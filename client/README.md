@@ -34,3 +34,4 @@ Tipos Comunes:
      git commit -m "mensaje del commit"
      git push
 
+Posibles calendarios: React big calendar - FullCalendar
