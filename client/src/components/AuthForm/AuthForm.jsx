@@ -1,4 +1,4 @@
-// import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { useLocation, Link } from 'react-router-dom'
 import { ErrorText } from '../Error/ErrorText'
@@ -8,7 +8,8 @@ export const AuthForm = () => {
 
 
     const { pathname } = useLocation();
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
+
     const { register,
         handleSubmit,
         formState: { errors } } = useForm()
@@ -17,7 +18,7 @@ export const AuthForm = () => {
 
         // Redireccionar
         // Si es Login -> /dashboard
-        // navigate('/dashboard')
+        navigate('/dashboard')
         console.log(values)
         // Si es registro -> Inicio
         console.log('submiting..')
