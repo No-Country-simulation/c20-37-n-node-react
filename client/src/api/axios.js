@@ -1,5 +1,5 @@
 import axios from "axios";
-import { VITE_API_HOST } from "../config";
+import { VITE_API_HOST } from "../config/config";
 
 
 const instance = axios.create({

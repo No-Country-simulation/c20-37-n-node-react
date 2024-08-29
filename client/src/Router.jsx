@@ -9,7 +9,8 @@ export const Router = () => {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path='/authentication' element={<Authentication />} />
+                <Route path='/login' element={<Authentication />} />
+                <Route path='/register' element={<Authentication />} />
                 <Route element={<Layout />}>
                     <Route path='/dashboard' element={<Dashboard />} />
                 </Route>
