@@ -2,17 +2,17 @@ import { Link } from "react-router-dom"
 
 export const Home = () => {
     return (
-        <div className="flex flex-col justify-center align-middle items-center h-screen">
+        <div className="flex flex-col justify-center items-center h-[calc(100vh-50px)]">
             <img className="sm:max-w-2xl" src="/Logo.png" alt="Logo SaludNet" />
             <div className="flex gap-x-4">
-                <Link to="/login">
+                <Link to="/authentication">
                     <button className="bg-secondary hover:bg-teal-900 duration-300 text-white font-bold py-2 px-4 rounded-full">
                         Ingresar
                     </button>
                 </Link>
-                <Link to={'/register'}>
+                <Link to={'/authentication'}>
                     <button className="bg-primary hover:bg-cyan-900 duration-300 text-white font-bold py-2 px-4 rounded-full">
-                        Crear una cuenta
+                        Registrarse
                     </button>
                 </Link>
             </div>

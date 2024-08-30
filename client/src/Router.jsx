@@ -1,8 +1,7 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import { Layout } from './Layout'
 import { Home } from './Pages/Home'
-import { Login } from './Pages/Login'
-import { Register } from './Pages/Register'
+import { Authentication } from './Pages/Authentication'
 import { Dashboard } from './Pages/Dashboard'
 
 export const Router = () => {
@@ -10,10 +9,10 @@ export const Router = () => {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Home />} />
+                <Route path='/login' element={<Authentication />} />
+                <Route path='/register' element={<Authentication />} />
                 <Route element={<Layout />}>
                     <Route path='/dashboard' element={<Dashboard />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/register' element={<Register />} />
                 </Route>
             </Routes>
         </BrowserRouter>
