@@ -6,6 +6,7 @@ import session from "express-session"
 import { connectMongoDB } from './config/mongoDB.config.js';
 import { initializePassport } from "./config/passport.config.js";
 import passport from 'passport';
+import cookieParser from 'cookie-parser';
 
 const app = express();  
 
@@ -15,6 +16,7 @@ connectMongoDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(cookieParser());
 app.use(session(
     {
         secret: envs.SECRET_CODE,
