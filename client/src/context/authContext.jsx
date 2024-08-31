@@ -2,6 +2,7 @@
 import { createContext, useContext, useState } from "react";
 import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest } from '../api/auth'
 import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 
@@ -26,21 +27,17 @@ export const AuthProvider = ({ children }) => {
     const register = async (values) => {
         try {
             setLoading(true)
-            if (logued.role !== 'Admin') {
-                // toast.error('No tienes permisos para registrar usuarios')
-                setLoading(false)
-                return;
-            }
             const { data } = await registerRequest(values)
             if (!data) {
                 setLoading(false)
-                return setErrors(['No se pudo registrar el usuario'])
+                return toast.error('No se pudo registrar el usuario')
             }
-            // toast.success('Usuario registrado correctamente')
+            toast.success('Usuario registrado correctamente')
             setLoading(false)
         } catch (error) {
             setLoading(false)
             setErrors(error)
+            toast.error('No se pudo registrar el usuario')
         }
     }
 
@@ -54,6 +51,7 @@ export const AuthProvider = ({ children }) => {
                 setLogued(null)
                 setAuthenticated(false)
                 setErrors(['No se pudo verificar el token'])
+                toast.error('No se pudo verificar el token')
                 setLoading(false)
                 return;
             }
@@ -64,6 +62,7 @@ export const AuthProvider = ({ children }) => {
             if (error.code === 'ERR_NETWORK') return setErrors(['No se pudo conectar con el servidor'])
             if (!error.response.data.message) return setErrors([error.message])
             setErrors(error.response.data.message)
+            toast.error('No se pudo iniciar sesión')
             setLoading(false)
         } finally {
             setLoading(false);
@@ -80,10 +79,12 @@ export const AuthProvider = ({ children }) => {
             setLogued({})
             setAuthenticated(false)
             setLoading(false)
+            toast.success('Se ha cerrado la sesión')
         } catch (error) {
             if (!error) return setErrors([error])
             setErrors(error)
             setLoading(false)
+            toast.error('No se pudo cerrar la sesión')
         }
     }
 
@@ -94,7 +95,8 @@ export const AuthProvider = ({ children }) => {
             errors,
             login,
             register,
-            logout
+            logout,
+            logued
         }}>
             {children}
         </AuthContext.Provider>
