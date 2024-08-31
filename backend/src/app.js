@@ -7,6 +7,7 @@ import { connectMongoDB } from './config/mongoDB.config.js';
 import { initializePassport } from "./config/passport.config.js";
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
+import cors from "cors"
 
 const app = express();  
 
@@ -24,7 +25,12 @@ app.use(session(
         saveUninitialized: false
     }
 ));
-
+app.use(cors({
+    origin: '*',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}))
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
