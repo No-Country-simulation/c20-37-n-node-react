@@ -27,8 +27,9 @@ export const AuthProvider = ({ children }) => {
     const register = async (values) => {
         try {
             setLoading(true)
-            const { data } = await registerRequest(values)
-            if (!data) {
+            const response = await registerRequest(values)
+            console.log(response)
+            if (!response) {
                 setLoading(false)
                 return toast.error('No se pudo registrar el usuario')
             }
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
             setLoading(false)
         } catch (error) {
             setLoading(false)
-            setErrors(error)
+            console.log(error)
             toast.error('No se pudo registrar el usuario')
         }
     }

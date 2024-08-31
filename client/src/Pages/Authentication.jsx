@@ -1,9 +1,11 @@
-import { AuthForm } from "../components/AuthForm/AuthForm"
-
+import { LoginForm } from '../components/AuthForm/LoginForm';
+import { RegisterForm } from '../components/AuthForm/RegisterForm';
 export const Authentication = () => {
   return (
-    <div className="authForm h-screen">
-      <AuthForm />
+    <div className="h-screen">
+      {window.location.pathname === '/register' ?
+        <RegisterForm />
+        : <LoginForm />}
     </div>
 
   )
