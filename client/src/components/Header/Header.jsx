@@ -1,13 +1,18 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from '../../context/authContext';
 
 export const Header = () => {
 
+
+    const { logued } = useAuth();
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!isMobileMenuOpen);
         console.log(isMobileMenuOpen);
     };
+
+    const role = logued.role;
     return (
         <nav className="flex top-0 fixed items-center justify-between flex-wrap bg-teal-500 w-full">
             <div className="flex items-center flex-shrink-0 text-white">
@@ -27,15 +32,12 @@ export const Header = () => {
             <div
                 className={`w-full ${isMobileMenuOpen ? 'block' : 'hidden'} border border-t-white lg:border-none flex-grow lg:flex lg:items-center lg:w-auto  `}>
                 <div className="text-sm lg:flex-grow">
-                    <Link to={"/dashboard"} className="block mt-2 ml-2 lg:inline-block lg:mt-0 text-lg text-black hover:text-white mr-4">
-                        Dashboard
+                    <Link to={"/dashboard"} className="block mt-2 ml-2 md:ml-6 lg:inline-block lg:mt-0 text-lg text-black hover:text-white mr-4">
+                        Tablero
                     </Link>
-                    <Link to={"#responsive-header"} className="block mt-4 ml-2 lg:inline-block lg:mt-0 text-lg text-black hover:text-white mr-4">
-                        Examples
-                    </Link>
-                    <Link to={"#responsive-header"} className="block mt-4 ml-2 lg:inline-block lg:mt-0 text-lg text-black hover:text-white">
-                        Blog
-                    </Link>
+                    {role === 'admin' && <Link to={"/admin/userList"} className="block mt-4 ml-2 lg:inline-block lg:mt-0 text-lg text-black hover:text-white">
+                        Lista de usuarios
+                    </Link>}
                 </div>
             </div>
         </nav >

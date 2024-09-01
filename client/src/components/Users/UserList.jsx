@@ -1,7 +1,13 @@
+import { useEffect } from "react"
 import { usersList } from "../../services/userServices"
+import { useUsers } from "../../context/usersContext"
 
 export const UserList = () => {
 
+    const { getUsers } = useUsers()
+    useEffect(() => {
+        getUsers()
+    }, [])
 
     return (
         <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">

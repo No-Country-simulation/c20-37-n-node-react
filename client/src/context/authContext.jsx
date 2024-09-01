@@ -2,7 +2,7 @@
 import { createContext, useContext, useState } from "react";
 import { registerRequest, loginRequest, logoutRequest } from '../api/auth'
 import Cookies from "js-cookie";
-import toast from "react-hot-toast";
+import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
 
@@ -34,13 +34,10 @@ export const AuthProvider = ({ children }) => {
                 return toast.error('No se pudo registrar el usuario')
             }
             toast.success('Usuario registrado correctamente')
-            alert('Usuario registrado correctamente')
             setLoading(false)
         } catch (error) {
             setLoading(false)
             console.log(error.response)
-            alert('No se pudo registrar el usuario')
-
             toast.error('No se pudo registrar el usuario')
         }
     }
@@ -48,24 +45,13 @@ export const AuthProvider = ({ children }) => {
     const login = async (user) => {
         setLoading(true)
         try {
-            setTimeout(async () => {
-                const { data } = await loginRequest(user)
-                console.log(data)
-                Cookies.set("access_token", data.token, { expires: 3 })
-                // const auth = await verifyTokenRequest();
-                // if (!auth) {
-                //     setLogued(null)
-                //     setAuthenticated(false)
-                //     setErrors(['No se pudo verificar el token'])
-                //     toast.error('No se pudo verificar el token')
-                //     setLoading(false)
-                //     return;
-                // }
-                setLogued(data.payload)
-                setAuthenticated(true)
-                setLoading(false)
-                alert('Sesión iniciada correctamente')
-            }, 2000)
+            const { data } = await loginRequest(user)
+            Cookies.set("access_token", data.token, { expires: 3 })
+            console.log(data)
+            if (!data.playload) return toast.error(['No se pudo iniciar sesión'])
+            toast.success('Se ha iniciado sesión')
+            setLogued(data.playload)
+            setAuthenticated(true)
         } catch (error) {
             if (error.code === 'ERR_NETWORK') return setErrors(['No se pudo conectar con el servidor'])
             if (!error.response.data.message) return setErrors([error.message])
@@ -99,7 +85,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{
-            authenticated,
+            isAuthenticated: authenticated,
             loading,
             errors,
             login,
