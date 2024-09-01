@@ -7,6 +7,7 @@ import { AdminLayout } from './components/Layouts/AdminLayout'
 import { UserList } from './components/Users/UserList'
 import { ProtectedRoute } from './ProtectedRoute'
 import { Toaster } from 'react-hot-toast';
+import { ClinicalHistory } from './Pages/ClinicalHistory'
 
 export const Router = () => {
     return (
@@ -21,6 +22,7 @@ export const Router = () => {
 
                     <Route element={<ProtectedRoute />}>
                         <Route path='/dashboard' element={<Dashboard />} />
+                        <Route path='/admin/clinicalHistory/' element={<ClinicalHistory />} />
                         {/* Rutas para el administrador */}
                         <Route path='/admin' element={<AdminLayout />}>
                             <Route path='/admin/userList/' element={<UserList />} />

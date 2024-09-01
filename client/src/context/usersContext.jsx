@@ -20,7 +20,7 @@ export const UsersProvider = ({ children }) => {
 
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState([]);
+    // const [errors, setErrors] = useState([]);
 
     const getUsers = async () => {
         try {
@@ -31,7 +31,7 @@ export const UsersProvider = ({ children }) => {
                 setLoading(false)
                 return toast.error('No se pudo obtener los usuarios')
             }
-            // setUsers(response.data)
+            setUsers(response.data.playload)
         } catch (error) {
             console.log(error)
             toast.error('No se pudo obtener los usuarios')
