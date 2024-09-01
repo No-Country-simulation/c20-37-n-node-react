@@ -47,21 +47,11 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await loginRequest(user)
             Cookies.set("access_token", data.token, { expires: 3 })
-            // const auth = await verifyTokenRequest();
-            // if (!auth) {
-            //     setLogued(null)
-            //     setAuthenticated(false)
-            //     setErrors(['No se pudo verificar el token'])
-            //     toast.error('No se pudo verificar el token')
-            //     setLoading(false)
-            //     return;
-            // }
             console.log(data)
             if (!data.playload) return toast.error(['No se pudo iniciar sesión'])
             toast.success('Se ha iniciado sesión')
             setLogued(data.playload)
             setAuthenticated(true)
-            setLoading(false)
         } catch (error) {
             if (error.code === 'ERR_NETWORK') return setErrors(['No se pudo conectar con el servidor'])
             if (!error.response.data.message) return setErrors([error.message])
