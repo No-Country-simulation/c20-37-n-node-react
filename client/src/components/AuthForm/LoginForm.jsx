@@ -38,7 +38,7 @@ export const LoginForm = () => {
                     <label className="block text-gray-700 text-sm font-bold" htmlFor="password">
                         Contraseña
                     </label>
-                    <input className="shadow appearance-none border focus:border-red-500 rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************"
+                    <input className="shadow appearance-none border focus:border-blue-800 rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************"
                         {...register('password', { required: true })}
                     />
                     {errors.password && <ErrorText text="Contraseña es requerida" />}
@@ -46,14 +46,14 @@ export const LoginForm = () => {
                 <div className="flex items-center justify-between mb-6">
                     <button
                         type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:border-black">
                         Iniciar Sesión
                     </button>
-                    <Link to={'#'} className="inline-block align-baseline px-4 font-bold text-xs text-blue-500 hover:text-blue-800" href="#">
+                    <Link to={'#'} className="px-4 font-bold text-xs text-blue-500 hover:text-blue-800 focus:border-black p-2" href="#">
                         Olvidaste la contraseña?
                     </Link>
                 </div>
-                <Link to={'/register'} className="text-sm flex justify-end text-red-500 hover:text-red-800 duration-200">Registrarse</Link>
+                <Link to={'/register'} className="text-sm justify-end text-red-500 hover:text-red-800 duration-200">Registrarse</Link>
             </form>
             <FormFooter />
         </div>

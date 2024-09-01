@@ -6,12 +6,14 @@ import { Authentication } from './Pages/Authentication'
 import { AdminLayout } from './components/Layouts/AdminLayout'
 import { UserList } from './components/Users/UserList'
 import { ProtectedRoute } from './ProtectedRoute'
+import { Toaster } from 'react-hot-toast';
 
 export const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Home />} />
+
                 <Route element={<Layout />}>
 
                     <Route path='/login' element={<Authentication />} />
@@ -19,7 +21,6 @@ export const Router = () => {
 
                     <Route element={<ProtectedRoute />}>
                         <Route path='/dashboard' element={<Dashboard />} />
-
                         {/* Rutas para el administrador */}
                         <Route path='/admin' element={<AdminLayout />}>
                             <Route path='/admin/userList/' element={<UserList />} />
@@ -27,6 +28,7 @@ export const Router = () => {
                     </Route>
                 </Route>
             </Routes>
+            <Toaster />
         </BrowserRouter>
     )
 }
