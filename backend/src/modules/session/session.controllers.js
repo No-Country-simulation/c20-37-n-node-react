@@ -29,4 +29,13 @@ const userUpdate = async (req=request, res=response) => {
         res.status(500).json({ status: "error", msg: "Internal server error" });
     }}
 
-export default { userRegister, userLogin, userUpdate }
+const getAll = async (req=request, res=response) => {
+    try {
+        const users = await userService.getAll();
+        return res.status(200).json({ status: "ok", playload:users });
+    } catch (error) {
+        res.status(500).json({ status: "error", msg: "Internal server error" });
+    }
+}
+
+export default { userRegister, userLogin, userUpdate, getAll }
