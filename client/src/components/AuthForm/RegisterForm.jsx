@@ -5,7 +5,6 @@ import { ErrorText } from '../Error/ErrorText'
 import { useAuth } from "../../context/authContext"
 import { FormFooter } from "./FormFooter"
 
-
 export const RegisterForm = () => {
     // const navigate = useNavigate()
 

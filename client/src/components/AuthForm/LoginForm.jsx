@@ -1,4 +1,4 @@
-// import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { Link } from 'react-router-dom'
 import { ErrorText } from '../Error/ErrorText'
@@ -7,8 +7,7 @@ import { FormFooter } from "./FormFooter"
 
 
 export const LoginForm = () => {
-    // const navigate = useNavigate()
-
+    const navigate = useNavigate()
     const { register,
         handleSubmit,
         formState: { errors } } = useForm()
@@ -19,8 +18,7 @@ export const LoginForm = () => {
         await LoginRequest(values)
         console.log('ingresando..')
         // Redireccionar
-        // navigate('/dashboard')
-        console.log(values)
+        navigate('/dashboard')
     })
     return (
         <div className="h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto  p-2 md:p-6">
