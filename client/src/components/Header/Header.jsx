@@ -1,11 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 /* import { useAuth } from '../../context/authContext'; */
 
 export const Header = () => {
+    const location = useLocation();
 
+    const isInLogin = location.pathname == '/login';
+    const isInRegister = location.pathname == '/register';
 
 /*     const { logued } = useAuth(); */
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -24,11 +27,11 @@ export const Header = () => {
                         <img src="/logotipo.png" alt="SaludNet Logo" className="mr-3 h-10 sm:h-12"/>
                     </Link>
                     <div className="flex items-center lg:order-2">
-                        <Link to={'/login'} className="flex items-center text-primary bg-primary-700 hover:bg-muted focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2">
+                        <Link to={'/login'} className={`${isInLogin? 'hidden' : 'flex'} items-center text-primary bg-primary-700 hover:bg-muted focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2`}>
                             <FontAwesomeIcon icon={faRightToBracket} className="text-primary" />
                             <span className=" hidden sm:inline ml-2">Iniciar Sesión</span>
                         </Link>
-                        <Link to={'/register'} className="flex items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-450 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none ">
+                        <Link to={'/register'} className={`${isInRegister? 'hidden' : 'flex'} items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-450 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none`}>
                             <FontAwesomeIcon icon={faUserPlus} />
                             <span className="hidden sm:inline ml-2">Registrarse</span>
                         </Link>
