@@ -15,11 +15,11 @@ export const RegisterForm = () => {
     const { register: registerRequest } = useAuth()
     const onSubmit = handleSubmit(async (values) => {
         // Logica de autenticacion
-        await registerRequest(values)
+        const response = await registerRequest(values)
         console.log('registrando..')
         // Redireccionar
         // navigate('/login')
-        console.log(values)
+        console.log(response)
     })
     return (
         <div className="h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto p-2 md:p-6">

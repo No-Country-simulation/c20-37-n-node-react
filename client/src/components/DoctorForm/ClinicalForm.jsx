@@ -5,7 +5,6 @@ import 'flowbite/dist/flowbite.css';
 
 
 export const ClinicalForm = () => {
-
     const [patientData, setPatientData] = useState({
         name: '',
         age: '',
