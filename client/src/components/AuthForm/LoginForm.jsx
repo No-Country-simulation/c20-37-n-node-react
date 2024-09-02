@@ -21,7 +21,7 @@ export const LoginForm = () => {
         navigate('/dashboard')
     })
     return (
-        <div className="roboto h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto  p-2 md:p-6">
+        <div className="roboto h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto p-2 md:p-6">
             <h1 className="text-2xl font-black py-4 text-center">Ingresar</h1>
             <form onSubmit={onSubmit} className="bg-white shadow-xl rounded px-4 lg:p-8 pt-6 pb-8 mb-4">
             {loginError && <ErrorText text={loginError} />}

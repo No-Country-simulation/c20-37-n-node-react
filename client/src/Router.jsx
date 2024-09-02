@@ -13,10 +13,8 @@ export const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Home />} />
-
                 <Route element={<Layout />}>
-
+                <Route path='/' element={<Home />} />
                     <Route path='/login' element={<Authentication />} />
                     <Route path='/register' element={<Authentication />} />
 

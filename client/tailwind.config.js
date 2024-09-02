@@ -3,16 +3,29 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/flowbite/**/*.js",
+    'node_modules/flowbite-react/lib/esm/**/*.js'
   ],
   theme: {
     extend: {
       colors: {
-        'primary': '#00598e', // Usado para elementos principales como encabezados, botones primarios, y enlaces.
-        'secondary': '#0bb3a8', // Usado para acentos, botones secundarios, y elementos de éxito o confirmación.
-        'lightGray': '#d3d3d3', // Usado para texto secundario, bordes de campos de formulario, y fondos de elementos secundarios.
-        'darkGray': '#4f4f4f', // Usado para texto principal y elementos como iconografía secundaria.
+        /* 'primary': '#00598e',
+        'secondary': '#0bb3a8', */
+        'primary': '#0E588F',
+        'secondary': '#08A39F',
+        'background': '#FCFAF9',
+        'accent': '#5FB49C',
+        'text': '#07020D',
+        'muted': '#F1EFEF'
       },
+      fontFamily: {
+        lato: ['Lato'],
+        poppins: ['Poppins'],
+        bebas: ['Bebas Neue']
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ]
 }
