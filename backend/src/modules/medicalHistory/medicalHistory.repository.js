@@ -15,10 +15,28 @@ const create = async (data) => {
     return medicalHistory;
 }
 
-const update = async (id,data) => {
-    const medicalHistory = await medicalHistoryModel.findByIdAndUpdate(id,data,{new:true});
+const update = async (id, data) => {
+    const medicalHistory = await medicalHistoryModel.findByIdAndUpdate(
+        id,
+        {
+            $addToSet: data,  
+        },
+        { new: true, upsert: false }
+    );
     return medicalHistory;
-}
+};
+
+const removeSubdocumentById = async (historyId, arrayName, subdocumentId) => {
+    const update = await medicalHistoryModel.findByIdAndUpdate(
+        historyId,
+        {
+            $pull: { [arrayName]: { _id: subdocumentId } }
+        },
+        { new: true }
+    );
+    return update;
+};
 
 
-export default {getAll, getByID, create, update}
+
+export default {getAll, getByID, create, update, removeSubdocumentById}

@@ -9,5 +9,8 @@ const create = async (data) => {return await medicalHistoryRepository.create(dat
 
 const update = async (id,data) => {return await medicalHistoryRepository.update(id,data);};
 
+const removeSubdocumentById= async(historyId, arrayName, subdocumentId) => {
+    return await medicalHistoryRepository.removeSubdocumentById(historyId, arrayName, subdocumentId);
+}
 
-export default { getAll, getByID, create, update };
+export default { getAll, getByID, create, update, removeSubdocumentById };
