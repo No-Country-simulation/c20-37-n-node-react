@@ -1,0 +1,21 @@
+import { Outlet } from "react-router-dom"
+import { Header } from "../Header/Header"
+import { Footer } from "../Footer/Footer"
+import { useAuth } from "../../context/authContext"
+import { LoadingPage } from "../Loading/LoadingPage"
+
+export const Layout = () => {
+
+    const { loading } = useAuth()
+    if (loading) return <LoadingPage />
+    return (
+
+        <div >
+            <Header />
+                <main className="mt-1 max-w-6xl h-screen mx-auto">
+                    <Outlet />
+                </main>
+            <Footer />
+        </div >
+    )
+}

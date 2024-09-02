@@ -1,21 +1,32 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
-import { Layout } from './Layout'
+import { Layout } from './components/Layouts/Layout'
 import { Home } from './Pages/Home'
-import { Login } from './Pages/Login'
-import { Register } from './Pages/Register'
 import { Dashboard } from './Pages/Dashboard'
+import { Authentication } from './Pages/Authentication'
+import { AdminLayout } from './components/Layouts/AdminLayout'
+import { UserList } from './components/Users/UserList'
+import { ProtectedRoute } from './ProtectedRoute'
+import { Toaster } from 'react-hot-toast';
 
 export const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Home />} />
                 <Route element={<Layout />}>
-                    <Route path='/dashboard' element={<Dashboard />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/register' element={<Register />} />
+                <Route path='/' element={<Home />} />
+                    <Route path='/login' element={<Authentication />} />
+                    <Route path='/register' element={<Authentication />} />
+
+                    <Route element={<ProtectedRoute />}>
+                        <Route path='/dashboard' element={<Dashboard />} />
+                        {/* Rutas para el administrador */}
+                        <Route path='/admin' element={<AdminLayout />}>
+                            <Route path='/admin/userList/' element={<UserList />} />
+                        </Route>
+                    </Route>
                 </Route>
             </Routes>
+            <Toaster />
         </BrowserRouter>
     )
 }

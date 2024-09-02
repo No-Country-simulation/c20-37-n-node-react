@@ -1,10 +1,17 @@
+import { AuthProvider } from "./context/authContext"
+import { UsersProvider } from "./context/usersContext"
 import { Router } from "./Router"
+
 
 function App() {
 
   return (
     <>
-      <Router />
+      <AuthProvider>
+        <UsersProvider>
+          <Router />
+        </UsersProvider>
+      </AuthProvider>
     </>
   )
 }
