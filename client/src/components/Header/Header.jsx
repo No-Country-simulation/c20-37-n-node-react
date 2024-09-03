@@ -35,11 +35,11 @@ export const Header = () => {
 
                         {logued.role ?
                             <>
-                                <Link to={'/user/profile'} className="flex items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-450 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none">
+                                <Link to={'/user/profile'} className="flex items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none">
                                     <FontAwesomeIcon icon={faUser} />
                                     <span className="hidden sm:inline ml-2">Perfil</span>
                                 </Link>
-                                <button onClick={() => logout()} className="flex items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-450 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none">
+                                <button onClick={() => logout()} className="flex items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none">
                                     <FontAwesomeIcon icon={faRightToBracket} />
                                     <span className="hidden sm:inline ml-2">Cerrar Sesión</span>
                                 </button>
@@ -49,7 +49,7 @@ export const Header = () => {
                                     <FontAwesomeIcon icon={faRightToBracket} className="text-primary" />
                                     <span className=" hidden sm:inline ml-2">Iniciar Sesión</span>
                                 </Link>
-                                <Link to={'/register'} className={`${isInRegister ? 'hidden' : 'flex'} items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-450 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none`}>
+                                <Link to={'/register'} className={`${isInRegister ? 'hidden' : 'flex'} items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none`}>
                                     <FontAwesomeIcon icon={faUserPlus} />
                                     <span className="hidden sm:inline ml-2">Registrarse</span>
                                 </Link>
