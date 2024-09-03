@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useContext, createContext, useState } from "react";
-import { getAllUsers } from "../api/users"
+import { getAllUsers, updateUser } from "../api/users"
 import toast from "react-hot-toast";
 
 
@@ -41,10 +41,23 @@ export const UsersProvider = ({ children }) => {
         }
     }
 
+
+    const updateUserById = async (id, user) => {
+        try {
+            const update = await updateUser(id, user)
+            console.log(update)
+            console.log('Usuario actualizado')
+        } catch (error) {
+            toast.error('No se pudo actualizar el usuario')
+            toast.error(error.message)
+        }
+    }
+
     return (
         <UsersContext.Provider value={{
             users,
             getUsers,
+            updateUserById,
             loading
         }}>
             {children}
