@@ -1,44 +1,33 @@
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import { registerRequest, loginRequest } from '../api/auth'
 import Cookies from "js-cookie";
 import toast from 'react-hot-toast'
+import { useGeneralContext } from "../hooks/useGeneralContext";
 
-const AuthContext = createContext();
-
-
-export const useAuth = () => {
-
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error("useAuth debe ser usado con AuthProvider");
-    }
-    return context;
-}
-
+export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
+
+    const { logued, setLogued, loading, setLoading } = useGeneralContext()
     const [authenticated, setAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState('');
-    const [logued, setLogued] = useState({});
 
 
     const register = async (values) => {
         try {
             setLoading(true)
             const response = await registerRequest(values)
-            console.log(response)
-            if (!response) {
-                setLoading(false)
+            if (response.status !== 201) {
                 return toast.error('No se pudo registrar el usuario')
             }
             toast.success('Usuario registrado correctamente')
-            setLoading(false)
         } catch (error) {
-            setLoading(false)
-            console.log(error)
+            toast.error(error.response.data.msg)
             toast.error('No se pudo registrar el usuario')
+        }
+        finally {
+            setLoading(false)
         }
     }
 
@@ -47,15 +36,14 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await loginRequest(user)
             Cookies.set("access_token", data.token, { expires: 3 })
-            console.log(data)
             if (!data.playload) return toast.error(['No se pudo iniciar sesión'])
             toast.success('Se ha iniciado sesión')
             setLogued(data.playload)
             setAuthenticated(true)
         } catch (error) {
-            console.log(error)
             setErrors('Credenciales incorrectas')
             toast.error('No se pudo iniciar sesión')
+            toast.error(error.data.msg)
         } finally {
             setLoading(false);
         }

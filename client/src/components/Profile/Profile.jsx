@@ -1,18 +1,19 @@
-import { useState } from 'react'
-import { Card, Label, TextInput, Button, Datepicker } from 'flowbite-react'
-import { useAuth } from '../../context/authContext'
-import { useUsers } from '../../context/usersContext'
+import { useState, useEffect } from 'react'
+import { Card, Label, TextInput, Button } from 'flowbite-react'
+import { useUsers } from '../../hooks/useUsersContext'
+import { useGeneralContext } from '../../hooks/useGeneralContext'
+import { DatePick } from '../DatePicker/DatePicker'
 
 export const Profile = () => {
 
-    const { logued } = useAuth()
+    const { logued, setLogued } = useGeneralContext()
     const { updateUserById } = useUsers()
     const [profile, setProfile] = useState({
         firstName: logued?.firstName,
         lastName: logued?.lastName,
         phone: logued?.phone,
         address: logued?.address,
-        birthdate: logued?.birthdate,
+        birthdate: new Date(logued?.birthdate),
     })
 
     const handleChange = (e) => {
@@ -30,17 +31,23 @@ export const Profile = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log('Profile to update:', profile)
         // Here you would typically send the data to your backend
-        updateUserById(logued._id, profile)
+        await updateUserById(logued._id, profile)
+        setLogued(prevLogued => ({
+            ...prevLogued,
+            ...profile
+        })
+        )
     }
 
     const viewMedicalHistory = () => {
-        console.log('Viewing medical history')
-        // Here you would typically navigate to a medical history page or open a modal
+        console.log('Ver historial médico')
+        // Navegar a historial medico o abrir modal con historial medico
     }
+    useEffect(() => {
+    }, [logued])
 
     return (
         <Card className="max-w-2xl mx-auto roboto">
@@ -105,12 +112,16 @@ export const Profile = () => {
                     <div className="mb-2 block">
                         <Label htmlFor="birthdate" value="Fecha de nacimiento" />
                     </div>
-                    <Datepicker
+                    <DatePick
+                        startDate={profile.birthdate}
+                        setStartDate={handleDateChange}
+                    />
+                    {/* <Datepicker
                         id="birthdate"
                         name="birthdate"
                         onSelectedDateChanged={handleDateChange}
                         required
-                    />
+                    /> */}
                 </div>
                 <Button className='bg-primary text-white hover:bg-blue-900 duration-200' color='primary' type="submit">
                     Actualizar Perfil

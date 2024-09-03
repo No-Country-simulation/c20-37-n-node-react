@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { Link } from 'react-router-dom'
 import { ErrorText } from '../Error/ErrorText'
-import { useAuth } from "../../context/authContext"
+import { useAuth } from "../../hooks/useAuthContext"
 import { FormFooter } from "./FormFooter"
 
 

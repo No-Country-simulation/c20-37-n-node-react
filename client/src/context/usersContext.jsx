@@ -1,40 +1,28 @@
 /* eslint-disable react/prop-types */
-import { useContext, createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { useGeneralContext } from "../hooks/useGeneralContext";
 import { getAllUsers, updateUser } from "../api/users"
 import toast from "react-hot-toast";
 
 
-const UsersContext = createContext();
-
-
-export const useUsers = () => {
-
-    const context = useContext(UsersContext);
-    if (!context) {
-        throw new Error("useUsers debe ser usado con UsersProvider");
-    }
-    return context;
-}
+export const UsersContext = createContext();
 
 export const UsersProvider = ({ children }) => {
-
+    const { loading, setLoading } = useGeneralContext()
     const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(false);
-    // const [errors, setErrors] = useState([]);
 
     const getUsers = async () => {
         try {
             setLoading(true)
             const response = await getAllUsers()
-            console.log(response)
             if (!response) {
-                setLoading(false)
                 return toast.error('No se pudo obtener los usuarios')
             }
             setUsers(response.data.playload)
+
         } catch (error) {
-            console.log(error)
             toast.error('No se pudo obtener los usuarios')
+            toast.error(error.response.data.msg)
         }
         finally {
             setLoading(false)
@@ -43,15 +31,27 @@ export const UsersProvider = ({ children }) => {
 
 
     const updateUserById = async (id, user) => {
+        setLoading(true)
         try {
             const update = await updateUser(id, user)
-            console.log(update)
-            console.log('Usuario actualizado')
+            if (update.status === 400 || update.status === 404) {
+                return toast.error('No se pudo actualizar el usuario, verifique que los datos sean correctos')
+            }
+            toast.success('Usuario actualizado correctamente')
         } catch (error) {
             toast.error('No se pudo actualizar el usuario')
-            toast.error(error.message)
+            toast.error(error.response.data.msg)
+        }
+        finally {
+            setLoading(false)
         }
     }
+
+    useEffect(() => {
+        getUsers()
+        console.log('render desde el context')
+    }, [users.length])
+
 
     return (
         <UsersContext.Provider value={{

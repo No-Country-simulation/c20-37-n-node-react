@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 import { Header } from "../Header/Header"
 import { Footer } from "../Footer/Footer"
-import { useAuth } from "../../context/authContext"
+import { useAuth } from "../../hooks/useAuthContext"
 import { LoadingPage } from "../Loading/LoadingPage"
 
 export const Layout = () => {

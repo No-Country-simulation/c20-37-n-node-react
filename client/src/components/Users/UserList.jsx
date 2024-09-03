@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 // import { usersList } from "../../services/userServices"
-import { useUsers } from "../../context/usersContext"
+import { useUsers } from "../../hooks/useUsersContext"
 
 export const UserList = () => {
 
@@ -9,7 +9,6 @@ export const UserList = () => {
 
     useEffect(() => {
         getUsers()
-        console.log(users)
     }, [])
 
     return (

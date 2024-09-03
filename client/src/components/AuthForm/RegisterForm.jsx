@@ -1,13 +1,14 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ErrorText } from '../Error/ErrorText'
-import { useAuth } from "../../context/authContext"
+import { useAuth } from "../../hooks/useAuthContext"
 import { FormFooter } from "./FormFooter"
 import { DatePick } from "../DatePicker/DatePicker"
+import toast from "react-hot-toast"
 
 export const RegisterForm = () => {
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const [startDate, setStartDate] = useState(new Date());
     const { register,
@@ -22,10 +23,13 @@ export const RegisterForm = () => {
             birthdate: startDate
         }
         const response = await registerRequest(user)
-
-        // Redireccionar
-        // navigate('/login')
         console.log(response)
+        // Redireccionar
+        if (!response) return;
+        setTimeout(() => {
+            toast.success('Registro exitoso, redirigiendo a login')
+            navigate('/login')
+        }, 2000)
     })
     return (
         <div className="h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto p-2 md:p-6">

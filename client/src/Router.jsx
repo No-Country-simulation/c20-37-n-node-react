@@ -38,7 +38,7 @@ export const Router = () => {
                         {/* Rutas para el usuario */}
                         <Route path='/user' element={<UserLayout />}>
                         </Route>
-                        
+
                         <Route path='/user/profile' element={<ProfilePage />} />
                     </Route>
                     <Route path='/*' element={<Error404 />} />
