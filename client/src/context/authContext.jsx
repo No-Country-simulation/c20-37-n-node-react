@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState } from "react";
-import { registerRequest, loginRequest, logoutRequest } from '../api/auth'
+import { registerRequest, loginRequest } from '../api/auth'
 import Cookies from "js-cookie";
 import toast from 'react-hot-toast'
 
@@ -62,22 +62,15 @@ export const AuthProvider = ({ children }) => {
     }
 
 
-    const logout = async () => {
+    const logout = () => {
         setLoading(true)
-        try {
-            await logoutRequest()
-            Cookies.remove()
-            Cookies.remove("access_token")
-            setLogued({})
-            setAuthenticated(false)
-            setLoading(false)
-            toast.success('Se ha cerrado la sesión')
-        } catch (error) {
-            if (!error) return setErrors([error])
-            setErrors(error)
-            setLoading(false)
-            toast.error('No se pudo cerrar la sesión')
-        }
+        // Enviar peticion al backend para que elimine el token
+        Cookies.remove('token')
+        Cookies.remove("access_token")
+        setLogued({})
+        setAuthenticated(false)
+        setLoading(false)
+        toast.success('Se ha cerrado la sesión')
     }
 
     return (
