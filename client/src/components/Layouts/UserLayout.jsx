@@ -1,11 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { useAuth } from "../../context/authContext"
-export const AdminLayout = () => {
+export const UserLayout = () => {
 
     const { logued } = useAuth()
 
     const rol = logued.role
-    // Si es administrador dejarlo seguir, sino redirigirlo a la pantalla principal
-    if (rol !== 'admin') return Navigate('/')
+    // Si es usuario dejarlo seguir, sino redirigirlo a la pantalla principal
+    if (rol !== 'user') return Navigate('/')
     return <Outlet />
 }
