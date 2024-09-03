@@ -2,13 +2,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-/* import { useAuth } from '../../context/authContext'; */
+import { useAuth } from '../../context/authContext'
 
 export const Header = () => {
     const location = useLocation();
 
     const isInLogin = location.pathname == '/login';
     const isInRegister = location.pathname == '/register';
+
+    const { logued } = useAuth();
 
     /*     const { logued } = useAuth(); */
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,7 +19,7 @@ export const Header = () => {
         console.log(isMobileMenuOpen);
     };
 
-    /* const role = logued.role; */
+    const role = logued.role;
     return (
 
         <header className='font-poppins shadow-lg'>
@@ -55,6 +57,11 @@ export const Header = () => {
                             <li>
                                 <Link to={'#'} className="block py-2 pr-4 pl-3 text-gray-400 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-primary lg:p-0 ">Contacto</Link>
                             </li>
+                            {role === 'admin' &&
+                                <li>
+                                    <Link to={'/admin/userList'} className="block py-2 pr-4 pl-3 text-gray-400 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-primary lg:p-0 ">Usuarios</Link>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>

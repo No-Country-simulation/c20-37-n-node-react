@@ -1,13 +1,15 @@
-// import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { Link } from 'react-router-dom'
 import { ErrorText } from '../Error/ErrorText'
 import { useAuth } from "../../context/authContext"
 import { FormFooter } from "./FormFooter"
+import { DatePick } from "../DatePicker/DatePicker"
 
 export const RegisterForm = () => {
     // const navigate = useNavigate()
 
+    const [startDate, setStartDate] = useState(new Date());
     const { register,
         handleSubmit,
         formState: { errors } } = useForm()
@@ -15,8 +17,12 @@ export const RegisterForm = () => {
     const { register: registerRequest } = useAuth()
     const onSubmit = handleSubmit(async (values) => {
         // Logica de autenticacion
-        const response = await registerRequest(values)
-        console.log('registrando..')
+        const user = {
+            ...values,
+            birthdate: startDate
+        }
+        const response = await registerRequest(user)
+
         // Redireccionar
         // navigate('/login')
         console.log(response)
@@ -44,7 +50,15 @@ export const RegisterForm = () => {
                         {...register('lastName', { required: true })}
                     />
                 </div>
-
+                <div className="flex flex-col w-full mb-4">
+                    <label htmlFor="birthdate">
+                        Fecha de nacimiento
+                        <DatePick
+                            startDate={startDate}
+                            setStartDate={setStartDate}
+                        />
+                    </label>
+                </div>
                 <div className='flex flex-col w-full mb-4'>
                     <label className="block text-gray-700 text-sm font-bold" htmlFor="username">
                         Email
