@@ -23,7 +23,7 @@ export const Header = () => {
         <header className='font-poppins shadow-lg'>
             <nav className="bg-background border-gray-200 px-4 lg:px-6 py-2.5">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-                    <Link  to={'/dashboard'} className="flex items-center">
+                    <Link  to={'/st'} className="flex items-center">
                         <img src="/logotipo.png" alt="SaludNet Logo" className="mr-3 h-10 sm:h-12"/>
                     </Link>
                     <div className="flex items-center lg:order-2">
