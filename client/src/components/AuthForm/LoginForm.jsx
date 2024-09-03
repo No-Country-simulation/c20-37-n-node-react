@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { Link } from 'react-router-dom'
 import { ErrorText } from '../Error/ErrorText'
-import { useAuth } from "../../context/authContext"
+import { useAuth } from "../../hooks/useAuthContext"
 import { FormFooter } from "./FormFooter"
 
 
@@ -12,7 +12,7 @@ export const LoginForm = () => {
         handleSubmit,
         formState: { errors } } = useForm()
 
-    const { login: LoginRequest } = useAuth()
+    const { login: LoginRequest, errors: loginError } = useAuth()
     const onSubmit = handleSubmit(async (values) => {
         // Logica de autenticacion
         await LoginRequest(values)
@@ -21,10 +21,10 @@ export const LoginForm = () => {
         navigate('/dashboard')
     })
     return (
-        <div className="h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto  p-2 md:p-6">
+        <div className="roboto h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto p-2 md:p-6">
             <h1 className="text-2xl font-black py-4 text-center">Ingresar</h1>
             <form onSubmit={onSubmit} className="bg-white shadow-xl rounded px-4 lg:p-8 pt-6 pb-8 mb-4">
-
+            {loginError && <ErrorText text={loginError} />}
                 <div className='flex flex-col w-full mb-4'>
                     <label className="block text-gray-700 text-sm font-bold" htmlFor="username">
                         Email

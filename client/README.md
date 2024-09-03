@@ -35,3 +35,4 @@ Tipos Comunes:
      git push
 
 Posibles calendarios: React big calendar - FullCalendar
+Videollamada: Jitsi o Daily.co

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 import { Header } from "../Header/Header"
 import { Footer } from "../Footer/Footer"
-import { useAuth } from "../../context/authContext"
+import { useAuth } from "../../hooks/useAuthContext"
 import { LoadingPage } from "../Loading/LoadingPage"
 
 export const Layout = () => {
@@ -12,9 +12,9 @@ export const Layout = () => {
 
         <div >
             <Header />
-                <main className="mt-1 max-w-6xl h-screen mx-auto">
-                    <Outlet />
-                </main>
+            <main className="mt-12 max-w-screen-2xl min-h-screen mx-auto">
+                <Outlet />
+            </main>
             <Footer />
         </div >
     )

@@ -1,10 +1,12 @@
 import { useEffect } from "react"
-import { usersList } from "../../services/userServices"
-import { useUsers } from "../../context/usersContext"
+// import { usersList } from "../../services/userServices"
+import { useUsers } from "../../hooks/useUsersContext"
 
 export const UserList = () => {
 
-    const { getUsers } = useUsers()
+    const { users, getUsers } = useUsers()
+
+
     useEffect(() => {
         getUsers()
     }, [])
@@ -12,6 +14,7 @@ export const UserList = () => {
     return (
         <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
             <h1 className="text-2xl font-black my-4 px-4 lg:px-12">Control de usuarios</h1>
+
             <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
                 <div className="bg-white dark:bg-gray-800 shadow-md sm:rounded-lg overflow-hidden">
                     <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
@@ -88,7 +91,7 @@ export const UserList = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {usersList.map((user) => (
+                                {users ? users.map((user) => (
                                     <tr key={user.email} className="border-b dark:border-gray-700">
                                         <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{user.email}</th>
                                         <td className="px-4 py-3">{user.firstName}</td>
@@ -116,8 +119,10 @@ export const UserList = () => {
                                             </div>
                                         </td>
                                     </tr>
-
-                                ))}
+                                ))
+                                    : <tr>
+                                        <td colSpan="6" className="text-center py-4">No hay usuarios</td>
+                                    </tr>}
 
                             </tbody>
                         </table>

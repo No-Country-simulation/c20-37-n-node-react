@@ -1,4 +1,4 @@
-import { useAuth } from "../context/authContext"
+import { useAuth } from "../hooks/useAuthContext"
 import { UserDashboard } from "../components/Dashboards/UserDashboard"
 import { AdminDashboard } from "../components/Dashboards/AdminDashboard"
 import { DoctorDashboard } from "../components/Dashboards/DoctorDashboard"

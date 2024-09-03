@@ -1,4 +1,5 @@
 import { AuthProvider } from "./context/authContext"
+import { GeneralProvider } from "./context/generalContext"
 import { UsersProvider } from "./context/usersContext"
 import { Router } from "./Router"
 
@@ -7,11 +8,13 @@ function App() {
 
   return (
     <>
-      <AuthProvider>
-        <UsersProvider>
-          <Router />
-        </UsersProvider>
-      </AuthProvider>
+      <GeneralProvider>
+        <AuthProvider>
+          <UsersProvider>
+            <Router />
+          </UsersProvider>
+        </AuthProvider>
+      </GeneralProvider>
     </>
   )
 }

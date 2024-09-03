@@ -1,13 +1,16 @@
-// import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ErrorText } from '../Error/ErrorText'
-import { useAuth } from "../../context/authContext"
+import { useAuth } from "../../hooks/useAuthContext"
 import { FormFooter } from "./FormFooter"
+import { DatePick } from "../DatePicker/DatePicker"
+import toast from "react-hot-toast"
 
 export const RegisterForm = () => {
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
+    const [startDate, setStartDate] = useState(new Date());
     const { register,
         handleSubmit,
         formState: { errors } } = useForm()
@@ -15,11 +18,18 @@ export const RegisterForm = () => {
     const { register: registerRequest } = useAuth()
     const onSubmit = handleSubmit(async (values) => {
         // Logica de autenticacion
-        await registerRequest(values)
-        console.log('registrando..')
+        const user = {
+            ...values,
+            birthdate: startDate
+        }
+        const response = await registerRequest(user)
+        console.log(response)
         // Redireccionar
-        // navigate('/login')
-        console.log(values)
+        if (!response) return;
+        setTimeout(() => {
+            toast.success('Registro exitoso, redirigiendo a login')
+            navigate('/login')
+        }, 2000)
     })
     return (
         <div className="h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto p-2 md:p-6">
@@ -44,7 +54,15 @@ export const RegisterForm = () => {
                         {...register('lastName', { required: true })}
                     />
                 </div>
-
+                <div className="flex flex-col w-full mb-4">
+                    <label htmlFor="birthdate">
+                        Fecha de nacimiento
+                        <DatePick
+                            startDate={startDate}
+                            setStartDate={setStartDate}
+                        />
+                    </label>
+                </div>
                 <div className='flex flex-col w-full mb-4'>
                     <label className="block text-gray-700 text-sm font-bold" htmlFor="username">
                         Email

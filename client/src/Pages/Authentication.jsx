@@ -1,6 +1,6 @@
 import { LoginForm } from '../components/AuthForm/LoginForm';
 import { RegisterForm } from '../components/AuthForm/RegisterForm';
-import { useAuth } from '../context/authContext';
+import { useAuth } from '../hooks/useAuthContext';
 import { Navigate } from 'react-router-dom';
 
 
