@@ -1,7 +1,7 @@
 import { useAuth } from '../../hooks/useAuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket, faUserPlus, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { DocNav } from './DocNav';
 import { UserNav } from './UserNav';
@@ -9,7 +9,7 @@ import { AdminNav } from './AdminNav';
 
 export const Header = () => {
     const location = useLocation();
-
+    const navigate = useNavigate();
     const isInLogin = location.pathname == '/login';
     const isInRegister = location.pathname == '/register';
 
@@ -20,25 +20,28 @@ export const Header = () => {
         setMobileMenuOpen(!isMobileMenuOpen);
         console.log(isMobileMenuOpen);
     };
-
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    }
     const role = logued.role;
     return (
 
         <header className='font-poppins shadow-lg'>
             <nav className="bg-background border-gray-200 px-4 lg:px-6 py-2.5">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-                    <Link to={'/st'} className="flex items-center">
+                    <Link to={'/'} className="flex items-center">
                         <img src="/logotipo.png" alt="SaludNet Logo" className="mr-3 h-10 sm:h-12" />
                     </Link>
                     <div className="flex items-center lg:order-2">
 
                         {logued.role ?
                             <>
-                                <Link to={'/user/profile'} className="flex items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none">
+                                <Link to={'/profile'} className="flex items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none">
                                     <FontAwesomeIcon icon={faUser} />
                                     <span className="hidden sm:inline ml-2">Perfil</span>
                                 </Link>
-                                <button onClick={() => logout()} className="flex items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none">
+                                <button onClick={() => handleLogout()} className="flex items-center text-gray-800 hover:bg-primary hover:text-background transition-all duration-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none">
                                     <FontAwesomeIcon icon={faRightToBracket} />
                                     <span className="hidden sm:inline ml-2">Cerrar Sesión</span>
                                 </button>

@@ -12,6 +12,7 @@ import { DoctorLayout } from './components/Layouts/DoctorLayout'
 import { UserLayout } from './components/Layouts/UserLayout'
 import { Error404 } from './components/NotFound/Error404'
 import { ProfilePage } from './Pages/User/ProfilePage'
+import { MedicalHistoryPage } from './Pages/User/MedicalHistoryPage'
 
 export const Router = () => {
     return (
@@ -27,20 +28,23 @@ export const Router = () => {
 
                         {/* Rutas para el administrador */}
                         <Route path='/admin' element={<AdminLayout />}>
+                            <Route path='/admin/profile' element={<ProfilePage />} />
                             <Route path='/admin/userList/' element={<UserListPage />} />
                         </Route>
 
                         {/* Rutas para el doctor */}
                         <Route path='/doc' element={<DoctorLayout />}>
+                            <Route path='/doc/profile' element={<ProfilePage />} />
                             <Route path='/doc/clinicalHistory/' element={<ClinicalHistoryPage />} />
                         </Route>
 
                         {/* Rutas para el usuario */}
                         <Route path='/user' element={<UserLayout />}>
+                            <Route path='/user/profile' element={<ProfilePage />} />
+                            <Route path='/user/medicalHistory/' element={<MedicalHistoryPage />} />
                         </Route>
-
-                        <Route path='/user/profile' element={<ProfilePage />} />
                     </Route>
+                    <Route path='/profile' element={<ProfilePage />} />
                     <Route path='/*' element={<Error404 />} />
                 </Route>
             </Routes>
