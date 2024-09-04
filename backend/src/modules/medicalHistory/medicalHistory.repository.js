@@ -10,8 +10,8 @@ const getByID = async (id) => {
     return medicalHistory;
 }
 
-const create = async (data) => {
-    const medicalHistory = await medicalHistoryModel.create(data);
+const create = async () => {
+    const medicalHistory = await medicalHistoryModel.create({});
     return medicalHistory;
 }
 
@@ -26,15 +26,19 @@ const update = async (id, data) => {
     return medicalHistory;
 };
 
-const removeSubdocumentById = async (historyId, arrayName, subdocumentId) => {
-    const update = await medicalHistoryModel.findByIdAndUpdate(
-        historyId,
-        {
-            $pull: { [arrayName]: { _id: subdocumentId } }
-        },
-        { new: true }
-    );
-    return update;
+const removeSubdocumentById = async (id, element, position) => {
+    try {
+        const document = id;
+        if (position >= 0 && position < document[element].length) {
+            const removedElement = document[element].splice(position, 1)[0];
+            await document.save();
+            return removedElement; 
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 
