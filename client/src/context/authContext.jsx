@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import { useGeneralContext } from "../hooks/useGeneralContext";
 
 export const AuthContext = createContext();
+
 export const AuthProvider = ({ children }) => {
 
 
@@ -22,6 +23,7 @@ export const AuthProvider = ({ children }) => {
                 return toast.error('No se pudo registrar el usuario')
             }
             toast.success('Usuario registrado correctamente')
+            return response
         } catch (error) {
             toast.error(error.response.data.msg)
             toast.error('No se pudo registrar el usuario')

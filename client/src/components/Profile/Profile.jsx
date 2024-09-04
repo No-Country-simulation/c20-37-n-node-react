@@ -3,18 +3,13 @@ import { Card, Label, TextInput, Button } from 'flowbite-react'
 import { useUsers } from '../../hooks/useUsersContext'
 import { useGeneralContext } from '../../hooks/useGeneralContext'
 import { DatePick } from '../DatePicker/DatePicker'
+import { Link } from 'react-router-dom'
 
 export const Profile = () => {
 
     const { logued, setLogued } = useGeneralContext()
     const { updateUserById } = useUsers()
-    const [profile, setProfile] = useState({
-        firstName: logued?.firstName,
-        lastName: logued?.lastName,
-        phone: logued?.phone,
-        address: logued?.address,
-        birthdate: new Date(logued?.birthdate),
-    })
+    const [profile, setProfile] = useState(logued)
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -42,10 +37,6 @@ export const Profile = () => {
         )
     }
 
-    const viewMedicalHistory = () => {
-        console.log('Ver historial médico')
-        // Navegar a historial medico o abrir modal con historial medico
-    }
     useEffect(() => {
     }, [logued])
 
@@ -127,9 +118,9 @@ export const Profile = () => {
                     Actualizar Perfil
                 </Button>
             </form>
-            <div className="mt-4">
-                <Button color="success" onClick={viewMedicalHistory} className="w-full hover:bg-green-900 duration-200">
-                    Ver Historial Médico
+            <div className="mt-2">
+                <Button color="success" className="w-full hover:bg-green-900 duration-200">
+                    <Link to={"/user/medicalHistory"}>Ver Historial Médico</Link>
                 </Button>
             </div>
         </Card>

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { useGeneralContext } from "../hooks/useGeneralContext";
 import { getAllUsers, updateUser } from "../api/users"
 import toast from "react-hot-toast";
@@ -46,12 +46,6 @@ export const UsersProvider = ({ children }) => {
             setLoading(false)
         }
     }
-
-    useEffect(() => {
-        getUsers()
-        console.log('render desde el context')
-    }, [users.length])
-
 
     return (
         <UsersContext.Provider value={{

@@ -3,9 +3,8 @@ import { useForm } from "react-hook-form"
 import { Link, useNavigate } from 'react-router-dom'
 import { ErrorText } from '../Error/ErrorText'
 import { useAuth } from "../../hooks/useAuthContext"
-import { FormFooter } from "./FormFooter"
 import { DatePick } from "../DatePicker/DatePicker"
-import toast from "react-hot-toast"
+import 'flowbite/dist/flowbite.css';
 
 export const RegisterForm = () => {
     const navigate = useNavigate()
@@ -16,6 +15,10 @@ export const RegisterForm = () => {
         formState: { errors } } = useForm()
 
     const { register: registerRequest } = useAuth()
+
+    const handleDateChange = (date) => {
+        setStartDate(date)
+    }
     const onSubmit = handleSubmit(async (values) => {
         // Logica de autenticacion
         const user = {
@@ -26,10 +29,7 @@ export const RegisterForm = () => {
         console.log(response)
         // Redireccionar
         if (!response) return;
-        setTimeout(() => {
-            toast.success('Registro exitoso, redirigiendo a login')
-            navigate('/login')
-        }, 2000)
+        navigate('/login')
     })
     return (
         <div className="h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto p-2 md:p-6">
@@ -59,15 +59,18 @@ export const RegisterForm = () => {
                         Fecha de nacimiento
                         <DatePick
                             startDate={startDate}
-                            setStartDate={setStartDate}
+                            setStartDate={handleDateChange}
                         />
                     </label>
                 </div>
                 <div className='flex flex-col w-full mb-4'>
-                    <label className="block text-gray-700 text-sm font-bold" htmlFor="username">
+                    <label
+                        className="block text-gray-700 text-sm font-bold" htmlFor="username">
                         Email
                     </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" name="email" placeholder="Email"
+                    <input
+                        autoComplete="email"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" name="email" placeholder="Email"
                         {...register('email', { required: true })}
                     />
                     {errors.email && <ErrorText text="Email es requerido" />}
@@ -84,7 +87,9 @@ export const RegisterForm = () => {
                     <label className="block text-gray-700 text-sm font-bold" htmlFor="password">
                         Contraseña
                     </label>
-                    <input className="shadow appearance-none border focus:border-red-500 rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************"
+                    <input
+                        autoComplete="new-password"
+                        className="shadow appearance-none border focus:border-red-500 rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************"
                         {...register('password', { required: true })}
                     />
                     {errors.password && <ErrorText text="Contraseña es requerida" />}
@@ -98,7 +103,6 @@ export const RegisterForm = () => {
                     Ya estas registrado/a?
                 </Link>
             </form>
-            <FormFooter />
         </div>
     )
 }
