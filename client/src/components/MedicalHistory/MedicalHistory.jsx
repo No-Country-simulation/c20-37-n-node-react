@@ -1,8 +1,12 @@
 import { Card, Badge, Table } from 'flowbite-react'
-
+import { useUsers } from '../../hooks/useUsersContext'
+import { useAuth } from '../../hooks/useAuthContext'
 
 export const MedicalHistory = () => {
 
+    const { logued } = useAuth()
+    const { medicalHistory, getMedicalHistoryById } = useUsers()
+    console.log(logued)
     const userMedicalInfo = {
         name: "Juan Pérez",
         age: "35",
@@ -29,20 +33,22 @@ export const MedicalHistory = () => {
         if (userMedicalInfo.allergies.other) allergies.push('Otros')
         return allergies.length > 0 ? allergies.join(', ') : 'Ninguna'
     }
-
+    // useEffect(() => {
+    //     getMedicalHistoryById(logued.medicalHistory)
+    // }, [])
     return (
         <Card className="max-w-4xl mx-auto">
             <h2 className="text-2xl font-bold mb-4">Mi Información Médica</h2>
-
+            <button className='bg-black text-white' onClick={() => getMedicalHistoryById(logued.medicalHistory)}>Traer registro</button>
             <Table>
                 <Table.Body className="divide-y">
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Nombre</Table.Cell>
-                        <Table.Cell>{userMedicalInfo.name}</Table.Cell>
+                        <Table.Cell>{logued.firstName} {logued.lastName}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <Table.Cell className="font-medium">Edad</Table.Cell>
-                        <Table.Cell>{userMedicalInfo.age}</Table.Cell>
+                        <Table.Cell className="font-medium">Fecha de Nacimiento</Table.Cell>
+                        <Table.Cell>{new Date(logued.birthdate).toLocaleDateString()}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Género</Table.Cell>
