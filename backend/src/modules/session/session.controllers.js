@@ -38,4 +38,12 @@ const getAll = async (req=request, res=response) => {
     }
 }
 
-export default { userRegister, userLogin, userUpdate, getAll }
+const verificationSessions = async (req=request, res=response) => {
+    try {
+        return res.status(200).json({status:"ok", playload:req.user});
+    } catch (error) {
+        res.status(500).json({ status: "error", msg: "Internal server error" });
+    }
+}
+
+export default { userRegister, userLogin, userUpdate, getAll, verificationSessions }
