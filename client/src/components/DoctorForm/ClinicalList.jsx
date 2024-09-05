@@ -8,6 +8,7 @@ export function ClinicalList() {
     { id: 1, date: "2023-05-15", diagnosis: "Resfriado común", description: "El paciente presentó síntomas de resfriado común. Se recetó descanso y medicamentos de venta libre." },
     { id: 2, date: "2023-07-22", diagnosis: "Esguince de tobillo", description: "El paciente sufrió un esguince leve en el tobillo derecho. Se recomendó el método RICE y se proporcionó una venda de compresión." },
   ])
+  // Aca llamar a la funcion de get medical history segun el ID pasado en un input
 
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)

@@ -2,7 +2,7 @@
 import { createContext, useState } from "react";
 import { useGeneralContext } from "../hooks/useGeneralContext";
 import { getAllUsers, updateUser } from "../api/users"
-import { getMedicalHistory } from "../api/medicalHistory"
+import { getMedicalHistory, updateMedicalHistory } from "../api/medicalHistory"
 import toast from "react-hot-toast";
 
 
@@ -69,6 +69,24 @@ export const UsersProvider = ({ children }) => {
         }
     }
 
+    const updateMedicalHistoryById = async (id, data) => {
+        setLoading(true)
+        try {
+            const update = await updateMedicalHistory(id, data)
+            if (update.status === 400 || update.status === 404) {
+                return toast.error('No se pudo actualizar la historia clínica, verifique que los datos sean correctos')
+            }
+            console.log(update)
+            toast.success('Historia clínica actualizada correctamente')
+        } catch (error) {
+            toast.error('No se pudo actualizar la historia clínica')
+            toast.error(error.response.data.msg)
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
     return (
         <UsersContext.Provider value={{
             users,
@@ -76,6 +94,7 @@ export const UsersProvider = ({ children }) => {
             updateUserById,
             loading,
             getMedicalHistoryById,
+            updateMedicalHistoryById,
             medicalHistory
         }}>
             {children}
