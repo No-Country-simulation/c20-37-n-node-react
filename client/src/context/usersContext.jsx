@@ -50,7 +50,7 @@ export const UsersProvider = ({ children }) => {
     useEffect(() => {
         getUsers()
         console.log('render desde el context')
-    }, [users.length])
+    }, [])
 
 
     return (

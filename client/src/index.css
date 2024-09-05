@@ -19,22 +19,8 @@ html .system-ui {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-html .merienda {
-    font-family: 'Merienda', cursive;
-    font-weight: 400;
-}
-
-html .roboto {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-html .system-ui {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
 body {
-    font-family: 'Merienda', cursive;
-    font-weight: 400;
+    font-family: 'Poppins';
 }
 
 h1 {
@@ -64,3 +50,12 @@ p {
     box-shadow: -1px -10px 10px 0px rgba(0,0,0,0.15);
     border-top: 2px rgba(0,0,0,0.15);
 }
+
+.box-shadow{
+    filter: drop-shadow(2px 2px 7px rgba(200, 200, 224, 0.5));
+}
+
+.h-110vh{
+    min-height: 110vh;
+}
+
