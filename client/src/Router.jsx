@@ -36,6 +36,7 @@ export const Router = () => {
                         <Route path='/doc' element={<DoctorLayout />}>
                             <Route path='/doc/profile' element={<ProfilePage />} />
                             <Route path='/doc/clinicalHistory/' element={<ClinicalHistoryPage />} />
+                            <Route path='/doc/medicalHistory/' element={<MedicalHistoryPage />} />
                         </Route>
 
                         {/* Rutas para el usuario */}

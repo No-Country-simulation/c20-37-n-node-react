@@ -9,5 +9,6 @@ router.post('/register',passportCall('register'),sessionController.userRegister)
 router.post("/login",passportCall('login'),sessionController.userLogin);
 router.put('/update/:id',passportCall('current'),authorization(["admin","doctor","user"]),sessionController.userUpdate);
 router.get ("/usersAll",passportCall("current"),authorization(["admin","doctor"]),sessionController.getAll);
+router.get ("verify-session", passportCall("current",{session:false}),sessionController.verificationSessions);
 
 export default router;

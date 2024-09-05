@@ -1,47 +1,44 @@
-import { Card, Badge, Table } from 'flowbite-react'
+import { Card, Table, Label, TextInput } from 'flowbite-react'
 import { useUsers } from '../../hooks/useUsersContext'
 import { useAuth } from '../../hooks/useAuthContext'
+import { useState } from 'react'
 
 export const MedicalHistory = () => {
 
     const { logued } = useAuth()
     const { medicalHistory, getMedicalHistoryById } = useUsers()
-    console.log(logued)
-    const userMedicalInfo = {
-        name: "Juan Pérez",
-        age: "35",
-        gender: "Masculino",
-        bloodType: "A+",
-        allergies: {
-            food: true,
-            medication: false,
-            environmental: true,
-            other: false
-        },
-        allergyDetails: "Alergia a los maníes y al polen",
-        medicalHistory: "Apendicectomía en 2010",
-        currentSymptoms: "Dolores de cabeza ocasionales",
-        medications: "Aspirina según sea necesario",
-        vaccines: "COVID-19 (2021), Vacuna contra la gripe (2022)",
-        diagnosis: "Alergias estacionales"
-    };
-    const getAllergies = () => {
-        const allergies = []
-        if (userMedicalInfo.allergies.food) allergies.push('Alimentos')
-        if (userMedicalInfo.allergies.medication) allergies.push('Medicamentos')
-        if (userMedicalInfo.allergies.environmental) allergies.push('Ambientales')
-        if (userMedicalInfo.allergies.other) allergies.push('Otros')
-        return allergies.length > 0 ? allergies.join(', ') : 'Ninguna'
-    }
+    const [idClient, setIdClient] = useState('')
+
     // useEffect(() => {
     //     getMedicalHistoryById(logued.medicalHistory)
     // }, [])
+
     return (
-        <Card className="max-w-4xl mx-auto">
+        <Card className="max-w-6xl mx-auto roboto">
             <h2 className="text-2xl font-bold mb-4">Mi Información Médica</h2>
-            <button className='bg-black text-white' onClick={() => getMedicalHistoryById(logued.medicalHistory)}>Traer registro</button>
+            {logued.role === 'doctor' &&
+                <div>
+                    <Label htmlFor="idClient" value="Id historia clinica" />
+                    <TextInput
+                        id="idClient"
+                        name="idClient"
+                        value={idClient}
+                        onChange={(e) => setIdClient(e.target.value)}
+                        required
+                    />
+                    <button className='bg-black text-white w-full' onClick={() => getMedicalHistoryById(idClient)}>Obtener Datos o Refrescar</button>
+                </div>
+            }
             <Table>
                 <Table.Body className="divide-y">
+                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell className="font-medium">Creación de ficha</Table.Cell>
+                        <Table.Cell>{medicalHistory.createdAt ? new Date(medicalHistory.createdAt).toLocaleString() : 'No hay datos cargados'}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell className="font-medium">Última actualización</Table.Cell>
+                        <Table.Cell>{medicalHistory.updatedAt ? new Date(medicalHistory.updatedAt).toLocaleString() : 'No hay datos cargados'}</Table.Cell>
+                    </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Nombre</Table.Cell>
                         <Table.Cell>{logued.firstName} {logued.lastName}</Table.Cell>
@@ -52,45 +49,106 @@ export const MedicalHistory = () => {
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Género</Table.Cell>
-                        <Table.Cell>{userMedicalInfo.gender}</Table.Cell>
+                        <Table.Cell>{medicalHistory.gender ? medicalHistory.gender : 'Sin definir aún'}</Table.Cell>
                     </Table.Row>
-                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                    {/* <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Tipo de Sangre</Table.Cell>
                         <Table.Cell>{userMedicalInfo.bloodType}</Table.Cell>
-                    </Table.Row>
+                    </Table.Row> */}
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Alergias</Table.Cell>
-                        <Table.Cell>
-                            <p>{getAllergies()}</p>
-                            {userMedicalInfo.allergyDetails && (
-                                <p className="mt-2 text-sm text-gray-600">{userMedicalInfo.allergyDetails}</p>
-                            )}
+                        <Table.Cell className='flex flex-wrap gap-1'>
+                            {medicalHistory?.allergies?.length ? medicalHistory.allergies.map((allergy, index) => (
+                                <div key={index} className='flex '>
+                                    <p color={'white'} size="lg" className="text-sm mr-2 px-1 border-gray-300 border">{allergy}</p>
+                                    {/* <button className='bg-red-500 px-1 text-white rounded-sm' onClick={() => console.log(allergy, index)} >x</button> */}
+                                </div>
+                            ))
+                                : <p className='text-sm'>No hay registros de alergias disponibles.</p>}
                         </Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Historial Médico</Table.Cell>
-                        <Table.Cell>{userMedicalInfo.medicalHistory || 'No se registran condiciones médicas pasadas.'}</Table.Cell>
+                        <Table.Cell className='flex flex-wrap gap-1'>
+                            {medicalHistory?.medicalHistory?.length ? (
+                                medicalHistory.medicalHistory.map((history, index) => (
+                                    <div key={index} className='flex'>
+                                        <p className="text-sm mr-2 px-1 border-gray-300 border">{history}</p>
+                                        {/* <button className='bg-red-500 px-1 text-white rounded-sm' onClick={() => console.log(medication, index)} >x</button> */}
+                                    </div>
+                                ))
+                            ) : (
+                                <p className='text-sm'>No hay registro de historial medico.</p>
+                            )}
+                        </Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <Table.Cell className="font-medium">Síntomas Actuales</Table.Cell>
-                        <Table.Cell>{userMedicalInfo.currentSymptoms || 'No se reportan síntomas actuales.'}</Table.Cell>
+                        <Table.Cell className="font-medium">Consultas</Table.Cell>
+                        <Table.Cell className='flex flex-wrap gap-1'>
+                            {medicalHistory?.consultations?.length ? (
+                                medicalHistory.consultations.map((consult, index) => (
+                                    <div key={index} className='flex'>
+                                        <p className="flex align-middle items-center text-sm mr-2 px-1 border-gray-300 border">{consult}</p>
+                                        {/* <button className='bg-red-500 px-1 text-white rounded-sm' onClick={() => console.log(medication, index)} >x</button> */}
+                                    </div>
+                                ))
+                            ) : (
+                                <p className='text-sm'>No hay registros de consultas.</p>
+                            )}
+                        </Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Medicamentos Actuales</Table.Cell>
-                        <Table.Cell>{userMedicalInfo.medications || 'No se registran medicamentos actuales.'}</Table.Cell>
+                        <Table.Cell className='flex flex-wrap gap-1'>
+                            {medicalHistory?.medications?.length ? (
+                                medicalHistory.medications.map((medication, index) => (
+                                    <div key={index} className='flex'>
+                                        <p className="text-sm mr-2 px-1 border-gray-300 border">{medication}</p>
+                                        {/* <button className='bg-red-500 px-1 text-white rounded-sm' onClick={() => console.log(medication, index)} >x</button> */}
+                                    </div>
+                                ))
+                            ) : (
+                                <p className='text-sm'>No hay registros de medicaciones.</p>
+                            )}
+                        </Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Historial de Vacunación</Table.Cell>
-                        <Table.Cell>{userMedicalInfo.vaccines || 'No hay registros de vacunación disponibles.'}</Table.Cell>
+                        <Table.Cell className='flex flex-wrap gap-1'>
+                            {medicalHistory?.vaccines?.length ? medicalHistory.vaccines.map((vaccines, index) => (
+                                <div key={index} className='flex'>
+                                    <p color={'white'} size="lg" className="text-sm mr-2 px-1 border-gray-300 border">{vaccines}</p>
+                                    {/* <button className='bg-red-500 px-1 text-white rounded-sm' onClick={() => console.log(allergy, index)} >x</button> */}
+                                </div>
+
+                            ))
+                                : <p className='text-sm'>No hay registros de vacunas.</p>}
+                        </Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Diagnóstico Actual</Table.Cell>
-                        <Table.Cell>
-                            {userMedicalInfo.diagnosis ? (
-                                <Badge color="warning" size="lg">{userMedicalInfo.diagnosis}</Badge>
-                            ) : (
-                                'No hay diagnóstico actual.'
-                            )}
+                        <Table.Cell className='flex flex-wrap gap-1'>
+                            {medicalHistory?.diagnoses?.length ? medicalHistory.vaccines.map((diagnoses, index) => (
+                                <div key={index} className='flex'>
+                                    <p color={'white'} size="lg" className="text-sm mr-2 px-1 border-gray-300 border">{diagnoses}</p>
+                                    {/* <button className='bg-red-500 px-1 text-white rounded-sm' onClick={() => console.log(allergy, index)} >x</button> */}
+                                </div>
+
+                            ))
+                                : <p className='text-sm'>No hay registros de diagnosticos.</p>}
+                        </Table.Cell>
+                    </Table.Row>
+                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell className="font-medium">Documentos adjuntos</Table.Cell>
+                        <Table.Cell className='flex flex-wrap gap-1'>
+                            {medicalHistory?.attachedDocuments?.length ? medicalHistory.attachedDocuments.map((document, index) => (
+                                <div key={index} className='flex'>
+                                    <p color={'white'} size="lg" className="text-sm mr-2 px-1 border-gray-300 border">{document}</p>
+                                    {/* <button className='bg-red-500 px-1 text-white rounded-sm' onClick={() => console.log(allergy, index)} >x</button> */}
+                                </div>
+
+                            ))
+                                : <p className='text-sm'>No hay registro de documentos.</p>}
                         </Table.Cell>
                     </Table.Row>
                 </Table.Body>

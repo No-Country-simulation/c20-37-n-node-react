@@ -45,6 +45,9 @@ export const Profile = () => {
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Editar Perfil
             </h5>
+            <div className="mb-2 block">
+                <Label value={'Rol: ' + logued.role} />
+            </div>
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 <div>
                     <div className="mb-2 block">
@@ -107,12 +110,6 @@ export const Profile = () => {
                         startDate={profile.birthdate}
                         setStartDate={handleDateChange}
                     />
-                    {/* <Datepicker
-                        id="birthdate"
-                        name="birthdate"
-                        onSelectedDateChanged={handleDateChange}
-                        required
-                    /> */}
                 </div>
                 <Button className='bg-primary text-white hover:bg-blue-900 duration-200' color='primary' type="submit">
                     Actualizar Perfil
