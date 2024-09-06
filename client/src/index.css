@@ -28,12 +28,6 @@ p {
     font-size: 18px;
 }
 
-
-.authForm {
-    background-image: url('/authBack.jpg');
-    background-size: auto;
-}
-
 .shadow-top {
     box-shadow: -1px -10px 10px 0px rgba(0, 0, 0, 0.15);
     border-top: 2px rgba(0, 0, 0, 0.15);

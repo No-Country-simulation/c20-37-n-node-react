@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom"
 import { Header } from "../Header/Header"
 import { Footer } from "../Footer/Footer"
-import { useAuth } from "../../hooks/useAuthContext"
 import { LoadingPage } from "../Loading/LoadingPage"
+import { useGeneralContext } from "../../hooks/useGeneralContext"
 
 export const Layout = () => {
 
-    const { loading } = useAuth()
+    const { loading } = useGeneralContext()
     if (loading) return <LoadingPage />
     return (
 

@@ -7,15 +7,13 @@ import { Router } from "./Router"
 function App() {
 
   return (
-    <>
-      <GeneralProvider>
-        <AuthProvider>
-          <UsersProvider>
-            <Router />
-          </UsersProvider>
-        </AuthProvider>
-      </GeneralProvider>
-    </>
+    <GeneralProvider>
+      <AuthProvider>
+        <UsersProvider>
+          <Router />
+        </UsersProvider>
+      </AuthProvider>
+    </GeneralProvider>
   )
 }
 

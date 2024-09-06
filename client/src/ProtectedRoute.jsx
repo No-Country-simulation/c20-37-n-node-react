@@ -6,8 +6,8 @@ import { useEffect } from 'react';
 
 export const ProtectedRoute = () => {
 
-    const { isAuthenticated } = useAuth();
     const { loading } = useGeneralContext()
+    const { isAuthenticated } = useAuth();
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -17,8 +17,6 @@ export const ProtectedRoute = () => {
     useEffect(() => {
         if (loading) return <LoadingPage />
     }, [loading])
-    // if (!isAuthenticated && !loading) return navigate('/login')
-
 
     return <Outlet />
 

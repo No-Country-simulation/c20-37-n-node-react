@@ -8,6 +8,7 @@ import { Navigate } from 'react-router-dom';
 export const Authentication = () => {
 
   const { isAuthenticated } = useAuth();
+  console.log(isAuthenticated)
   useEffect(() => {
     if (isAuthenticated) return <Navigate to='/dashboard' />
   }, [isAuthenticated])
