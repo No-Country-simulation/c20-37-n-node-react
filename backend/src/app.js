@@ -26,7 +26,7 @@ app.use(session(
     }
 ));
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: envs.FRONTEND_URL,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
