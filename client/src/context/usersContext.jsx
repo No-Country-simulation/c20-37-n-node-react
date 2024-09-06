@@ -56,11 +56,10 @@ export const UsersProvider = ({ children }) => {
             if (!response) {
                 return toast.error('No se pudo obtener la historia clínica')
             }
-            console.log(response)
             setMedicalHistory(response.data.playload)
             return response.data.playload
         } catch (error) {
-            toast.error('No se pudo obtener la historia clínica')
+            toast.error('No se pudo obtener la historia clínica, pruebe refrescando la pagina, en caso de persisitir contactar al administrador')
             toast.error(error.response.data.msg)
             console.log(error)
         }
@@ -68,6 +67,10 @@ export const UsersProvider = ({ children }) => {
             setLoading(false)
         }
     }
+    // useEffect(() => {
+    //     getUsers()
+    //     console.log('render desde el context')
+    // }, [])
 
     const updateMedicalHistoryById = async (id, data) => {
         setLoading(true)

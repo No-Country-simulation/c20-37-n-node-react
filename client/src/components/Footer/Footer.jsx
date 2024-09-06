@@ -45,13 +45,13 @@ export const Footer = () => {
                         <h2 className="mb-6 text-sm font-semibold text-secondary uppercase">Contacto</h2>
                         <ul className="text-gray-500 font-medium">
                             <li className="mb-4">
-                                <p>Calle Ejemplo, 123, Ciudad, País</p>
+                                <a>Calle Ejemplo, 123, Ciudad, País</a>
                             </li>
                             <li className="mb-4">
-                                <p>(123) 456-7890</p>
+                                <a>(123) 456-7890</a>
                             </li>
                             <li>
-                                <p>contacto@saludnet.com</p>
+                                <a>contacto@saludnet.com</a>
                             </li>
                         </ul>
                     </div>
