@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await loginRequest(user)
             Cookies.set("access_token", data.token, { expires: 3 })
+            console.log(data)
             if (!data.playload) return toast.error(['No se pudo iniciar sesión'])
             toast.success('Se ha iniciado sesión')
             setLogued(data.playload)
@@ -52,17 +53,56 @@ export const AuthProvider = ({ children }) => {
     }
 
 
-    const logout = () => {
+    const logout = async () => {
         setLoading(true)
-        // Enviar peticion al backend para que elimine el token
-        Cookies.remove('token')
-        Cookies.remove("access_token")
-        setLogued({})
-        setAuthenticated(false)
-        setLoading(false)
-        toast.success('Se ha cerrado la sesión')
+        try {
+            // const response = await logoutRequest()
+            // console.log(response)
+            // Enviar peticion al backend para que elimine el token
+            Cookies.remove('token')
+            Cookies.remove("access_token")
+            setLogued({})
+            setAuthenticated(false)
+            setLoading(false)
+            toast.success('Se ha cerrado la sesión')
+        } catch (error) {
+            console.error("Error al cerrar sesión", error)
+        }
+        finally {
+            setLoading(false)
+        }
+
     }
 
+    // const verifySession = async () => {
+    //     try {
+    //         const response = await verifyTokenRequest()
+    //         if (response.status === 401) {
+    //             console.log("No hay sesión activa");
+    //             setAuthenticated(false)
+    //             setLogued({})
+    //             return
+    //         }
+    //         if (response.status === 200) {
+    //             // Actualiza el estado de la app con los datos del usuario
+    //             setLogued(response.data.playload)
+    //             setAuthenticated(true)
+    //         }
+    //     } catch (error) {
+    //         console.error("Error al verificar la sesión");
+    //         Cookies.remove('token')
+    //         Cookies.remove("access_token")
+    //         setAuthenticated(false)
+    //         setLogued({})
+    //     }
+    //     finally {
+    //         setLoading(false)
+    //     }
+    // };
+    // useEffect(() => {
+
+    //     verifySession()
+    // }, [])
     return (
         <AuthContext.Provider value={{
             isAuthenticated: authenticated,

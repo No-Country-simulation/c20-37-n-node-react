@@ -3,7 +3,6 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css';
 
 export const DatePick = ({ startDate, setStartDate }) => {
-    console.log(startDate)
     return (
         <div>
             <DatePicker

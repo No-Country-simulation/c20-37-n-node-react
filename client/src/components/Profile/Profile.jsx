@@ -31,7 +31,6 @@ export const Profile = () => {
             ...prevAddress,
             [name]: value
         }))
-        console.log(address)
     }
 
     const handleDateChange = (date) => {
@@ -51,11 +50,9 @@ export const Profile = () => {
             ...profile
         })
         )
-        console.log(profile)
     }
 
     useEffect(() => {
-        console.log(logued)
     }, [logued])
 
     return (
@@ -150,13 +147,15 @@ export const Profile = () => {
                     Actualizar Perfil
                 </Button>
             </form>
-            <div className="mt-2">
-                <Link color='primary' to={"/user/medicalHistory"}>
-                    <Button className="w-full hover:bg-green-900 duration-200">
-                        Ver Historial Médico
-                    </Button>
-                </Link>
-            </div>
+            {logued.role === 'user' &&
+                <div className="mt-2">
+                    <Link color='primary' to={"/user/medicalHistory"}>
+                        <Button className="w-full hover:bg-green-900 duration-200">
+                            Ver Historial Médico
+                        </Button>
+                    </Link>
+                </div>
+            }
         </Card>
     )
 }
