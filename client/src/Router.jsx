@@ -44,12 +44,13 @@ export const Router = () => {
                             <Route path='/user/profile' element={<ProfilePage />} />
                             <Route path='/user/medicalHistory/' element={<MedicalHistoryPage />} />
                         </Route>
+                        <Route path='/profile' element={<ProfilePage />} />
                     </Route>
-                    <Route path='/profile' element={<ProfilePage />} />
                     <Route path='/*' element={<Error404 />} />
                 </Route>
             </Routes>
-            <Toaster />
+            <Toaster
+            />
         </BrowserRouter>
     )
 }

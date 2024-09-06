@@ -29,6 +29,7 @@ export const MedicalHistory = () => {
                     <button className='bg-black text-white w-full' onClick={() => getMedicalHistoryById(idClient)}>Obtener Datos o Refrescar</button>
                 </div>
             }
+            <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.medicalHistory)}>Obtener Datos o Refrescar</button>
             <Table>
                 <Table.Body className="divide-y">
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
