@@ -67,6 +67,10 @@ export const UsersProvider = ({ children }) => {
             setLoading(false)
         }
     }
+    // useEffect(() => {
+    //     getUsers()
+    //     console.log('render desde el context')
+    // }, [])
 
     const updateMedicalHistoryById = async (id, data) => {
         setLoading(true)
