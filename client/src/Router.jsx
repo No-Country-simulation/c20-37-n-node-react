@@ -28,20 +28,20 @@ export const Router = () => {
 
                         {/* Rutas para el administrador */}
                         <Route path='/admin' element={<AdminLayout />}>
-                            <Route path='/admin/profile' element={<ProfilePage />} />
+                            {/* <Route path='/admin/profile' element={<ProfilePage />} /> */}
                             <Route path='/admin/userList/' element={<UserListPage />} />
                         </Route>
 
                         {/* Rutas para el doctor */}
                         <Route path='/doc' element={<DoctorLayout />}>
-                            <Route path='/doc/profile' element={<ProfilePage />} />
+                            {/* <Route path='/doc/profile' element={<ProfilePage />} /> */}
                             <Route path='/doc/clinicalHistory/' element={<ClinicalHistoryPage />} />
                             <Route path='/doc/medicalHistory/' element={<MedicalHistoryPage />} />
                         </Route>
 
                         {/* Rutas para el usuario */}
                         <Route path='/user' element={<UserLayout />}>
-                            <Route path='/user/profile' element={<ProfilePage />} />
+                            {/* <Route path='/user/profile' element={<ProfilePage />} /> */}
                             <Route path='/user/medicalHistory/' element={<MedicalHistoryPage />} />
                         </Route>
                         <Route path='/profile' element={<ProfilePage />} />

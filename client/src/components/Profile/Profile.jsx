@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom'
 import { HiMail, HiPhone } from "react-icons/hi";
 import { AddressForm } from './AddressForm'
 
-export const Profile = () => {
+export const Profile = ({ user }) => {
     const { logued, setLogued } = useGeneralContext()
     const { updateUserById } = useUsers()
-    const [profile, setProfile] = useState(logued)
+    const [profile, setProfile] = useState(user)
     const [showModal, setShowModal] = useState(false);
-    const [address, setAddress] = useState(logued.address)
+    const [address, setAddress] = useState(user?.address)
 
     const openModal = () => setShowModal(true);
     const closeModal = () => setShowModal(false);
@@ -44,7 +44,7 @@ export const Profile = () => {
         e.preventDefault()
         profile.address = address
         // Here you would typically send the data to your backend
-        await updateUserById(logued._id, profile)
+        await updateUserById(user?._id, profile)
         setLogued(prevLogued => ({
             ...prevLogued,
             ...profile
@@ -53,7 +53,7 @@ export const Profile = () => {
     }
 
     useEffect(() => {
-    }, [logued])
+    }, [user])
 
     return (
         <Card className="max-w-4xl mx-auto roboto">
@@ -61,7 +61,7 @@ export const Profile = () => {
                 Editar Perfil
             </h5>
             <div className="mb-2 block">
-                <Label value={'Rol: ' + logued.role} />
+                <Label value={'Rol: ' + user?.role} />
             </div>
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 <div>
@@ -123,7 +123,7 @@ export const Profile = () => {
                     <div className="mb-2 block">
                         <Label htmlFor="gender" value="Género" />
                     </div>
-                    <Select onChange={handleChange} value={logued.gender} id="gender" name='gender' required>
+                    <Select onChange={handleChange} value={user?.gender} id="gender" name='gender' required>
                         <option value={''}>-- Seleccionar género --</option>
                         <option value={'Female'}>Femenino</option>
                         <option value={'Male'}>Masculino</option>
