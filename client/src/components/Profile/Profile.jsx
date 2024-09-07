@@ -1,18 +1,19 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
 import { Card, Label, TextInput, Button, Select } from 'flowbite-react'
-import { useUsers } from '../../hooks/useUsersContext'
 import { useGeneralContext } from '../../hooks/useGeneralContext'
+import { useUsers } from '../../hooks/useUsersContext'
 import { DatePick } from '../DatePicker/DatePicker'
 import { Link } from 'react-router-dom'
 import { HiMail, HiPhone } from "react-icons/hi";
 import { AddressForm } from './AddressForm'
 
 export const Profile = ({ user }) => {
-    const { logued, setLogued } = useGeneralContext()
+    const { setLogued } = useGeneralContext()
     const { updateUserById } = useUsers()
     const [profile, setProfile] = useState(user)
     const [showModal, setShowModal] = useState(false);
-    const [address, setAddress] = useState(user?.address)
+    const [address, setAddress] = useState(profile?.address)
 
     const openModal = () => setShowModal(true);
     const closeModal = () => setShowModal(false);
@@ -43,17 +44,12 @@ export const Profile = ({ user }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         profile.address = address
-        // Here you would typically send the data to your backend
-        await updateUserById(user?._id, profile)
-        setLogued(prevLogued => ({
-            ...prevLogued,
-            ...profile
-        })
-        )
+        await updateUserById(profile?._id, profile)
+       setLogued(profile)
     }
-
+    
     useEffect(() => {
-    }, [user])
+    }, [profile])
 
     return (
         <Card className="max-w-4xl mx-auto roboto">
@@ -61,7 +57,7 @@ export const Profile = ({ user }) => {
                 Editar Perfil
             </h5>
             <div className="mb-2 block">
-                <Label value={'Rol: ' + user?.role} />
+                <Label value={'Rol: ' + profile?.role} />
             </div>
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 <div>
@@ -123,7 +119,7 @@ export const Profile = ({ user }) => {
                     <div className="mb-2 block">
                         <Label htmlFor="gender" value="Género" />
                     </div>
-                    <Select onChange={handleChange} value={user?.gender} id="gender" name='gender' required>
+                    <Select onChange={handleChange} value={profile?.gender} id="gender" name='gender' required>
                         <option value={''}>-- Seleccionar género --</option>
                         <option value={'Female'}>Femenino</option>
                         <option value={'Male'}>Masculino</option>
@@ -147,7 +143,7 @@ export const Profile = ({ user }) => {
                     Actualizar Perfil
                 </Button>
             </form>
-            {logued.role === 'user' &&
+            {profile.role === 'user' &&
                 <div className="mt-2">
                     <Link color='primary' to={"/user/medicalHistory"}>
                         <Button className="w-full hover:bg-green-900 duration-200">

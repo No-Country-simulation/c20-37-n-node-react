@@ -15,10 +15,10 @@ export const MedicalHistory = () => {
 
     return (
         <Card className="max-w-6xl mx-auto roboto">
-            <h2 className="text-2xl font-bold mb-4">Mi Información Médica</h2>
-            {logued.role === 'doctor' &&
+            <h2 className="text-2xl font-bold mb-4">Historial Médico</h2>
+            {logued?.role === 'doctor' &&
                 <div>
-                    <Label htmlFor="idClient" value="Id historia clinica" />
+                    <Label htmlFor="idClient" value="Id de la historia clinica" />
                     <TextInput
                         id="idClient"
                         name="idClient"
@@ -26,31 +26,35 @@ export const MedicalHistory = () => {
                         onChange={(e) => setIdClient(e.target.value)}
                         required
                     />
-                    <button className='bg-black text-white w-full' onClick={() => getMedicalHistoryById(idClient)}>Obtener Datos o Refrescar</button>
                 </div>
             }
-            <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.medicalHistory)}>Obtener Datos o Refrescar</button>
+            {logued?.role === 'user' ?
+            <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.medicalHistory)}>Obtener Datos o Refrescar</button> :
+            <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(idClient)}>Obtener Datos o Refrescar</button>
+        }
+
+
             <Table>
                 <Table.Body className="divide-y">
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Creación de ficha</Table.Cell>
-                        <Table.Cell>{medicalHistory.createdAt ? new Date(medicalHistory.createdAt).toLocaleString() : 'No hay datos cargados'}</Table.Cell>
+                        <Table.Cell>{medicalHistory?.createdAt ? new Date(medicalHistory.createdAt).toLocaleString() : 'No hay datos cargados'}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Última actualización</Table.Cell>
-                        <Table.Cell>{medicalHistory.updatedAt ? new Date(medicalHistory.updatedAt).toLocaleString() : 'No hay datos cargados'}</Table.Cell>
+                        <Table.Cell>{medicalHistory?.updatedAt ? new Date(medicalHistory.updatedAt).toLocaleString() : 'No hay datos cargados'}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Nombre</Table.Cell>
-                        <Table.Cell>{logued.firstName} {logued.lastName}</Table.Cell>
+                        <Table.Cell>{logued?.firstName} {logued?.lastName}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Fecha de Nacimiento</Table.Cell>
-                        <Table.Cell>{new Date(logued.birthdate).toLocaleDateString()}</Table.Cell>
+                        <Table.Cell>{new Date(logued?.birthdate).toLocaleDateString()}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Género</Table.Cell>
-                        <Table.Cell>{medicalHistory.gender ? medicalHistory.gender : 'Sin definir aún'}</Table.Cell>
+                        <Table.Cell>{medicalHistory?.gender ? medicalHistory.gender : 'Sin definir aún'}</Table.Cell>
                     </Table.Row>
                     {/* <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Tipo de Sangre</Table.Cell>
