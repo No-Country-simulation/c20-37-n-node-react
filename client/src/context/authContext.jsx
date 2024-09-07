@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true)
         try {
             const { data } = await loginRequest(user)
+            console.log(data)
             Cookies.set("access_token", data.token, { expires: 3 })
             if (!data.playload) return toast.error(['No se pudo iniciar sesión'])
             toast.success('Se ha iniciado sesión')
@@ -83,12 +84,23 @@ export const AuthProvider = ({ children }) => {
     }, [errors])
 
     const verifySession = async () => {
+        const cookie = Cookies.get()
+        console.log(cookie)
+        // Si el usuario no existe y no se generá un token, no lo dejamos ingresar a la página.
+        // utilizar cookie.access_token
+        if (!cookie.access_token) {
+            setAuthenticated(false)
+            setLoading(false)
+            return;
+        }
         try {
+
             const response = await verifyTokenRequest()
             if (response.status === 401) {
                 console.log("No hay sesión activa");
                 setAuthenticated(false)
-                setLogued({})            }
+                setLogued({})
+            }
             if (response.status === 200) {
                 // Actualiza el estado de la app con los datos del usuario
                 console.log("Sesión activa");

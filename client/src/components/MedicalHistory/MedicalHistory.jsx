@@ -29,7 +29,7 @@ export const MedicalHistory = () => {
                 </div>
             }
             {logued?.role === 'user' ?
-            <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.medicalHistory)}>Obtener Datos o Refrescar</button> :
+            <button className='bg-red-200 py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.medicalHistory)}>Obtener Datos o Refrescar</button> :
             <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(idClient)}>Obtener Datos o Refrescar</button>
         }
 
