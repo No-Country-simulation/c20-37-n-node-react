@@ -1,6 +1,7 @@
 import { request, response } from "express";
 import {createToken} from "../../utils/jwt.js";
 import userService from "./session.services.js";
+import { cookieExtractor } from "../../utils/cookieExtractor.js";
 
 const userRegister = async (req=request, res=response) => {
     try {
@@ -46,4 +47,23 @@ const verificationSessions = async (req=request, res=response) => {
     }
 }
 
-export default { userRegister, userLogin, userUpdate, getAll, verificationSessions }
+const logout = (req, res, next) => {
+    try {
+        cookieExtractor(req);
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: false, 
+            path: '/' 
+        });
+        req.session.destroy((err) => {
+            if (err) {
+                return res.status(500).send('Error destroying session');
+            }
+            res.status(200).send('Session closed and cookies deleted');
+        });
+    } catch (error) {
+        res.status(500).json({ status: "error", msg: "Internal server error" });
+    }
+};
+
+export default { userRegister, userLogin, userUpdate, getAll, verificationSessions, logout }
