@@ -21,8 +21,8 @@ export const UsersProvider = ({ children }) => {
                 return toast.error('No se pudo obtener los usuarios')
             }
             setUsers(response.data.playload)
-
         } catch (error) {
+            console.log(error)  
             toast.error('No se pudo obtener los usuarios')
             toast.error(error.response.data.msg)
         }
@@ -54,14 +54,15 @@ export const UsersProvider = ({ children }) => {
             setLoading(true)
             const response = await getMedicalHistory(id)
             if (!response) {
+                setMedicalHistory([])
                 return toast.error('No se pudo obtener la historia clínica')
             }
+            toast.success('Historia clínica obtenida correctamente')
             setMedicalHistory(response.data.playload)
             return response.data.playload
         } catch (error) {
             toast.error('No se pudo obtener la historia clínica, pruebe refrescando la pagina, en caso de persisitir contactar al administrador')
-            toast.error(error.response.data.msg)
-            console.log(error)
+            setMedicalHistory([])
         }
         finally {
             setLoading(false)
@@ -79,11 +80,9 @@ export const UsersProvider = ({ children }) => {
             if (update.status === 400 || update.status === 404) {
                 return toast.error('No se pudo actualizar la historia clínica, verifique que los datos sean correctos')
             }
-            console.log(update)
             toast.success('Historia clínica actualizada correctamente')
         } catch (error) {
             toast.error('No se pudo actualizar la historia clínica')
-            toast.error(error.response.data.msg)
         }
         finally {
             setLoading(false)
@@ -93,6 +92,7 @@ export const UsersProvider = ({ children }) => {
     return (
         <UsersContext.Provider value={{
             users,
+            setUsers,
             getUsers,
             updateUserById,
             loading,

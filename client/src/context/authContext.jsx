@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
-import { registerRequest, loginRequest } from '../api/auth'
+import { createContext, useState, useEffect } from "react";
+import { useGeneralContext } from "../hooks/useGeneralContext";
+import { registerRequest, loginRequest, verifyTokenRequest } from '../api/auth'
 import Cookies from "js-cookie";
 import toast from 'react-hot-toast'
-import { useGeneralContext } from "../hooks/useGeneralContext";
 
 export const AuthContext = createContext();
 
@@ -38,7 +38,6 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await loginRequest(user)
             Cookies.set("access_token", data.token, { expires: 3 })
-            console.log(data)
             if (!data.playload) return toast.error(['No se pudo iniciar sesión'])
             toast.success('Se ha iniciado sesión')
             setLogued(data.playload)
@@ -46,7 +45,7 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             setErrors('Credenciales incorrectas')
             toast.error('No se pudo iniciar sesión')
-            toast.error(error.data.msg)
+            toast.error(error.response.data.msg)
         } finally {
             setLoading(false);
         }
@@ -63,7 +62,6 @@ export const AuthProvider = ({ children }) => {
             Cookies.remove("access_token")
             setLogued({})
             setAuthenticated(false)
-            setLoading(false)
             toast.success('Se ha cerrado la sesión')
         } catch (error) {
             console.error("Error al cerrar sesión", error)
@@ -74,35 +72,45 @@ export const AuthProvider = ({ children }) => {
 
     }
 
-    // const verifySession = async () => {
-    //     try {
-    //         const response = await verifyTokenRequest()
-    //         if (response.status === 401) {
-    //             console.log("No hay sesión activa");
-    //             setAuthenticated(false)
-    //             setLogued({})
-    //             return
-    //         }
-    //         if (response.status === 200) {
-    //             // Actualiza el estado de la app con los datos del usuario
-    //             setLogued(response.data.playload)
-    //             setAuthenticated(true)
-    //         }
-    //     } catch (error) {
-    //         console.error("Error al verificar la sesión");
-    //         Cookies.remove('token')
-    //         Cookies.remove("access_token")
-    //         setAuthenticated(false)
-    //         setLogued({})
-    //     }
-    //     finally {
-    //         setLoading(false)
-    //     }
-    // };
-    // useEffect(() => {
+    // Elimina los errores del formulario luego de 5 segundos.
+    useEffect(() => {
+        if (errors.length > 0) {
+            const timer = setTimeout(() => {
+                setErrors([])
+            }, 5000);
+            return () => clearTimeout(timer)
+        }
+    }, [errors])
 
-    //     verifySession()
-    // }, [])
+    const verifySession = async () => {
+        try {
+            const response = await verifyTokenRequest()
+            if (response.status === 401) {
+                console.log("No hay sesión activa");
+                setAuthenticated(false)
+                setLogued({})            }
+            if (response.status === 200) {
+                // Actualiza el estado de la app con los datos del usuario
+                console.log("Sesión activa");
+                setLogued(response.data.playload)
+                setAuthenticated(true)
+            }
+        } catch (error) {
+            setAuthenticated(false)
+            setLogued({})
+        }
+        finally {
+            setLoading(false)
+        }
+    };
+    useEffect(() => {
+
+        verifySession()
+
+        return () => {
+            console.log("Cleanup AuthContext")
+        }
+    }, [])
     return (
         <AuthContext.Provider value={{
             isAuthenticated: authenticated,

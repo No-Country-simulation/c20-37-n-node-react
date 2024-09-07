@@ -14,7 +14,6 @@ export const LoginForm = () => {
     const onSubmit = handleSubmit(async (values) => {
         // Logica de autenticacion
         await LoginRequest(values)
-        console.log('ingresando..')
         // Redireccionar
         navigate('/dashboard')
     })

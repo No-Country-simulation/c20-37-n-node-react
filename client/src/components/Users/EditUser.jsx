@@ -1,21 +1,15 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
 import { Modal, Button, Label, TextInput, Select } from 'flowbite-react';
 
-export const EditUser = ({ show, onClose, onSave, user }) => {
-    const [editedUser, setEditedUser] = useState(user);
-    useEffect(() => {
-        setEditedUser(user);
-    }, [user]);
-
+export const EditUser = ({ show, onClose, onSave, selectedUser, setSelectedUser }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setEditedUser(prevUser => ({ ...prevUser, [name]: value }));
+        setSelectedUser(prevUser => ({ ...prevUser, [name]: value }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(editedUser);
+        onSave(selectedUser);
     };
     return (
         <Modal className='mx-auto' size="6xl" show={show} onClose={onClose}>
@@ -27,7 +21,7 @@ export const EditUser = ({ show, onClose, onSave, user }) => {
                         <TextInput
                             id="firstName"
                             name="firstName"
-                            value={editedUser.firstName}
+                            value={selectedUser.firstName}
                             onChange={handleChange}
                             required
                         />
@@ -37,7 +31,7 @@ export const EditUser = ({ show, onClose, onSave, user }) => {
                         <TextInput
                             id="lastName"
                             name="lastName"
-                            value={editedUser.lastName}
+                            value={selectedUser.lastName}
                             onChange={handleChange}
                             required
                         />
@@ -48,7 +42,7 @@ export const EditUser = ({ show, onClose, onSave, user }) => {
                             id="email"
                             name="email"
                             type="email"
-                            value={editedUser.email}
+                            value={selectedUser.email}
                             onChange={handleChange}
                             required
                         />
@@ -58,13 +52,13 @@ export const EditUser = ({ show, onClose, onSave, user }) => {
                         <Select
                             id="role"
                             name="role"
-                            value={editedUser.role}
+                            value={selectedUser.role}
                             onChange={handleChange}
                             required
                         >
-                            <option value="Admin">Admin</option>
-                            <option value="Doctor">Medico</option>
-                            <option value="User">Paciente</option>
+                            <option value="admin">Admin</option>
+                            <option value="doctor">Medico</option>
+                            <option value="user">Paciente</option>
                         </Select>
                     </div>
                 </form>
