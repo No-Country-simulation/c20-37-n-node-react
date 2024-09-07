@@ -61,6 +61,7 @@ export const UsersProvider = ({ children }) => {
             setMedicalHistory(response.data.playload)
             return response.data.playload
         } catch (error) {
+            console.log(error)
             toast.error('No se pudo obtener la historia clínica, pruebe refrescando la pagina, en caso de persisitir contactar al administrador')
             setMedicalHistory([])
         }

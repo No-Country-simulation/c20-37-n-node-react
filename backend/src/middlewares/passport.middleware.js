@@ -28,18 +28,17 @@ export const passportCall = (strategy) => {
   return (req, res, next) => {
     passport.authenticate(strategy, (err, user, info) => {
       if (err) {
-        console.log("error", err);
         return next(err);
       }
       if (!user) {
-        console.log("user", user);
         return res.status(401).json({
           status: "error",
           msg: info?.message || "Authentication failed",
         });
       }
-      console.log("user defined", user);
-      req.user = user;
+      const userWithoutPassword = { ...user._doc };
+      delete userWithoutPassword.password;
+      req.user = userWithoutPassword;
       next();
     })(req, res, next);
   };

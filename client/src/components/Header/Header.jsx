@@ -1,8 +1,9 @@
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useGeneralContext } from '../../hooks/useGeneralContext';
 import { useAuth } from '../../hooks/useAuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket, faUserPlus, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { DocNav } from './DocNav';
 import { UserNav } from './UserNav';
 import { AdminNav } from './AdminNav';
@@ -13,18 +14,19 @@ export const Header = () => {
     const isInLogin = location.pathname == '/login';
     const isInRegister = location.pathname == '/register';
 
-    const { logued, logout } = useAuth();
+    const { logued } = useGeneralContext()
+    const { logout } = useAuth();
 
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!isMobileMenuOpen);
-        console.log(isMobileMenuOpen);
     };
     const handleLogout = () => {
         logout();
         navigate('/');
     }
-    const role = logued.role;
+    const role = logued?.role;
+    console.log(logued);
     return (
 
         <header className='font-poppins shadow-lg'>

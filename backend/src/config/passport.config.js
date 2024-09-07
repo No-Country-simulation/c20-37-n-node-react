@@ -6,7 +6,7 @@ import userService from '../modules/session/session.services.js';
 import { createHash, isValidPassword } from '../utils/hashPassword.js';
 import { cookieExtractor } from '../utils/cookieExtractor.js';
 import { verifyToken } from '../utils/jwt.js';
-import  {sendEmail}  from '../utils/sendEmail.js';
+import { sendEmail } from '../utils/sendEmail.js';
 
 
 const LocalStrategy = passportLocal.Strategy;
@@ -16,20 +16,20 @@ const CustomStrategy = passportCustom.Strategy;
 export const initializePassport = () => {
     passport.use("register", new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
         try {
-            const {firstName, lastName, phone, role, birthdate, address}= req.body;
+            const { firstName, lastName, phone, role, birthdate, address } = req.body;
             const user = await userService.getByEmail(username);
-            if (user) { return done(null,false,{message:"User already exists"});}
+            if (user) { return done(null, false, { message: "User already exists" }); }
             const medicalHistory = await medicalHistoryService.create()
-            const newUser ={
+            const newUser = {
                 firstName,
                 lastName,
                 email: username,
                 password: createHash(password),
                 phone,
                 role,
-                birthdate:new Date(birthdate),
+                birthdate: new Date(birthdate),
                 address,
-                medicalHistory:medicalHistory._id
+                medicalHistory: medicalHistory._id
             }
             const userCreate = await userService.create(newUser)
             await sendEmail(newUser.email, "Welcome to SaludNet", `Welcome ${newUser.firstName} ${newUser.lastName} to SaludNet, registered user`)
