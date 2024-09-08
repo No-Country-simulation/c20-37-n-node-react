@@ -1,6 +1,4 @@
-import { useState } from 'react'
-import { Button } from 'flowbite-react'
-import { HiMenuAlt1 } from 'react-icons/hi'
+import { useEffect, useMemo, useState } from 'react'
 import { useUsers } from '../../hooks/useUsersContext'
 
 export const AdminDashboard = () => {
@@ -11,19 +9,17 @@ export const AdminDashboard = () => {
         setIsSidebarCollapsed(!isSidebarCollapsed)
     }
 
+    const activedDoctors = useMemo(() => {
+        return users?.filter(user => user.role === 'doctor' & user.status)
+    }, [users])
+
+    useEffect(() => {
+    }, [users])
     return (
         <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
 
             {/* Main Content */}
             <div className="flex-1 flex flex-col overflow-hidden">
-                {/* Toggle Button for Sidebar */}
-                <Button
-                    className="lg:hidden fixed top-4 left-4 z-20"
-                    onClick={toggleSidebar}
-                    size="sm"
-                >
-                    <HiMenuAlt1 className="h-5 w-5" />
-                </Button>
 
                 {/* Page Content */}
                 <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-800 p-4">
@@ -38,7 +34,7 @@ export const AdminDashboard = () => {
                             </div>
                             <div className="bg-white dark:bg-gray-700 rounded-lg shadow p-4">
                                 <h2 className="text-lg font-semibold mb-2">Especialistas Activos</h2>
-                                <p className="text-3xl font-bold">{users?.filter(user => user.role === 'doctor').length}</p>
+                                <p className="text-3xl font-bold">{activedDoctors.length}</p>
                             </div>
                             <div className="bg-white dark:bg-gray-700 rounded-lg shadow p-4">
                                 <h2 className="text-lg font-semibold mb-2">Citas Hoy</h2>
