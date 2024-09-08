@@ -43,8 +43,8 @@ export const initializePassport = () => {
     passport.use("login", new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
         try {
             const user = await userService.getByEmail(username);
-            if (!user || isValidPassword(password, user.password)) { return done(null, false, { message: "User does not exist" }); }
-            return done(null, user);
+            if (!user || !isValidPassword(user.password,password )) { return done(null, false, { message: "Credenciales no válidas" }); }
+            else{return done(null, user);}
         } catch (error) {
             done(error)
         }

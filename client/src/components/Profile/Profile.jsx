@@ -45,9 +45,9 @@ export const Profile = ({ user }) => {
         e.preventDefault()
         profile.address = address
         await updateUserById(profile?._id, profile)
-       setLogued(profile)
+        setLogued(profile)
     }
-    
+
     useEffect(() => {
     }, [profile])
 

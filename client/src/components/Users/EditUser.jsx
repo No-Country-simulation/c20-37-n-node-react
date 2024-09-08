@@ -61,6 +61,19 @@ export const EditUser = ({ show, onClose, onSave, selectedUser, setSelectedUser 
                             <option value="user">Paciente</option>
                         </Select>
                     </div>
+                    <div>
+                        <Label htmlFor="status" value="Estado" />
+                        <Select
+                            id="status"
+                            name="status"
+                            value={selectedUser.status}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value={true}>Activo</option>
+                            <option value={false}>Deshabilitado</option>
+                        </Select>
+                    </div>
                 </form>
             </Modal.Body>
             <Modal.Footer>
