@@ -1,31 +1,20 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useUsers } from '../../hooks/useUsersContext'
+import { useEffect, useMemo } from 'react'
+import { useUsers } from '../../../hooks/useUsersContext'
 
-export const AdminDashboard = () => {
+export const Info = () => {
     const { users } = useUsers()
-    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
-
-    const toggleSidebar = () => {
-        setIsSidebarCollapsed(!isSidebarCollapsed)
-    }
-
     const activedDoctors = useMemo(() => {
         return users?.filter(user => user.role === 'doctor' & user.status)
     }, [users])
 
     useEffect(() => {
     }, [users])
+
     return (
-        <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
-
-            {/* Main Content */}
-            <div className="flex-1 flex flex-col overflow-hidden">
-
-                {/* Page Content */}
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-800 p-4">
+                <div className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-800 p-4">
                     <div className="container mx-auto px-4">
                         <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                            Dashboard de Telemedicina
+                            Dashboard
                         </h1>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                             <div className="bg-white dark:bg-gray-700 rounded-lg shadow p-4">
@@ -64,8 +53,7 @@ export const AdminDashboard = () => {
                             </ul>
                         </div>
                     </div>
-                </main>
-            </div>
-        </div>
+                    </div>
     )
 }
+
