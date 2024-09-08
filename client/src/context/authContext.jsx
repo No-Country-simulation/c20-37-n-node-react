@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState, useEffect } from "react";
 import { useGeneralContext } from "../hooks/useGeneralContext";
-import { registerRequest, loginRequest, verifyTokenRequest } from '../api/auth'
+import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest } from '../api/auth'
 import Cookies from "js-cookie";
 import toast from 'react-hot-toast'
 
@@ -40,11 +40,14 @@ export const AuthProvider = ({ children }) => {
             console.log(data)
             Cookies.set("access_token", data.token, { expires: 3 })
             if (!data.playload) return toast.error(['No se pudo iniciar sesión'])
-            toast.success('Se ha iniciado sesión')
+            if (data.playload.status === false) return toast.error(['Usuario inactivo, comuniquese con un administrador']) // Si el usuario esta inactivo
             setLogued(data.playload)
             setAuthenticated(true)
+            toast.success('Se ha iniciado sesión')
         } catch (error) {
             setErrors('Credenciales incorrectas')
+            setAuthenticated(false)
+            setLogued({})
             toast.error('No se pudo iniciar sesión')
             toast.error(error.response.data.msg)
         } finally {
@@ -56,8 +59,8 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         setLoading(true)
         try {
-            // const response = await logoutRequest()
-            // console.log(response)
+            const response = await logoutRequest()
+            console.log(response)
             // Enviar peticion al backend para que elimine el token
             Cookies.remove('token')
             Cookies.remove("access_token")
@@ -77,7 +80,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (errors.length > 0) {
             const timer = setTimeout(() => {
-                setErrors([])
+                setErrors('')
             }, 5000);
             return () => clearTimeout(timer)
         }

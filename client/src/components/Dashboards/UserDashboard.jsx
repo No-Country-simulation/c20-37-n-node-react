@@ -1,6 +1,6 @@
 
 export const UserDashboard = () => {
-    return (
-        <div>UserDashboard</div>
-    )
+  return (
+    <div>UserDashboard</div>
+  )
 }

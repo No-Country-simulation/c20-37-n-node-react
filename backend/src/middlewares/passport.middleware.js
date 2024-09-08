@@ -33,7 +33,7 @@ export const passportCall = (strategy) => {
       if (!user) {
         return res.status(401).json({
           status: "error",
-          msg: info?.message || "Authentication failed",
+          msg: info?.message || "Credenciales no válidas",
         });
       }
       const userWithoutPassword = { ...user._doc };

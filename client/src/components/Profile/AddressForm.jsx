@@ -8,6 +8,7 @@ export const AddressForm = (({ show, onClose, handleAddress, addressInfo }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         toast.success('Dirección guardada correctamente');
+        toast.success('Para finalizar la edición, presione Actualizar Perfil');
         onClose();
     }
     return (

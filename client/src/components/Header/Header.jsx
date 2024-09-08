@@ -26,7 +26,6 @@ export const Header = () => {
         navigate('/');
     }
     const role = logued?.role;
-    console.log(logued);
     return (
 
         <header className='font-poppins shadow-lg'>

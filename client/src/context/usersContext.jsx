@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useGeneralContext } from "../hooks/useGeneralContext";
 import { getAllUsers, updateUser } from "../api/users"
 import { getMedicalHistory, updateMedicalHistory } from "../api/medicalHistory"
@@ -22,7 +22,7 @@ export const UsersProvider = ({ children }) => {
             }
             setUsers(response.data.playload)
         } catch (error) {
-            console.log(error)  
+            console.log(error)
             toast.error('No se pudo obtener los usuarios')
             toast.error(error.response.data.msg)
         }
@@ -69,10 +69,10 @@ export const UsersProvider = ({ children }) => {
             setLoading(false)
         }
     }
-    // useEffect(() => {
-    //     getUsers()
-    //     console.log('render desde el context')
-    // }, [])
+    useEffect(() => {
+        getUsers()
+        console.log('render desde el context')
+    }, [])
 
     const updateMedicalHistoryById = async (id, data) => {
         setLoading(true)
