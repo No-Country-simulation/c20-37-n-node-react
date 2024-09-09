@@ -26,7 +26,8 @@ app.use(session(
         cookie: { 
             maxAge: 3600000,  
             httpOnly: true,  
-            secure: true 
+            secure: true ,
+            samSite: 'none'
         },
         name: 'connect.sid'
     }
