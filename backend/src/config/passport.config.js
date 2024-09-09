@@ -16,7 +16,7 @@ const CustomStrategy = passportCustom.Strategy;
 export const initializePassport = () => {
     passport.use("register", new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
         try {
-            const {firstName, lastName, phone, role, birthdate, address}= req.body;
+            const {firstName, lastName, phone, role, birthdate, address,dni}= req.body;
             const user = await userService.getByEmail(username);
             if (user) { return done(null,false,{message:"User already exists"});}
             const medicalHistory = await medicalHistoryService.create()
@@ -29,7 +29,8 @@ export const initializePassport = () => {
                 role,
                 birthdate:new Date(birthdate),
                 address,
-                medicalHistory:medicalHistory._id
+                medicalHistory:medicalHistory._id,
+                dni
             }
             const userCreate = await userService.create(newUser)
             await sendEmail(newUser.email, "Welcome to SaludNet", `Welcome ${newUser.firstName} ${newUser.lastName} to SaludNet, registered user`)
