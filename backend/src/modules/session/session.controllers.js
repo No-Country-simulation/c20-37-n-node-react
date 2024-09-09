@@ -5,7 +5,7 @@ import { cookieExtractor } from "../../utils/cookieExtractor.js";
 
 const userRegister = async (req = request, res = response) => {
     try {
-        return res.status(201).json({ status: "ok", msg: "User created" });
+        return res.status(201).json({ status: "ok", msg: "User created", playload: req.user });
     } catch (error) {
         res.status(500).json({ status: "error", msg: "Internal server error" });
     }
@@ -55,8 +55,8 @@ const logout = (req, res, next) => {
         cookieExtractor(req);
         res.clearCookie('token', {
             httpOnly: true,
-            secure: false, 
-            path: '/' 
+            secure: false,
+            path: '/'
         });
         req.session.destroy((err) => {
             if (err) {

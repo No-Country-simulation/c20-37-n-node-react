@@ -1,7 +1,5 @@
 import { useState } from 'react'
-// import { Button } from 'flowbite-react'
-// import { HiMenuAlt1 } from 'react-icons/hi'
-import {Users} from "../../components/Dashboards/Menu/Users"
+import { Users } from "../../components/Dashboards/Menu/Users"
 import { Doctors } from '../../components/Dashboards/Menu/Doctors'
 import { AdminSidebar } from '../../components/Dashboards/Sidebar/AdminSidebar'
 import { Info } from '../../components/Dashboards/Menu/Info'
@@ -27,20 +25,17 @@ export const AdminDashboardPage = () => {
         return <Agenda />
     }
   }
-
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex h-screen w-full bg-gray-50 dark:bg-gray-900">
       <AdminSidebar
-      isSidebarCollapsed={isSidebarCollapsed}
-      setActiveMenu={setActiveMenu}
-      activeMenu={activeMenu}
-      toggleSidebar={toggleSidebar}
+        isSidebarCollapsed={isSidebarCollapsed}
+        setActiveMenu={setActiveMenu}
+        activeMenu={activeMenu}
+        toggleSidebar={toggleSidebar}
       />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-800 p-4">
-          <div className="container mx-auto px-4">
-            {renderContent()}
-          </div>
-        </main>
+      {/* <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-800 p-4"> */}
+      {renderContent()}
+      {/* </main> */}
     </div>
   )
 }
