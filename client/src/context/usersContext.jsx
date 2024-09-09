@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState, useEffect } from "react";
+import { createContext, useEffect } from "react";
 import { useGeneralContext } from "../hooks/useGeneralContext";
+import { useAuth } from "../hooks/useAuthContext";
 import { getAllUsers, updateUser } from "../api/users"
 import { getMedicalHistory, updateMedicalHistory } from "../api/medicalHistory"
 import toast from "react-hot-toast";
@@ -9,9 +10,8 @@ import toast from "react-hot-toast";
 export const UsersContext = createContext();
 
 export const UsersProvider = ({ children }) => {
-    const { loading, setLoading } = useGeneralContext()
-    const [medicalHistory, setMedicalHistory] = useState([]);
-    const [users, setUsers] = useState([]);
+    const { loading, setLoading, users, setUsers, medicalHistory, setMedicalHistory } = useGeneralContext()
+    const { logued } = useAuth()
 
     const getUsers = async () => {
         try {
@@ -22,9 +22,7 @@ export const UsersProvider = ({ children }) => {
             }
             setUsers(response.data.playload)
         } catch (error) {
-            console.log(error)
             toast.error('No se pudo obtener los usuarios')
-            toast.error(error.response.data.msg)
         }
         finally {
             setLoading(false)
@@ -40,6 +38,7 @@ export const UsersProvider = ({ children }) => {
                 return toast.error('No se pudo actualizar el usuario, verifique que los datos sean correctos')
             }
             toast.success('Usuario actualizado correctamente')
+            setUsers(users.map(user => user._id === id ? update.data.playload : user))
         } catch (error) {
             toast.error('No se pudo actualizar el usuario')
             toast.error(error.response.data.msg)
@@ -61,7 +60,6 @@ export const UsersProvider = ({ children }) => {
             setMedicalHistory(response.data.playload)
             return response.data.playload
         } catch (error) {
-            console.log(error)
             toast.error('No se pudo obtener la historia clínica, pruebe refrescando la pagina, en caso de persisitir contactar al administrador')
             setMedicalHistory([])
         }
@@ -70,9 +68,10 @@ export const UsersProvider = ({ children }) => {
         }
     }
     useEffect(() => {
-        getUsers()
-        console.log('render desde el context')
-    }, [])
+        if (logued.email) {
+            getUsers()
+        }
+    }, [logued])
 
     const updateMedicalHistoryById = async (id, data) => {
         setLoading(true)
@@ -82,8 +81,10 @@ export const UsersProvider = ({ children }) => {
                 return toast.error('No se pudo actualizar la historia clínica, verifique que los datos sean correctos')
             }
             toast.success('Historia clínica actualizada correctamente')
+            setMedicalHistory(update.data.playload)
         } catch (error) {
             toast.error('No se pudo actualizar la historia clínica')
+            setMedicalHistory([])
         }
         finally {
             setLoading(false)

@@ -1,12 +1,14 @@
 import { useState } from "react"
 import { useUsers } from "../../hooks/useUsersContext"
 import { EditUser } from "./EditUser";
-import { Table, Dropdown, TextInput } from 'flowbite-react'
+import { Table, Dropdown, TextInput, Button } from 'flowbite-react'
 import { HiDotsVertical, HiPencil, HiTrash, HiSearch } from 'react-icons/hi'
+import { useGeneralContext } from "../../hooks/useGeneralContext";
 
-export const UserList = () => {
+export const UserList = ({ filterUsed }) => {
 
-  const { users, getUsers, setUsers, updateUserById } = useUsers()
+  const { users, setUsers } = useGeneralContext()
+  const { getUsers, updateUserById } = useUsers()
   const [selectedUser, setSelectedUser] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState('');
@@ -34,11 +36,13 @@ export const UserList = () => {
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
-      <h1 className="text-2xl font-black my-4 px-4 lg:px-12">Control de usuarios</h1>
+      <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+        Panel de usuarios
+      </h1>
 
       {/* <div className="mx-auto max-w-screen-2xl px-4 lg:px-12"> */}
       {/* <div className="bg-white dark:bg-gray-800 shadow-md sm:rounded-lg overflow-hidden"> */}
-      <div className="flex justify">
+      <div className="flex">
         <TextInput
           id="search"
           type="text"
@@ -48,6 +52,7 @@ export const UserList = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <Button className="ml-2" onClick={() => getUsers()}>Recargar lista</Button>
       </div>
       <div className="overflow-x-auto">
         <Table striped>
@@ -64,6 +69,7 @@ export const UserList = () => {
           </Table.Head>
           <Table.Body className="divide-y">
             {users?.filter((user) => user.email.toLowerCase().includes(search.toLowerCase()))
+              .filter((user) => user.role.toLowerCase().includes(filterUsed))
               .map((user) => (
                 <Table.Row key={user.email} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                   <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">

@@ -26,7 +26,6 @@ export const RegisterForm = () => {
             birthdate: startDate
         }
         const response = await registerRequest(user)
-        console.log(response)
         // Redireccionar
         if (!response) return;
         navigate('/login')
