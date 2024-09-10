@@ -13,5 +13,5 @@ export default {
   REFRESH_CODE: process.env.REFRESH_CODE,
   REDIRECT_URI: process.env.REDIRECT_URI,
   ACCESS_TOKEN: process.env.ACCESS_TOKEN,
-  FRONTEND_URL: process.env.FRONTEND_URL,
+  FRONTEND_URL: process.env.FRONTEND_URL || "http://localhost:5173",
 };

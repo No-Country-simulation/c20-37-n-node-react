@@ -1,44 +1,33 @@
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useState } from "react";
-import { registerRequest, loginRequest, logoutRequest } from '../api/auth'
+import { createContext, useEffect } from "react";
+import { useGeneralContext } from "../hooks/useGeneralContext";
+import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest } from '../api/auth'
 import Cookies from "js-cookie";
 import toast from 'react-hot-toast'
 
-const AuthContext = createContext();
-
-
-export const useAuth = () => {
-
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error("useAuth debe ser usado con AuthProvider");
-    }
-    return context;
-}
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-    const [authenticated, setAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState('');
-    const [logued, setLogued] = useState({});
 
+    const { logued, setLogued, loading, setLoading, authenticated, setAuthenticated, errors, setErrors, users, setUsers } = useGeneralContext()
 
     const register = async (values) => {
         try {
             setLoading(true)
             const response = await registerRequest(values)
-            console.log(response)
-            if (!response) {
-                setLoading(false)
+            if (response.status !== 201) {
                 return toast.error('No se pudo registrar el usuario')
             }
             toast.success('Usuario registrado correctamente')
-            setLoading(false)
+            setUsers([...users, response.data.playload])
+            return response
         } catch (error) {
-            setLoading(false)
-            console.log(error)
+            toast.error(error.response.data.msg)
             toast.error('No se pudo registrar el usuario')
+        }
+        finally {
+            setLoading(false)
         }
     }
 
@@ -47,15 +36,17 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await loginRequest(user)
             Cookies.set("access_token", data.token, { expires: 3 })
-            console.log(data)
             if (!data.playload) return toast.error(['No se pudo iniciar sesión'])
-            toast.success('Se ha iniciado sesión')
+            if (data.playload.status === false) return toast.error(['Usuario inactivo, comuniquese con un administrador']) // Si el usuario esta inactivo
             setLogued(data.playload)
             setAuthenticated(true)
+            toast.success('Se ha iniciado sesión')
         } catch (error) {
-            console.log(error)
             setErrors('Credenciales incorrectas')
+            setAuthenticated(false)
+            setLogued({})
             toast.error('No se pudo iniciar sesión')
+            toast.error(error.response.data.msg)
         } finally {
             setLoading(false);
         }
@@ -66,25 +57,73 @@ export const AuthProvider = ({ children }) => {
         setLoading(true)
         try {
             await logoutRequest()
-            Cookies.remove()
+            // Enviar peticion al backend para que elimine el token
+            Cookies.remove('token')
             Cookies.remove("access_token")
             setLogued({})
             setAuthenticated(false)
-            setLoading(false)
             toast.success('Se ha cerrado la sesión')
         } catch (error) {
-            if (!error) return setErrors([error])
-            setErrors(error)
-            setLoading(false)
             toast.error('No se pudo cerrar la sesión')
         }
+        finally {
+            setLoading(false)
+        }
+
     }
 
+    // Elimina los errores del formulario luego de 5 segundos.
+    useEffect(() => {
+        if (errors.length > 0) {
+            const timer = setTimeout(() => {
+                setErrors('')
+            }, 5000);
+            return () => clearTimeout(timer)
+        }
+    }, [errors])
+
+    const verifySession = async () => {
+        const cookie = Cookies.get()
+        // Si el usuario no existe y no se generá un token, no lo dejamos ingresar a la página.
+        // utilizar cookie.access_token
+        if (!cookie.access_token) {
+            setAuthenticated(false)
+            setLoading(false)
+            return;
+        }
+        try {
+
+            const response = await verifyTokenRequest()
+            if (response.status === 401) {
+                setAuthenticated(false)
+                setLogued({})
+            }
+            if (response.status === 200) {
+                // Actualiza el estado de la app con los datos del usuario
+                setLogued(response.data.playload)
+                setAuthenticated(true)
+            }
+        } catch (error) {
+            setAuthenticated(false)
+            setLogued({})
+        }
+        finally {
+            setLoading(false)
+        }
+    };
+    useEffect(() => {
+
+        verifySession()
+
+        return () => {
+            console.log("")
+        }
+    }, [])
     return (
         <AuthContext.Provider value={{
-            isAuthenticated: authenticated,
             loading,
             errors,
+            isAuthenticated: authenticated,
             login,
             register,
             logout,

@@ -1,25 +1,34 @@
-// import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ErrorText } from '../Error/ErrorText'
-import { useAuth } from "../../context/authContext"
-import { FormFooter } from "./FormFooter"
+import { useAuth } from "../../hooks/useAuthContext"
+import { DatePick } from "../DatePicker/DatePicker"
+import 'flowbite/dist/flowbite.css';
 
 export const RegisterForm = () => {
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
+    const [startDate, setStartDate] = useState(new Date());
     const { register,
         handleSubmit,
         formState: { errors } } = useForm()
 
     const { register: registerRequest } = useAuth()
+
+    const handleDateChange = (date) => {
+        setStartDate(date)
+    }
     const onSubmit = handleSubmit(async (values) => {
         // Logica de autenticacion
-        const response = await registerRequest(values)
-        console.log('registrando..')
+        const user = {
+            ...values,
+            birthdate: startDate
+        }
+        const response = await registerRequest(user)
         // Redireccionar
-        // navigate('/login')
-        console.log(response)
+        if (!response) return;
+        navigate('/login')
     })
     return (
         <div className="h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto p-2 md:p-6">
@@ -44,12 +53,23 @@ export const RegisterForm = () => {
                         {...register('lastName', { required: true })}
                     />
                 </div>
-
+                <div className="flex flex-col w-full mb-4">
+                    <label htmlFor="birthdate">
+                        Fecha de nacimiento
+                        <DatePick
+                            startDate={startDate}
+                            setStartDate={handleDateChange}
+                        />
+                    </label>
+                </div>
                 <div className='flex flex-col w-full mb-4'>
-                    <label className="block text-gray-700 text-sm font-bold" htmlFor="username">
+                    <label
+                        className="block text-gray-700 text-sm font-bold" htmlFor="username">
                         Email
                     </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" name="email" placeholder="Email"
+                    <input
+                        autoComplete="email"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" name="email" placeholder="Email"
                         {...register('email', { required: true })}
                     />
                     {errors.email && <ErrorText text="Email es requerido" />}
@@ -66,7 +86,9 @@ export const RegisterForm = () => {
                     <label className="block text-gray-700 text-sm font-bold" htmlFor="password">
                         Contraseña
                     </label>
-                    <input className="shadow appearance-none border focus:border-red-500 rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************"
+                    <input
+                        autoComplete="new-password"
+                        className="shadow appearance-none border focus:border-red-500 rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************"
                         {...register('password', { required: true })}
                     />
                     {errors.password && <ErrorText text="Contraseña es requerida" />}
@@ -80,7 +102,6 @@ export const RegisterForm = () => {
                     Ya estas registrado/a?
                 </Link>
             </form>
-            <FormFooter />
         </div>
     )
 }

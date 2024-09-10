@@ -1,13 +1,23 @@
-import { Outlet, Navigate } from 'react-router-dom'
-import { useAuth } from './context/authContext';
+import { Outlet, useNavigate } from 'react-router-dom'
+import { useAuth } from './hooks/useAuthContext';
 import { LoadingPage } from './components/Loading/LoadingPage';
+import { useGeneralContext } from './hooks/useGeneralContext';
+import { useEffect } from 'react';
 
 export const ProtectedRoute = () => {
 
-    const { isAuthenticated, loading } = useAuth();
+    const { loading } = useGeneralContext()
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate()
 
-    if (loading) return <LoadingPage />
-    if (!isAuthenticated && !loading) return <Navigate to='/login' />
+    useEffect(() => {
+        if (!isAuthenticated && !loading) navigate('/login')
+    }, [isAuthenticated])
+
+    useEffect(() => {
+        if (loading) return <LoadingPage />
+    }, [loading])
+
     return <Outlet />
 
 }
