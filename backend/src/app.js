@@ -27,7 +27,7 @@ app.use(session(
             maxAge: 3600000,
             httpOnly: true,
             secure: true,
-            samSite: 'none'
+            sameSite: 'none'
         },
         name: 'connect.sid'
     }
