@@ -23,17 +23,17 @@ app.use(session(
         secret: envs.SECRET_CODE,
         resave: false,
         saveUninitialized: false,
-        cookie: { 
-            maxAge: 3600000,  
-            httpOnly: true,  
-            secure: true ,
+        cookie: {
+            maxAge: 3600000,
+            httpOnly: true,
+            secure: true,
             samSite: 'none'
         },
         name: 'connect.sid'
     }
 ));
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: envs.FRONTEND_URL,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
