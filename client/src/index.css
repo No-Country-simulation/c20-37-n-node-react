@@ -40,3 +40,33 @@ p {
 .h-110vh {
     min-height: 110vh;
 }
+
+.fc-day{
+    background-color: #FCFAF9;
+}
+
+.fc-day-header {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+  }
+
+.fc-event{
+    background-color: #08A39F;
+    font-size: small;
+    color: white;
+}
+
+.fc-toolbar {
+    background-color: #0E588F;
+    color: white;
+    padding: 10px;
+  }
+
+.fc-toolbar h2{
+    font-weight: 600;
+}
+
+.fc-prev-button{
+    background-color: #FCFAF9;
+}
