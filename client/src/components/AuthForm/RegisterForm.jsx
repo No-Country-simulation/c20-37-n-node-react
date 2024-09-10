@@ -46,7 +46,7 @@ export const RegisterForm = () => {
                     />
                 </div>
                 <div className="flex flex-col w-full mb-4">
-                    <label htmlFor="lastName">
+                    <label className="block text-gray-700 text-sm font-bold" htmlFor="lastName">
                         Apellido
                     </label>
                     <input className="shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastName" type="text" name="lastName" placeholder="Apellido"
@@ -54,7 +54,15 @@ export const RegisterForm = () => {
                     />
                 </div>
                 <div className="flex flex-col w-full mb-4">
-                    <label htmlFor="birthdate">
+                    <label className="block text-gray-700 text-sm font-bold" htmlFor="dni">
+                        DNI
+                    </label>
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="dni" type="text" name="dni" placeholder="Dni"
+                        {...register('dni', { required: true })}
+                    />
+                </div>
+                <div className="flex flex-col w-full mb-4">
+                    <label className="block text-gray-700 text-sm font-bold" htmlFor="birthdate">
                         Fecha de nacimiento
                         <DatePick
                             startDate={startDate}
