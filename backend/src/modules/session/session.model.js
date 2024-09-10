@@ -64,10 +64,10 @@ const sessionSchema = new mongoose.Schema({
         type: String, 
         required: function() { return this.role === 'doctor'; }
     },
-    specialty:[{
+    specialty:{
         type: String,
         required: function() { return this.role === 'doctor'; }
-    }],
+    },
     medicalHistory:{
         type: mongoose.Schema.Types.ObjectId, ref:"medicalHistory"}
 }, {
