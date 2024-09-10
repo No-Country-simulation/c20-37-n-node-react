@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }) => {
             const { data } = await loginRequest(user)
             Cookies.set("access_token", data.token, { expires: 3 })
             const auth = await verifyTokenRequest();
+            console.log('auth', auth)
             if (!auth) {
                 setLogued(null)
                 setAuthenticated(false)
@@ -92,22 +93,26 @@ export const AuthProvider = ({ children }) => {
         const cookie = Cookies.get()
         // Si el usuario no existe y no se generá un token, no lo dejamos ingresar a la página.
         // utilizar cookie.access_token
+
         if (!cookie.access_token) {
             setAuthenticated(false)
             setLoading(false)
+            console.log('entro aca no existe access')
             return;
         }
         try {
-
             const response = await verifyTokenRequest()
             if (!response) {
+                console.log('no existe response', response)
                 setAuthenticated(false)
                 setLogued({})
                 return;
             }
+            console.log('existe response', response)
             setLogued(response.data.playload)
             setAuthenticated(true)
         } catch (error) {
+            console.log('Error en la verificación del token', error)
             setAuthenticated(false)
             setLogued({})
         }
@@ -120,7 +125,7 @@ export const AuthProvider = ({ children }) => {
         verifySession()
 
         return () => {
-            console.log("")
+            console.log("Renderizado auth context")
         }
     }, [])
     return (
