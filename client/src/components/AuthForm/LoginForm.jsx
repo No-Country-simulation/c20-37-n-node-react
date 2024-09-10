@@ -1,21 +1,18 @@
-import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { Link } from 'react-router-dom'
 import { ErrorText } from '../Error/ErrorText'
 import { useAuth } from "../../hooks/useAuthContext"
 
 export const LoginForm = () => {
-    const navigate = useNavigate()
     const { register,
         handleSubmit,
         formState: { errors } } = useForm()
 
-    const { login: LoginRequest, errors: loginError } = useAuth()
+    const { login: loginRequest, errors: loginError } = useAuth()
     const onSubmit = handleSubmit(async (values) => {
         // Logica de autenticacion
-        await LoginRequest(values)
-        // Redireccionar
-        navigate('/dashboard')
+        await loginRequest(values)
+
     })
     return (
         <div className="roboto h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto p-2 md:p-6">

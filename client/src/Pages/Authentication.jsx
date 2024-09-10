@@ -11,7 +11,10 @@ export const Authentication = () => {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    if (isAuthenticated) return navigate('/dashboard')
+    if (isAuthenticated) {
+      navigate('/dashboard')
+    }
+
   }, [isAuthenticated])
 
   return (
