@@ -7,7 +7,6 @@ import { useAuth } from '../hooks/useAuthContext';
 
 export const Authentication = () => {
   const navigate = useNavigate()
-
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
@@ -18,7 +17,7 @@ export const Authentication = () => {
   }, [isAuthenticated])
 
   return (
-    <div className="h-screen">
+    <div className="mt-24">
       {window.location.pathname === '/register' ?
         <RegisterForm />
         : <LoginForm />}

@@ -33,9 +33,7 @@ export const AdminDashboardPage = () => {
         activeMenu={activeMenu}
         toggleSidebar={toggleSidebar}
       />
-      {/* <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-800 p-4"> */}
       {renderContent()}
-      {/* </main> */}
     </div>
   )
 }

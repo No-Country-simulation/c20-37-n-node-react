@@ -29,11 +29,9 @@ export const MedicalHistory = () => {
                 </div>
             }
             {logued?.role === 'user' ?
-            <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.medicalHistory)}>Obtener Datos o Refrescar</button> :
-            <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(idClient)}>Obtener Datos o Refrescar</button>
-        }
-
-
+                <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.medicalHistory)}>Obtener Datos o Refrescar</button> :
+                <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(idClient)}>Obtener Datos o Refrescar</button>
+            }
             <Table>
                 <Table.Body className="divide-y">
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -133,7 +131,7 @@ export const MedicalHistory = () => {
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Diagnóstico Actual</Table.Cell>
                         <Table.Cell className='flex flex-wrap gap-1'>
-                            {medicalHistory?.diagnoses?.length ? medicalHistory.vaccines.map((diagnoses, index) => (
+                            {medicalHistory?.diagnoses?.length ? medicalHistory.diagnoses.map((diagnoses, index) => (
                                 <div key={index} className='flex'>
                                     <p color={'white'} size="lg" className="text-sm mr-2 px-1 border-gray-300 border">{diagnoses}</p>
                                     {/* <button className='bg-red-500 px-1 text-white rounded-sm' onClick={() => console.log(allergy, index)} >x</button> */}
