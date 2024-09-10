@@ -14,8 +14,12 @@ const userRegister = async (req = request, res = response) => {
 const userLogin = async (req = request, res = response) => {
     try {
         const token = createToken(req.user);
-        res.cookie("token", token, { httpOnly: true });
-        return res.status(200).json({ status: "ok", playload: req.user, token });
+        res.cookie("token",token,{
+            httpOnly: true,  
+            secure: true ,
+            samSite: 'none'
+        });
+        return res.status(200).json({ status: "ok", playload:req.user, token});
     } catch (error) {
         res.status(500).json({ status: "error", msg: "Internal server error" });
     }
