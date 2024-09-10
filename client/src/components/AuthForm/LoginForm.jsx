@@ -18,9 +18,10 @@ export const LoginForm = () => {
         navigate('/dashboard')
     })
     return (
-        <div className="roboto h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto p-2 md:p-6">
-            <h1 className="text-2xl font-black py-4 text-center">Ingresar</h1>
-            <form onSubmit={onSubmit} className="bg-white shadow-xl rounded px-4 lg:p-8 pt-6 pb-8 mb-4">
+        <div className="w-screen flex justify-center">
+        <div className="w-6/12 flex flex-col justify-center p-2 md:p-6 shadow-xl border rounded-lg">
+            <h1 className="text-2xl font-black text-primary py-4 text-center">Ingresar</h1>
+            <form onSubmit={onSubmit} className="bg-white  px-4 lg:p-8 pt-6 pb-8 mb-4">
                 {loginError && <ErrorText text={loginError} />}
                 <div className='flex flex-col w-full mb-4'>
                     <label className="block text-gray-700 text-sm font-bold" htmlFor="username">
@@ -54,8 +55,9 @@ export const LoginForm = () => {
                         Olvidaste la contraseña?
                     </Link>
                 </div>
-                <Link to={'/register'} className="text-sm justify-end text-red-500 hover:text-red-800 duration-200">Registrarse</Link>
+                <Link to={'/register'} className="text-sm justify-end font-bold text-secondary hover:text-blue-500 duration-200">Registrarse</Link>
             </form>
         </div>
+        </div> 
     )
 }

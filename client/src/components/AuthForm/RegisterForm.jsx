@@ -31,10 +31,11 @@ export const RegisterForm = () => {
         navigate('/login')
     })
     return (
-        <div className="h-[calc(100vh-50px)] w-full max-w-xl flex flex-col justify-center mx-auto p-2 md:p-6">
-            <h1 className="text-2xl font-black py-4 text-center">Registrarse</h1>
+        <div className="w-full min-h-screen flex justify-center">
+        <div className="w-6/12 bg-white flex flex-col justify-center my-1 p-2 md:p-6 shadow-xl border rounded-lg">
+            <h1 className="text-2xl font-black text-primary py-4 text-center">Registrarse</h1>
             <p className="text-center mb-4">Complete el formulario con su datos</p>
-            <form onSubmit={onSubmit} className="bg-white shadow-xl rounded px-4 lg:p-8 pt-6 pb-8 mb-4">
+            <form onSubmit={onSubmit} className=" px-4 lg:p-8 pt-6 pb-8 mb-4">
 
 
                 <div className="flex flex-col w-full mb-4">
@@ -46,7 +47,7 @@ export const RegisterForm = () => {
                     />
                 </div>
                 <div className="flex flex-col w-full mb-4">
-                    <label htmlFor="lastName">
+                    <label htmlFor="lastName"  className="block text-gray-700 text-sm font-bold">
                         Apellido
                     </label>
                     <input className="shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastName" type="text" name="lastName" placeholder="Apellido"
@@ -54,7 +55,7 @@ export const RegisterForm = () => {
                     />
                 </div>
                 <div className="flex flex-col w-full mb-4">
-                    <label htmlFor="birthdate">
+                    <label htmlFor="birthdate"  className="block text-gray-700 text-sm font-semibold">
                         Fecha de nacimiento
                         <DatePick
                             startDate={startDate}
@@ -88,7 +89,7 @@ export const RegisterForm = () => {
                     </label>
                     <input
                         autoComplete="new-password"
-                        className="shadow appearance-none border focus:border-red-500 rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************"
+                        className="shadow appearance-none border focus:border-blue-500 rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************"
                         {...register('password', { required: true })}
                     />
                     {errors.password && <ErrorText text="Contraseña es requerida" />}
@@ -98,10 +99,11 @@ export const RegisterForm = () => {
                     className="w-full mb-4 bg-blue-400 hover:bg-blue-700 transition-colors duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Confirmar datos
                 </button>
-                <Link to={'/login'} className=" font-bold text-xs text-red-500 hover:text-red-800" href="#">
+                <Link to={'/login'} className=" font-bold text-xs text-secondary hover:text-blue-500" href="#">
                     Ya estas registrado/a?
                 </Link>
             </form>
-        </div>
+        </div> 
+        </div> 
     )
 }

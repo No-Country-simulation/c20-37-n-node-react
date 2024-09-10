@@ -12,7 +12,7 @@ export const Layout = () => {
 
         <div >
             <Header />
-            <main className="mt-12 max-w-screen-2xl min-h-screen mx-auto">
+            <main className="max-w-screen-2xl min-h-screen my-10">
                 <Outlet />
             </main>
             <Footer />

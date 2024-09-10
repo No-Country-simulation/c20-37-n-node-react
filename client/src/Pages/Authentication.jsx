@@ -15,7 +15,7 @@ export const Authentication = () => {
   }, [isAuthenticated])
 
   return (
-    <div className="h-screen">
+    <div>
       {window.location.pathname === '/register' ?
         <RegisterForm />
         : <LoginForm />}
