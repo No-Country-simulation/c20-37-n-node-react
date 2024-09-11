@@ -1,19 +1,9 @@
 import calendarServices from "./calendar.services.js";
 
-const getCalendarByDoctor = async (req, res) => {
+const getCalendarByOwner= async (req, res) => {
     try {
-        const {id} = req.params;
-        const calendar = await calendarServices.getByDoctor(id);
-        return res.status(200).json({ status: "ok", playload:calendar })
-    } catch (error) {
-        res.status(500).json({status:"error", msg:"Internal server error"});
-    }
-}
-
-const getCalendarByPatient = async (req, res) => {
-    try {
-        const {id} = req.params;
-        const calendar = await calendarServices.getByPatient(id);
+        const {ownerId} = req.params;
+        const calendar = await calendarServices.getByDoctor(ownerId);
         return res.status(200).json({ status: "ok", playload:calendar })
     } catch (error) {
         res.status(500).json({status:"error", msg:"Internal server error"});
@@ -41,4 +31,4 @@ const removeByOwner = async (req , res) => {
 }
 
 
-export default {getCalendarByDoctor, getCalendarByPatient, create ,removeByOwner}
+export default {getCalendarByOwner, create ,removeByOwner}

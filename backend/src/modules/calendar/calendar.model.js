@@ -6,10 +6,6 @@ const calendarSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  availability: [{
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'AvailableTime',
-    }],
   consultations: [
     {
         type: mongoose.Schema.Types.ObjectId, 

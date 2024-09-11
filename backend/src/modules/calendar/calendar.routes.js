@@ -5,8 +5,7 @@ import calendarControllers from "./calendar.controllers.js";
 
 const router = Router();
 
-router.get("/doctor/:id",passportCall("current"),authorization(["admin","doctor","user"]), calendarControllers.getCalendarByDoctor);
-router.get("/patient/:id",passportCall("current"),authorization(["admin","user"]), calendarControllers.getCalendarByPatient);
+router.get("/:ownerId",passportCall("current"),authorization(["admin","doctor","user"]), calendarControllers.getCalendarByOwner);
 
 router.post("/", passportCall("current"),authorization(["admin","user", "doctor"]),calendarControllers.create);
 
