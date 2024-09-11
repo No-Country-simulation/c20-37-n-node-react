@@ -79,6 +79,5 @@ export const LoginForm = () => {
                 </form>
             </Card>
         </div>
-        </div > 
     )
 }

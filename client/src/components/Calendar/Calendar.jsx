@@ -25,7 +25,7 @@ export const Calendar = () => {
       }
 
     return (
-        <div className='w-screen flex justify-center'>
+        <div className='w-screen min-h-screen my-24 flex justify-center'>
             <div className='w-10/12'>
                 <FullCalendar
                 headerToolbar={{
