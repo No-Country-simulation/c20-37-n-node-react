@@ -11,6 +11,10 @@ export const GeneralProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [medicalHistory, setMedicalHistory] = useState([]);
+    const [calendar, setCalendar] = useState([]);
+    const [availableTime, setAvailableTime] = useState([]);
+    const [doctorAvailability, setDoctorAvailability] = useState([]);
+    const [consultation, setConsultation] = useState([]);
     const [errors, setErrors] = useState('');
 
 
@@ -24,6 +28,14 @@ export const GeneralProvider = ({ children }) => {
             setUsers,
             medicalHistory,
             setMedicalHistory,
+            calendar,
+            setCalendar,
+            availableTime,
+            setAvailableTime,
+            doctorAvailability,
+            setDoctorAvailability,
+            consultation,
+            setConsultation,
             authenticated,
             setAuthenticated,
             errors,

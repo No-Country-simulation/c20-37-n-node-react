@@ -67,6 +67,7 @@ export const UsersProvider = ({ children }) => {
             setLoading(false)
         }
     }
+    
     useEffect(() => {
         if (logued.email) {
             getUsers()

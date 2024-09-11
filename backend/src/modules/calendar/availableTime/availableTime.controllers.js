@@ -1,5 +1,14 @@
 import availableTimeServices from "./availableTime.services";
 
+const getAvailableTimeByDoctor= async (req, res) => {
+    try {
+        const {doctorId} = req.params;
+        const availableTime = await availableTimeServices.getByDoctor(doctorId);
+        return res.status(200).json({ status: "ok", playload:availableTime })
+    } catch (error) {
+        res.status(500).json({status:"error", msg:"Internal server error"});
+    }
+}
 
 const getAvailableTimeByDoctorAndRangeTime = async (req, res) => {
     try {
@@ -77,8 +86,8 @@ const updateByDoctor = async (req, res) => {
 const removeByDoctorAndDate = async (req , res) => {
     try {
         const {doctorId, date} = req.params;
-        const response = await availableTimeServices.removeByDoctorAndDate(doctorId, date);
-        return res.status(200).json({ status: "ok", msg: response.message })
+        const availableTime= await availableTimeServices.removeByDoctorAndDate(doctorId, date);
+        return res.status(200).json({ status: "ok", msg: "available times specific deleted", playload: availableTime})
     } catch (error) {
         res.status(500).json({status:"error", msg:"Internal server error"});
     }
@@ -86,4 +95,4 @@ const removeByDoctorAndDate = async (req , res) => {
 
 
 
-export default {getAvailableTimeByDoctorAndRangeTime, create, updateByDoctorAndDate, updateByDoctor, removeByDoctorAndDate}
+export default {getAvailableTimeByDoctor, getAvailableTimeByDoctorAndRangeTime, create, updateByDoctorAndDate, updateByDoctor, removeByDoctorAndDate}

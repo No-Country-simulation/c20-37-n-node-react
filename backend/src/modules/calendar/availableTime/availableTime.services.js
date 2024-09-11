@@ -1,5 +1,9 @@
 import availableTimeRepository from "./availableTime.repository";
 
+const getByDoctor = async (doctorId) => { 
+    return await availableTimeRepository.getByDoctor(doctorId); 
+};
+
 const getByDoctorAndRangeTime = async (doctorId, start, end) => { 
     return await availableTimeRepository.getByDoctorAndRangeTime(doctorId, start, end); 
 };
@@ -18,4 +22,4 @@ const removeByDoctorAndDate = async (doctorId, date) => {
     return await availableTimeRepository.removeByDoctorAndDate(doctorId, date);
 }
 
-export default { getByDoctorAndRangeTime, create, updateByDoctorAndDate, updateByDoctor, removeByDoctorAndDate};
+export default { getByDoctor,getByDoctorAndRangeTime, create, updateByDoctorAndDate, updateByDoctor, removeByDoctorAndDate};

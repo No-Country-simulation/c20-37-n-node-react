@@ -5,6 +5,8 @@ import availableTimeControllers from "./availableTime.controllers.js";
 
 const router = Router();
 
+router.get("/:doctorId",passportCall("current"),authorization(["admin","doctor", "user"]), availableTimeControllers.getAvailableTimeByDoctor);
+
 router.get("/:doctorId/:start/:end",passportCall("current"),authorization(["admin","doctor", "user"]), availableTimeControllers.getAvailableTimeByDoctorAndRangeTime);
 
 router.post("/", passportCall("current"),authorization(["admin","doctor"]), availableTimeControllers.create);

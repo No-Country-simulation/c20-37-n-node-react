@@ -1,6 +1,14 @@
 import consultationServices from "../consultation/consultation.services";
 import { AvailableTime } from "./availableTime.model";
 
+const getByDoctor = async (doctorId, start, end) => {
+  const availableTime = await AvailableTime.findOne(
+  {
+      doctor: doctorId,
+  });
+
+  return availableTime;
+}
 
 const getByDoctorAndRangeTime = async (doctorId, start, end) => {
     const availableTime = await AvailableTime.findOne(
@@ -112,7 +120,7 @@ const removeByDoctorAndDate = async (doctorId, date) => {
 
     await availableTime.save();
 
-    return { success: true, message: 'Available Time deleted successfully' };
+    return availableTime;
 };
 
-export default {getByDoctorAndRangeTime, create, updateByDoctorAndDate, updateByDoctor, removeByDoctorAndDate}
+export default { getByDoctor,getByDoctorAndRangeTime, create, updateByDoctorAndDate, updateByDoctor, removeByDoctorAndDate}
