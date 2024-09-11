@@ -61,7 +61,7 @@ const update = async (id, data) => {
 };
 
 const deleteOne = async (id) => {
-    const user = await userSession.findByIdAndUpdate(id, {status:false}, {new:true});
+    const user = await userSession.deleteOne({ _id: id });
     return user;
 }
 
