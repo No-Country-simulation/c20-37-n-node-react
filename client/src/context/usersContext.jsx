@@ -2,7 +2,7 @@
 import { createContext, useEffect } from "react";
 import { useGeneralContext } from "../hooks/useGeneralContext";
 import { useAuth } from "../hooks/useAuthContext";
-import { getAllUsers, updateUser } from "../api/users"
+import { deleteUser, getAllUsers, updateUser } from "../api/users"
 import { getMedicalHistory, updateMedicalHistory } from "../api/medicalHistory"
 import toast from "react-hot-toast";
 
@@ -29,7 +29,6 @@ export const UsersProvider = ({ children }) => {
         }
     }
 
-
     const updateUserById = async (id, user) => {
         setLoading(true)
         try {
@@ -48,6 +47,23 @@ export const UsersProvider = ({ children }) => {
         }
     }
 
+    const deleteUserByDni = async (dni) => {
+        try {
+            setLoading(true)
+            const response = await deleteUser(dni)
+            console.log(response)
+            setUsers(users.filter(user => user.dni !== dni))
+            toast.success('Usuario eliminado correctamente')
+            return response.data.playload
+        } catch (error) {
+            toast.error(error.response.data.msg)
+            toast.error('No se pudo eliminar el usuario')
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
     const getMedicalHistoryById = async (id) => {
         try {
             setLoading(true)
@@ -58,8 +74,9 @@ export const UsersProvider = ({ children }) => {
             }
             toast.success('Historia clínica obtenida correctamente')
             setMedicalHistory(response.data.playload)
-            return response.data.playload
+            console.log(response)
         } catch (error) {
+            console.log(error)
             toast.error('No se pudo obtener la historia clínica, pruebe refrescando la pagina, en caso de persisitir contactar al administrador')
             setMedicalHistory([])
         }
@@ -67,11 +84,6 @@ export const UsersProvider = ({ children }) => {
             setLoading(false)
         }
     }
-    useEffect(() => {
-        if (logued.role === 'admin' || logued.role === 'doctor') {
-            getUsers()
-        }
-    }, [logued])
 
     const updateMedicalHistoryById = async (id, data) => {
         setLoading(true)
@@ -90,7 +102,11 @@ export const UsersProvider = ({ children }) => {
             setLoading(false)
         }
     }
-
+    useEffect(() => {
+        if (logued.role === 'admin' || logued.role === 'doctor') {
+            getUsers()
+        }
+    }, [logued])
     return (
         <UsersContext.Provider value={{
             users,
@@ -100,7 +116,8 @@ export const UsersProvider = ({ children }) => {
             loading,
             getMedicalHistoryById,
             updateMedicalHistoryById,
-            medicalHistory
+            medicalHistory,
+            deleteUserByDni
         }}>
             {children}
         </UsersContext.Provider>

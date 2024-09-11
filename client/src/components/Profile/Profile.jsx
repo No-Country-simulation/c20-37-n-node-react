@@ -5,7 +5,7 @@ import { useGeneralContext } from '../../hooks/useGeneralContext'
 import { useUsers } from '../../hooks/useUsersContext'
 import { DatePick } from '../DatePicker/DatePicker'
 import { Link } from 'react-router-dom'
-import { HiMail, HiPhone } from "react-icons/hi";
+import { HiMail, HiPhone, HiIdentification } from "react-icons/hi";
 import { AddressForm } from './AddressForm'
 
 export const Profile = ({ user }) => {
@@ -49,6 +49,7 @@ export const Profile = ({ user }) => {
     }
 
     useEffect(() => {
+        console.log(profile)
     }, [profile])
 
     return (
@@ -98,6 +99,20 @@ export const Profile = ({ user }) => {
                         placeholder="ejemplo@hotmail.com"
                         required
                         icon={HiMail}
+                    />
+                </div>
+                <div>
+                    <div className="mb-2 block">
+                        <Label htmlFor="dni" value="DNI" />
+                    </div>
+                    <TextInput
+                        id="dni"
+                        name="dni"
+                        value={profile?.dni}
+                        onChange={handleChange}
+                        placeholder="12345678"
+                        required
+                        icon={HiIdentification}
                     />
                 </div>
                 <div>

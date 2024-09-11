@@ -13,6 +13,7 @@ import { UserLayout } from './components/Layouts/UserLayout'
 import { Error404 } from './components/NotFound/Error404'
 import { ProfilePage } from './Pages/User/ProfilePage'
 import { MedicalHistoryPage } from './Pages/User/MedicalHistoryPage'
+import { Calendar } from './components/Calendar/Calendar'
 
 export const Router = () => {
     return (
@@ -22,6 +23,7 @@ export const Router = () => {
                     <Route path='/' element={<Home />} />
                     <Route path='/login' element={<Authentication />} />
                     <Route path='/register' element={<Authentication />} />
+                    <Route path='/calendar' element={<Calendar />} />
 
                     <Route element={<ProtectedRoute />}>
                         <Route path='/dashboard' element={<Dashboard />} />

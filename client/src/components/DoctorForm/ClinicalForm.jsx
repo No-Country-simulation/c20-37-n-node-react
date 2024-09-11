@@ -30,11 +30,11 @@ export const ClinicalForm = () => {
     }
 
     return (
-        <div className='my-4 mx-auto'>
-            <form onSubmit={handleSubmit} className="roboto max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mx-auto">
+        <div className='w-full max-w-xl mx-auto'>
+            <form onSubmit={handleSubmit} className="roboto p-6 bg-white rounded-lg shadow-md mx-auto">
                 <h1 className="font-bold text-center mb-6">Formulario de historia clinica</h1>
                 <div>
-                    <Label htmlFor="idClient" value="Id historia clinica" />
+                    <Label htmlFor="idClient" value="ID de la historia medica" />
                     <TextInput
                         id="idClient"
                         name="idClient"
