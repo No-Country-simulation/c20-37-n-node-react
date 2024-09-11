@@ -14,11 +14,11 @@ export const MedicalHistory = () => {
     // }, [])
 
     return (
-        <Card className="max-w-6xl mx-auto roboto">
-            <h2 className="text-2xl font-bold mb-4">Historial Médico</h2>
+        <Card className="w-full max-w-2xl mx-auto roboto">
+            <h1 className="font-bold text-center mb-6">Historial medico</h1>
             {logued?.role === 'doctor' &&
                 <div>
-                    <Label htmlFor="idClient" value="Id de la historia clinica" />
+                    <Label className='font-medium text-md' htmlFor="idClient" value="Buscar por DNI de paciente" />
                     <TextInput
                         id="idClient"
                         name="idClient"
@@ -29,7 +29,7 @@ export const MedicalHistory = () => {
                 </div>
             }
             {logued?.role === 'user' ?
-                <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.medicalHistory)}>Obtener Datos o Refrescar</button> :
+                <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.dni)}>Obtener Datos o Refrescar</button> :
                 <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(idClient)}>Obtener Datos o Refrescar</button>
             }
             <Table>
@@ -43,8 +43,16 @@ export const MedicalHistory = () => {
                         <Table.Cell>{medicalHistory?.updatedAt ? new Date(medicalHistory.updatedAt).toLocaleString() : 'No hay datos cargados'}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell className="font-medium">Id de la historia medica</Table.Cell>
+                        <Table.Cell>{medicalHistory?._id ? medicalHistory._id : "No hay datos cargados"}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Nombre</Table.Cell>
                         <Table.Cell>{logued?.firstName} {logued?.lastName}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell className="font-medium">DNI</Table.Cell>
+                        <Table.Cell>{logued?.dni}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Fecha de Nacimiento</Table.Cell>
