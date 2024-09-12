@@ -23,7 +23,7 @@ export const Router = () => {
                     <Route path='/' element={<Home />} />
                     <Route path='/login' element={<Authentication />} />
                     <Route path='/register' element={<Authentication />} />
-                    <Route path='/calendar' element={<Calendar />}/>
+                    <Route path='/calendar' element={<Calendar />} />
 
                     <Route element={<ProtectedRoute />}>
                         <Route path='/dashboard' element={<Dashboard />} />

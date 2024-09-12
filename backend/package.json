@@ -23,6 +23,7 @@
     "googleapis": "^143.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.4",
+    "node-cron": "^3.0.3",
     "nodemailer": "^6.9.14",
     "passport": "^0.7.0",
     "passport-custom": "^1.1.1",

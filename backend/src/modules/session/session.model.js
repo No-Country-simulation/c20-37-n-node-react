@@ -47,10 +47,38 @@ const sessionSchema = new mongoose.Schema({
         zip: String,
         country: String
     },
+    dni: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    licenseNumber: { 
+        type: String, 
+        required: function() { return this.role === 'doctor'; }
+    },
+    yearsExperience: { 
+        type: Number, 
+        required: function() { return this.role === 'doctor'; }
+    },
+    professionalInfo: { 
+        type: String, 
+        required: function() { return this.role === 'doctor'; }
+    },
+    specialty:{
+        type: String,
+        required: function() { return this.role === 'doctor'; }
+    },
     medicalHistory:{
         type: mongoose.Schema.Types.ObjectId, ref:"medicalHistory"}
 }, {
     timestamps: true
 });
+
+
+
+
+
+
+
 
 export const userSession = mongoose.model(userSessionCollection, sessionSchema);

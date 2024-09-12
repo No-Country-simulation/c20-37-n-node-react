@@ -1,14 +1,14 @@
 import { useState } from "react"
+import { useGeneralContext } from "../../hooks/useGeneralContext";
 import { useUsers } from "../../hooks/useUsersContext"
 import { EditUser } from "./EditUser";
 import { Table, Dropdown, TextInput, Button } from 'flowbite-react'
 import { HiDotsVertical, HiPencil, HiTrash, HiSearch } from 'react-icons/hi'
-import { useGeneralContext } from "../../hooks/useGeneralContext";
 
 export const UserList = ({ filterUsed }) => {
 
   const { users, setUsers } = useGeneralContext()
-  const { getUsers, updateUserById } = useUsers()
+  const { getUsers, updateUserById, deleteUserByDni } = useUsers()
   const [selectedUser, setSelectedUser] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState('');
@@ -17,9 +17,14 @@ export const UserList = ({ filterUsed }) => {
     setSelectedUser(user);
     setShowModal(true);
   };
-  const handleDelete = (id) => {
-    console.log('aca se borraria el usuario con id:', id);
+  const handleDelete = async (dni) => {
 
+    const confirm = window.confirm('¿Estás seguro de eliminar este usuario?');
+    if (!confirm) return alert('Operación cancelada');
+
+    const response = await deleteUserByDni(dni);
+    console.log(response);
+    alert('Usuario eliminado correctamente');
   };
 
   const handleCloseModal = () => {
@@ -27,12 +32,13 @@ export const UserList = ({ filterUsed }) => {
     setSelectedUser(null);
   };
 
-  const handleSaveUser = (updatedUser) => {
+  const handleSaveUser = async (updatedUser) => {
     setUsers(users.map(user => user.id === updatedUser.id ? updatedUser : user));
-    updateUserById(updatedUser._id, updatedUser);
+    await updateUserById(updatedUser._id, updatedUser);
     getUsers();
     handleCloseModal();
   };
+
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
@@ -93,7 +99,7 @@ export const UserList = ({ filterUsed }) => {
                       <Dropdown.Item icon={HiPencil} onClick={() => handleEditClick(user)}>
                         Editar
                       </Dropdown.Item>
-                      <Dropdown.Item icon={HiTrash} onClick={() => handleDelete(user.email)}>
+                      <Dropdown.Item icon={HiTrash} onClick={() => handleDelete(user.dni)}>
                         Eliminar
                       </Dropdown.Item>
                     </Dropdown>

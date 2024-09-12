@@ -36,9 +36,16 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await loginRequest(user)
             Cookies.set("access_token", data.token, { expires: 3 })
-            if (!data.playload) return toast.error(['No se pudo iniciar sesión'])
+            const auth = await verifyTokenRequest();
+            if (!auth) {
+                setLogued(null)
+                setAuthenticated(false)
+                setErrors(['No se pudo verificar el token'])
+                setLoading(false)
+                return;
+            }
             if (data.playload.status === false) return toast.error(['Usuario inactivo, comuniquese con un administrador']) // Si el usuario esta inactivo
-            setLogued(data.playload)
+            setLogued(auth.data.playload)
             setAuthenticated(true)
             toast.success('Se ha iniciado sesión')
         } catch (error) {
@@ -46,7 +53,6 @@ export const AuthProvider = ({ children }) => {
             setAuthenticated(false)
             setLogued({})
             toast.error('No se pudo iniciar sesión')
-            toast.error(error.response.data.msg)
         } finally {
             setLoading(false);
         }
@@ -92,17 +98,15 @@ export const AuthProvider = ({ children }) => {
             return;
         }
         try {
-
             const response = await verifyTokenRequest()
-            if (response.status === 401) {
+            if (!response) {
+
                 setAuthenticated(false)
                 setLogued({})
+                return;
             }
-            if (response.status === 200) {
-                // Actualiza el estado de la app con los datos del usuario
-                setLogued(response.data.playload)
-                setAuthenticated(true)
-            }
+            setLogued(response.data.playload)
+            setAuthenticated(true)
         } catch (error) {
             setAuthenticated(false)
             setLogued({})

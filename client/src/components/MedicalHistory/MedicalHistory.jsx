@@ -9,16 +9,14 @@ export const MedicalHistory = () => {
     const { medicalHistory, getMedicalHistoryById } = useUsers()
     const [idClient, setIdClient] = useState('')
 
-    // useEffect(() => {
-    //     getMedicalHistoryById(logued.medicalHistory)
-    // }, [])
 
     return (
-        <Card className="max-w-6xl mx-auto roboto">
-            <h2 className="text-2xl font-bold mb-4">Historial Médico</h2>
+        <Card className="w-full max-w-2xl mx-auto roboto">
+            <h1 className="font-bold text-center mb-6">Historial medico</h1>
+            <p className='text-center'>Si no se muestran datos, porfavor presione el botón para refrescar.</p>
             {logued?.role === 'doctor' &&
                 <div>
-                    <Label htmlFor="idClient" value="Id de la historia clinica" />
+                    <Label className='font-medium text-md' htmlFor="idClient" value="Buscar por DNI de paciente" />
                     <TextInput
                         id="idClient"
                         name="idClient"
@@ -29,11 +27,9 @@ export const MedicalHistory = () => {
                 </div>
             }
             {logued?.role === 'user' ?
-            <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.medicalHistory)}>Obtener Datos o Refrescar</button> :
-            <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(idClient)}>Obtener Datos o Refrescar</button>
-        }
-
-
+                <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.dni)}>Obtener Datos o Refrescar</button> :
+                <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(idClient)}>Obtener Datos o Refrescar</button>
+            }
             <Table>
                 <Table.Body className="divide-y">
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -45,8 +41,16 @@ export const MedicalHistory = () => {
                         <Table.Cell>{medicalHistory?.updatedAt ? new Date(medicalHistory.updatedAt).toLocaleString() : 'No hay datos cargados'}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell className="font-medium">Id de la historia medica</Table.Cell>
+                        <Table.Cell>{medicalHistory?._id ? medicalHistory._id : "No hay datos cargados"}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Nombre</Table.Cell>
                         <Table.Cell>{logued?.firstName} {logued?.lastName}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell className="font-medium">DNI</Table.Cell>
+                        <Table.Cell>{logued?.dni}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Fecha de Nacimiento</Table.Cell>
@@ -133,7 +137,7 @@ export const MedicalHistory = () => {
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Diagnóstico Actual</Table.Cell>
                         <Table.Cell className='flex flex-wrap gap-1'>
-                            {medicalHistory?.diagnoses?.length ? medicalHistory.vaccines.map((diagnoses, index) => (
+                            {medicalHistory?.diagnoses?.length ? medicalHistory.diagnoses.map((diagnoses, index) => (
                                 <div key={index} className='flex'>
                                     <p color={'white'} size="lg" className="text-sm mr-2 px-1 border-gray-300 border">{diagnoses}</p>
                                     {/* <button className='bg-red-500 px-1 text-white rounded-sm' onClick={() => console.log(allergy, index)} >x</button> */}

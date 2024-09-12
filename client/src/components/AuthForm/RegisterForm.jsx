@@ -4,106 +4,178 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ErrorText } from '../Error/ErrorText'
 import { useAuth } from "../../hooks/useAuthContext"
 import { DatePick } from "../DatePicker/DatePicker"
-import 'flowbite/dist/flowbite.css';
+import { Button, Label, TextInput, Card } from 'flowbite-react'
+import { HiEye, HiEyeOff } from 'react-icons/hi'
+import toast from "react-hot-toast"
 
 export const RegisterForm = () => {
+    const { register: registerRequest } = useAuth()
     const navigate = useNavigate()
-
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [startDate, setStartDate] = useState(new Date());
     const { register,
         handleSubmit,
         formState: { errors } } = useForm()
 
-    const { register: registerRequest } = useAuth()
 
     const handleDateChange = (date) => {
         setStartDate(date)
     }
     const onSubmit = handleSubmit(async (values) => {
         // Logica de autenticacion
-        const user = {
+        if (values.password !== values.confirmPassword) {
+            toast.error('Las contraseñas no coinciden')
+            return;
+        }
+        const { confirmPassword, ...userWithoutPassword } = {
             ...values,
             birthdate: startDate
-        }
-        const response = await registerRequest(user)
+        }	// Eliminamos confirmPassword
+        const response = await registerRequest(userWithoutPassword)
         // Redireccionar
         if (!response) return;
         navigate('/login')
     })
     return (
-        <div className="w-full min-h-screen flex justify-center">
-        <div className="w-6/12 bg-white flex flex-col justify-center my-1 p-2 md:p-6 shadow-xl border rounded-lg">
-            <h1 className="text-2xl font-black text-primary py-4 text-center">Registrarse</h1>
-            <p className="text-center mb-4">Complete el formulario con su datos</p>
-            <form onSubmit={onSubmit} className=" px-4 lg:p-8 pt-6 pb-8 mb-4">
-
-
-                <div className="flex flex-col w-full mb-4">
-                    <label className="block text-gray-700 text-sm font-bold" htmlFor="firstName">
-                        Nombre
-                    </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstName" type="text" name="firstName" placeholder="Nombre"
-                        {...register('firstName', { required: true })}
-                    />
-                </div>
-                <div className="flex flex-col w-full mb-4">
-                    <label htmlFor="lastName"  className="block text-gray-700 text-sm font-bold">
-                        Apellido
-                    </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastName" type="text" name="lastName" placeholder="Apellido"
-                        {...register('lastName', { required: true })}
-                    />
-                </div>
-                <div className="flex flex-col w-full mb-4">
-                    <label htmlFor="birthdate"  className="block text-gray-700 text-sm font-semibold">
-                        Fecha de nacimiento
-                        <DatePick
-                            startDate={startDate}
-                            setStartDate={handleDateChange}
+        <div className="flex flex-col h-[calc(100vh-50px)] justify-center w-full">
+            <Card className="w-full max-w-xl mx-auto ">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Registro</h2>
+                <form className="flex flex-col gap-4" onSubmit={onSubmit}>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="firstName" value="Nombre" />
+                            <TextInput
+                                id="firstName"
+                                name="firstName"
+                                type="text"
+                                placeholder="Juan"
+                                required
+                                {...register('firstName', { required: true })}
+                            />
+                            {errors.firstName && <ErrorText text="Nombre es requerido" />}
+                        </div>
+                        <div>
+                            <Label htmlFor="lastName" value="Apellido" />
+                            <TextInput
+                                id="lastName"
+                                name="lastName"
+                                type="text"
+                                placeholder="Pérez"
+                                required
+                                {...register('lastName', { required: true })}
+                            />
+                            {errors.lastName && <ErrorText text="Apellido es requerido" />}
+                        </div>
+                    </div>
+                    <div>
+                        <Label htmlFor="dni" value="DNI" />
+                        <TextInput
+                            id="dni"
+                            name="dni"
+                            type="text"
+                            placeholder="12345678A"
+                            required
+                            {...register('dni', { required: true })}
                         />
-                    </label>
-                </div>
-                <div className='flex flex-col w-full mb-4'>
-                    <label
-                        className="block text-gray-700 text-sm font-bold" htmlFor="username">
-                        Email
-                    </label>
-                    <input
-                        autoComplete="email"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" name="email" placeholder="Email"
-                        {...register('email', { required: true })}
-                    />
-                    {errors.email && <ErrorText text="Email es requerido" />}
-                </div>
-                <div className="flex flex-col w-full mb-4">
-                    <label className="block text-gray-700 text-sm font-bold" htmlFor="phone">
-                        Telefono
-                    </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="phone" type="number" name="phone" placeholder="+59895229963"
-                        {...register('phone', { required: true })}
-                    />
-                </div>
-                <div className="flex flex-col w-full mb-4">
-                    <label className="block text-gray-700 text-sm font-bold" htmlFor="password">
-                        Contraseña
-                    </label>
-                    <input
-                        autoComplete="new-password"
-                        className="shadow appearance-none border focus:border-blue-500 rounded w-full py-2 px-3 my-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************"
-                        {...register('password', { required: true })}
-                    />
-                    {errors.password && <ErrorText text="Contraseña es requerida" />}
-                </div>
-                <button
-                    type="submit"
-                    className="w-full mb-4 bg-blue-400 hover:bg-blue-700 transition-colors duration-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Confirmar datos
-                </button>
-                <Link to={'/login'} className=" font-bold text-xs text-secondary hover:text-blue-500" href="#">
+                        {errors.dni && <ErrorText text="DNI es requerido" />}
+                    </div>
+                    <div>
+                        <Label htmlFor="email" value="Email" />
+                        <TextInput
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="juan.perez@ejemplo.com"
+                            required
+                            {...register('email', { required: true })}
+                        />
+                        {errors.email && <ErrorText text="Email es requerido" />}
+                    </div>
+                    <div>
+                        <Label htmlFor="phone" value="Teléfono" />
+                        <TextInput
+                            id="phone"
+                            name="phone"
+                            type="tel"
+                            placeholder="600123456"
+                            required
+                            {...register('phone', { required: true })}
+                        />
+                        {errors.phone && <ErrorText text="Numero es requerido" />}
+                    </div>
+                    <div>
+                        <Label htmlFor="birthdate">
+                            Fecha de nacimiento
+                            <DatePick
+                                startDate={startDate}
+                                setStartDate={handleDateChange}
+                            />
+                        </Label>
+                    </div>
+                    <div>
+                        <Label htmlFor="password" value="Contraseña" />
+                        <div className="relative">
+                            <TextInput
+                                id="password"
+                                name="password"
+                                type={passwordVisible ? 'text' : 'password'}
+                                required
+                                {...register('password', { required: true })}
+                            />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                                onClick={() => setPasswordVisible('password')}
+                            >
+                                {passwordVisible ? (
+                                    <HiEyeOff className="w-4 h-4" />
+                                ) : (
+                                    <HiEye className="w-4 h-4" />
+                                )}
+                                <span className="sr-only">
+                                    {passwordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                                </span>
+                            </button>
+                        </div>
+                        {errors.password && <ErrorText text="Contraseña es requerida" />}
+                    </div>
+                    <div>
+                        <Label htmlFor="confirmPassword" value="Confirmar Contraseña" />
+                        <div className="relative">
+                            <TextInput
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                required
+                                {...register('confirmPassword', { required: true })}
+                            />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            >
+                                {showConfirmPassword ? (
+                                    <HiEyeOff className="w-4 h-4" />
+                                ) : (
+                                    <HiEye className="w-4 h-4" />
+                                )}
+                                <span className="sr-only">
+                                    {showConfirmPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                                </span>
+                            </button>
+                        </div>
+                        {errors.confirmPassword && <ErrorText text="Confirmación es requerida" />}
+                    </div>
+                    <Button type="submit" className="mt-2">
+                        Registrarse
+                    </Button>
+                </form>
+                <Link to={'/login'} className=" font-bold text-xs text-red-500 hover:text-red-800" href="#">
                     Ya estas registrado/a?
                 </Link>
-            </form>
-        </div> 
-        </div> 
+            </Card>
+        </div>
+
     )
 }

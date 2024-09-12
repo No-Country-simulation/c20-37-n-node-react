@@ -10,7 +10,7 @@ export const UserLayout = () => {
 
     // Si es usuario dejarlo seguir, sino redirigirlo a la pantalla principal
     useEffect(() => {
-        if (rol !== 'user') navigate('/')
+        if (rol !== 'user') return navigate('/')
     }, [])
     return <Outlet />
 }

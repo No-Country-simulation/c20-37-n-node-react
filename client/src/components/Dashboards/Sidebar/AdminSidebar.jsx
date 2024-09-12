@@ -9,7 +9,7 @@ export const AdminSidebar = ({ isSidebarCollapsed,
 }) => {
 
   return (
-    <div className={`${isSidebarCollapsed ? 'w-16' : 'w-40'} transition-all duration-300 ease-in-out bg-red-200`}>
+    <div className={`${isSidebarCollapsed ? 'w-16' : 'w-40'} transition-all duration-300 ease-in-out`}>
       <Sidebar collapsed={isSidebarCollapsed}>
 
         <div className={`cursor-pointer flex ${isSidebarCollapsed ? 'justify-center' : null}`}>

@@ -14,7 +14,11 @@ const userRegister = async (req = request, res = response) => {
 const userLogin = async (req = request, res = response) => {
     try {
         const token = createToken(req.user);
-        res.cookie("token", token, { httpOnly: true });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none'
+        });
         return res.status(200).json({ status: "ok", playload: req.user, token });
     } catch (error) {
         res.status(500).json({ status: "error", msg: "Internal server error" });
@@ -69,4 +73,28 @@ const logout = (req, res, next) => {
     }
 };
 
-export default { userRegister, userLogin, userUpdate, getAll, verificationSessions, logout }
+const getByDni = async (req = request, res = response) => {
+    try {
+        const { dni } = req.params;
+
+        const user = await userService.getByDni(dni);
+        if (!user) return res.status(404).json({ status: "error", msg: "User not found" });
+        return res.status(200).json({ status: "ok", playload: user.medicalHistory });
+    } catch (error) {
+        res.status(500).json({ status: "error", msg: "Internal server error" });
+    }
+}
+
+const deleteByDni = async (req = request, res = response) => {
+    try {
+        const { dni } = req.params;
+        const user = await userService.getByDni(dni);
+        if (!user) return res.status(404).json({ status: "error", msg: "Usuario no encontrado" });
+        const userDeleted = await userService.deleteOne(user._id);
+        return res.status(200).json({ status: "ok", playload: userDeleted });
+    } catch (error) {
+        res.status(500).json({ status: "error", msg: "Internal server error" });
+    }
+}
+
+export default { userRegister, userLogin, userUpdate, getAll, verificationSessions, logout, getByDni, deleteByDni }
