@@ -1,22 +1,22 @@
-import availableTimeServices from "./availableTime.services";
+import availableTimeServices from "./availableTime.services.js";
 
-const getAvailableTimeByDoctor= async (req, res) => {
+const getAvailableTimeByDoctor = async (req, res) => {
     try {
-        const {doctorId} = req.params;
+        const { doctorId } = req.params;
         const availableTime = await availableTimeServices.getByDoctor(doctorId);
-        return res.status(200).json({ status: "ok", playload:availableTime })
+        return res.status(200).json({ status: "ok", playload: availableTime })
     } catch (error) {
-        res.status(500).json({status:"error", msg:"Internal server error"});
+        res.status(500).json({ status: "error", msg: "Internal server error" });
     }
 }
 
 const getAvailableTimeByDoctorAndRangeTime = async (req, res) => {
     try {
-        const {doctorId, start, end} = req.params;
+        const { doctorId, start, end } = req.params;
         const availableTime = await availableTimeServices.getByDoctorAndRangeTime(doctorId, start, end);
-        return res.status(200).json({ status: "ok", playload:availableTime })
+        return res.status(200).json({ status: "ok", playload: availableTime })
     } catch (error) {
-        res.status(500).json({status:"error", msg:"Internal server error"});
+        res.status(500).json({ status: "error", msg: "Internal server error" });
     }
 }
 
@@ -63,7 +63,7 @@ const create = async (req, res) => {
 
 const updateByDoctorAndDate = async (req, res) => {
     try {
-        const {doctorId, date} = req.params;
+        const { doctorId, date } = req.params;
         const body = req.body;
         const availableTime = await availableTimeServices.updateByDoctorAndDate(doctorId, date, body);
         return res.status(201).json({ status: "ok", msg: "available time updated", playload: availableTime });
@@ -74,7 +74,7 @@ const updateByDoctorAndDate = async (req, res) => {
 
 const updateByDoctor = async (req, res) => {
     try {
-        const {doctorId} = req.params;
+        const { doctorId } = req.params;
         const body = req.body;
         const availableTime = await availableTimeServices.updateByDoctor(doctorId, body);
         return res.status(201).json({ status: "ok", msg: "available time updated", playload: availableTime });
@@ -83,16 +83,16 @@ const updateByDoctor = async (req, res) => {
     }
 }
 
-const removeByDoctorAndDate = async (req , res) => {
+const removeByDoctorAndDate = async (req, res) => {
     try {
-        const {doctorId, date} = req.params;
-        const availableTime= await availableTimeServices.removeByDoctorAndDate(doctorId, date);
-        return res.status(200).json({ status: "ok", msg: "available times specific deleted", playload: availableTime})
+        const { doctorId, date } = req.params;
+        const availableTime = await availableTimeServices.removeByDoctorAndDate(doctorId, date);
+        return res.status(200).json({ status: "ok", msg: "available times specific deleted", playload: availableTime })
     } catch (error) {
-        res.status(500).json({status:"error", msg:"Internal server error"});
+        res.status(500).json({ status: "error", msg: "Internal server error" });
     }
 }
 
 
 
-export default {getAvailableTimeByDoctor, getAvailableTimeByDoctorAndRangeTime, create, updateByDoctorAndDate, updateByDoctor, removeByDoctorAndDate}
+export default { getAvailableTimeByDoctor, getAvailableTimeByDoctorAndRangeTime, create, updateByDoctorAndDate, updateByDoctor, removeByDoctorAndDate }

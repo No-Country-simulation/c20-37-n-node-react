@@ -1,4 +1,4 @@
-import consultationRepository from "./consultation.repository";
+import consultationRepository from "./consultation.repository.js";
 
 const getByID = async (id) => { return await consultationRepository.getByID(id); };
 
