@@ -3,7 +3,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
-export const Calendar = () => {
+export const Calendar = ({ tabsRef, setActiveTab }) => {
 
   const handleDateClick = (info) => {
     console.log("Fecha seleccionada: ", info.dateStr);
@@ -25,8 +25,10 @@ export const Calendar = () => {
   }
 
   return (
-    <div className='w-screen min-h-screen my-24 flex justify-center'>
-      <div className='w-10/12'>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6">Agendar consulta</h1>
+      {/* <div className='w-screen min-h-screen my-24 flex justify-center'> */}
+      <div className='w-10/12 mx-auto'>
         <FullCalendar
           headerToolbar={{
             end: 'prev,next today',
@@ -62,5 +64,6 @@ export const Calendar = () => {
         />
       </div>
     </div>
+    // </div>
   )
 }

@@ -1,19 +1,26 @@
+/* eslint-disable react/prop-types */
 import { Card, Table, Label, TextInput } from 'flowbite-react'
 import { useUsers } from '../../hooks/useUsersContext'
 import { useAuth } from '../../hooks/useAuthContext'
 import { useState } from 'react'
 
-export const MedicalHistory = () => {
+export const MedicalHistory = ({ tabsRef, setActiveTab }) => {
 
     const { logued } = useAuth()
     const { medicalHistory, getMedicalHistoryById } = useUsers()
     const [idClient, setIdClient] = useState('')
 
+    const refreshData = async () => {
+        if (logued?.role === 'doctor') {
+            await getMedicalHistoryById(idClient)
+            return;
+        }
+        await getMedicalHistoryById(logued?.dni)
+    }
 
     return (
         <Card className="w-full max-w-6xl mx-auto roboto">
-            <h1 className="font-bold text-center mb-6">Historial medico</h1>
-            <p className='text-center'>Si no se muestran datos, porfavor presione el botón para refrescar.</p>
+            <h1 className="font-bold text-center mb-2">Historial medico</h1>
             {logued?.role === 'doctor' &&
                 <div>
                     <Label className='font-medium text-md' htmlFor="idClient" value="Buscar por DNI de paciente" />
@@ -26,10 +33,8 @@ export const MedicalHistory = () => {
                     />
                 </div>
             }
-            {logued?.role === 'user' ?
-                <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(logued?.dni)}>Obtener Datos o Refrescar</button> :
-                <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={() => getMedicalHistoryById(idClient)}>Obtener Datos o Refrescar</button>
-            }
+            <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={refreshData}>Obtener Datos o Refrescar</button>
+            <p className='text-center text-base'>Si no se muestran datos, porfavor presione el botón para refrescar.</p>
             <Table>
                 <Table.Body className="divide-y">
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
