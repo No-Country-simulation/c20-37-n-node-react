@@ -33,10 +33,18 @@ const getByPatientAndRangeTime = async (patientId, start, end) => {
     return consultation;
 }
 
+const getByDoctorInSchedule = async (doctorId, startTime, endTime) => {
+
+    const consultation = await Consultation.findOne({
+        doctor: doctorId,
+        date: currentDate,
+        startTime: { $gte: startTime, $lt: endTime },
+      });
+    return consultation;
+}
+
 const create = async (data, doctorId, patientId) => {
     const consultation = await Consultation.create(data);
-
-    await availableTimeServices.updateByDoctorAndConsultation(doctorId, consultation);
 
     await calendarServices.updateCalendarByConsultation(doctorId, patientId, consultation._id);
 
@@ -58,4 +66,4 @@ const removeByID = async (id) => {
     return { success: true, message: 'Consultation deleted successfully' };
 };
 
-export default {getByID, getByDoctorAndRangeTime, getByPatientAndRangeTime, create, updateByID, removeByID}
+export default {getByID, getByDoctorAndRangeTime, getByPatientAndRangeTime, create, updateByID, removeByID, getByDoctorInSchedule}

@@ -6,23 +6,35 @@ const availableTimeSchema = new Schema({
     ref: 'User',
     required: true
   },
-  date: {
-    type: Date,
+  daysOfWeek: [{
+    type: Number,
     required: true
-  },
+  }],
   timeSlots: [{
     startTime: {
-      type: Date,
+      type: String, //HH:mm
       required: true
     },
     endTime: {
+      type: String,
+      required: true
+    }
+  }],
+  exceptions: [{
+    date: {
       type: Date,
       required: true
     },
-    booked: {
-      type: Boolean,
-      default: false
-    }
+    timeSlots: [{
+      startTime: {
+        type: String,
+        required: true
+      },
+      endTime: {
+        type: String,
+        required: true
+      }
+    }]
   }]
 }, {
   timestamps: true

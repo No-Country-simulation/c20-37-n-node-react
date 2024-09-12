@@ -1,9 +1,9 @@
 import availableTimeServices from "./availableTime.services";
 
-const getAvailableTimeByID = async (req, res) => {
+const getAvailableTimeByDoctor= async (req, res) => {
     try {
-        const {id} = req.params;
-        const availableTime = await availableTimeServices.getByID(id);
+        const {doctorId} = req.params;
+        const availableTime = await availableTimeServices.getByDoctor(doctorId);
         return res.status(200).json({ status: "ok", playload:availableTime })
     } catch (error) {
         res.status(500).json({status:"error", msg:"Internal server error"});
@@ -20,11 +20,41 @@ const getAvailableTimeByDoctorAndRangeTime = async (req, res) => {
     }
 }
 
-
 const create = async (req, res) => {
     try {
         const body = req.body;
-        const availableTime = await availableTimeServices.create(body);
+        const timeSlotsByHour = [];
+
+        for (let timeSlot of body.timeSlots) {
+            const startTime = new Date();
+            const [startHour, startMinute] = timeSlot.startTime.split(':');
+            startTime.setHours(startHour, startMinute);
+
+            const endTime = new Date();
+            const [endHour, endMinute] = timeSlot.endTime.split(':');
+            endTime.setHours(endHour, endMinute);
+
+
+            while (startTime < endTime) {
+
+                let nextHour = new Date(startTime);
+                nextHour.setHours(startTime.getHours() + 1);
+
+                timeSlotsByHour.push({
+                    startTime: `${startTime.getHours().toString().padStart(2, '0')}:${startTime.getMinutes().toString().padStart(2, '0')}`,
+                    endTime: `${nextHour.getHours().toString().padStart(2, '0')}:${nextHour.getMinutes().toString().padStart(2, '0')}`
+                });
+
+                startTime = nextHour;
+            }
+        }
+
+        const newBody = {
+            ...body,
+            timeSlots: timeSlotsByHour
+        };
+
+        const availableTime = await availableTimeServices.create(newBody);
         return res.status(201).json({ status: "ok", msg: "available time created", playload: availableTime });
     } catch (error) {
         res.status(500).json({ status: "error", msg: "Internal server error" });
@@ -42,11 +72,11 @@ const updateByDoctorAndDate = async (req, res) => {
     }
 }
 
-const updateByDoctorAndDay = async (req, res) => {
+const updateByDoctor = async (req, res) => {
     try {
-        const {doctorId, dayOfWeek} = req.params;
+        const {doctorId} = req.params;
         const body = req.body;
-        const availableTime = await availableTimeServices.updateByDoctorAndDay(doctorId, dayOfWeek, body);
+        const availableTime = await availableTimeServices.updateByDoctor(doctorId, body);
         return res.status(201).json({ status: "ok", msg: "available time updated", playload: availableTime });
     } catch (error) {
         res.status(500).json({ status: "error", msg: "Internal server error" });
@@ -56,22 +86,13 @@ const updateByDoctorAndDay = async (req, res) => {
 const removeByDoctorAndDate = async (req , res) => {
     try {
         const {doctorId, date} = req.params;
-        const response = await availableTimeServices.removeByDoctorAndDate(doctorId, date);
-        return res.status(200).json({ status: "ok", msg: response.message })
-    } catch (error) {
-        res.status(500).json({status:"error", msg:"Internal server error"});
-    }
-}
-
-const removeByDoctorAndDay = async (req , res) => {
-    try {
-        const {doctorId, dayOfWeek} = req.params;
-        const response = await availableTimeServices.removeByDoctorAndDay(doctorId, dayOfWeek);
-        return res.status(200).json({ status: "ok", msg: response.message })
+        const availableTime= await availableTimeServices.removeByDoctorAndDate(doctorId, date);
+        return res.status(200).json({ status: "ok", msg: "available times specific deleted", playload: availableTime})
     } catch (error) {
         res.status(500).json({status:"error", msg:"Internal server error"});
     }
 }
 
 
-export default {getAvailableTimeByID, getAvailableTimeByDoctorAndRangeTime, create, updateByDoctorAndDate, updateByDoctorAndDay, removeByDoctorAndDate, removeByDoctorAndDay}
+
+export default {getAvailableTimeByDoctor, getAvailableTimeByDoctorAndRangeTime, create, updateByDoctorAndDate, updateByDoctor, removeByDoctorAndDate}

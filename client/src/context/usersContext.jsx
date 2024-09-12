@@ -84,6 +84,11 @@ export const UsersProvider = ({ children }) => {
             setLoading(false)
         }
     }
+    useEffect(() => {
+        if (logued.email) {
+            getUsers()
+        }
+    }, [logued])
 
     const updateMedicalHistoryById = async (id, data) => {
         setLoading(true)

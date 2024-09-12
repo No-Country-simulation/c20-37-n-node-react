@@ -1,18 +1,19 @@
 import {Router} from "express";
 import {authorization} from "../../middlewares/authorization.middleware.js";
 import {passportCall} from "../../middlewares/passport.middleware.js";
+import availableTimeControllers from "./availableTime.controllers.js";
 
 const router = Router();
 
-router.get("/:id",passportCall("current"),authorization(["admin","doctor"]), );
-router.get("/:doctorId/:start/:end",passportCall("current"),authorization(["admin","doctor", "user"]), );
+router.get("/:doctorId",passportCall("current"),authorization(["admin","doctor", "user"]), availableTimeControllers.getAvailableTimeByDoctor);
 
-router.post("/", passportCall("current"),authorization(["admin","doctor"]), );
+router.get("/:doctorId/:start/:end",passportCall("current"),authorization(["admin","doctor", "user"]), availableTimeControllers.getAvailableTimeByDoctorAndRangeTime);
 
-router.put("/:doctorId/:date", passportCall("current"),authorization(["admi","doctor"]), );// un dia particular
-router.put("/:doctorId/:dayOfWeek", passportCall("current"),authorization(["admi","doctor"]), );
+router.post("/", passportCall("current"),authorization(["admin","doctor"]), availableTimeControllers.create);
 
-router.delete("/:doctorId/:date",passportCall("current"),authorization(["doctor","admi"]),); //eliminar un dia en particular por x razon
-router.delete("/:doctorId/day/:dayOfWeek",passportCall("current"),authorization(["doctor","admi"]),); //eliminar un dia de la semana de su horarios
+router.put("/:doctorId/:date", passportCall("current"),authorization(["admi","doctor"]), availableTimeControllers.updateByDoctorAndDate);// un dia particular
+router.put("/:doctorId", passportCall("current"),authorization(["admi","doctor"]), availableTimeControllers.updateByDoctor);
+
+router.delete("/:doctorId/:date",passportCall("current"),authorization(["doctor","admi"]), availableTimeControllers.removeByDoctorAndDate); //eliminar un dia en particular por x razon
 
 export default router;
