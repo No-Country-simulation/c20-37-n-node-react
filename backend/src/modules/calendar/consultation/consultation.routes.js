@@ -1,6 +1,6 @@
 import {Router} from "express";
-import {authorization} from "../../middlewares/authorization.middleware.js";
-import {passportCall} from "../../middlewares/passport.middleware.js";
+import {authorization} from "../../../middlewares/authorization.middleware.js";
+import {passportCall} from "../../../middlewares/passport.middleware.js";
 import consultationControllers from "./consultation.controllers.js";
 
 const router = Router();

@@ -1,7 +1,7 @@
 import {Router} from "express";
-import {authorization} from "../../middlewares/authorization.middleware.js";
-import {passportCall} from "../../middlewares/passport.middleware.js";
 import availableTimeControllers from "./availableTime.controllers.js";
+import { authorization } from "../../../middlewares/authorization.middleware.js";
+import { passportCall } from "../../../middlewares/passport.middleware.js";
 
 const router = Router();
 
