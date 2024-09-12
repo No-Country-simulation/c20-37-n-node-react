@@ -11,7 +11,7 @@ export const MedicalHistory = () => {
 
 
     return (
-        <Card className="w-full max-w-2xl mx-auto roboto">
+        <Card className="w-full max-w-6xl mx-auto roboto">
             <h1 className="font-bold text-center mb-6">Historial medico</h1>
             <p className='text-center'>Si no se muestran datos, porfavor presione el botón para refrescar.</p>
             {logued?.role === 'doctor' &&

@@ -53,7 +53,7 @@ export const Profile = ({ user }) => {
     }, [profile])
 
     return (
-        <Card className="max-w-4xl mx-auto roboto">
+        <Card className="max-w-4xl mx-auto roboto ">
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Editar Perfil
             </h5>

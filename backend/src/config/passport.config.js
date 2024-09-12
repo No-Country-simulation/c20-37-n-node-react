@@ -16,8 +16,14 @@ const CustomStrategy = passportCustom.Strategy;
 export const initializePassport = () => {
     passport.use("register", new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
         try {
+            console.log(req.body);
+            
             const { firstName, lastName, phone, role, birthdate, address, dni } = req.body;
             const user = await userService.getByEmail(username);
+            console.log("MAIL:",username);
+            
+            console.log(user);
+            
             if (user) { return done(null, false, { message: "User already exists" }); }
             const medicalHistory = await medicalHistoryService.create()
             const newUser = {

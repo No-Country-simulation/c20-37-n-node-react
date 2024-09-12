@@ -1,7 +1,7 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import { Layout } from './components/Layouts/Layout'
 import { Home } from './Pages/Home'
-import { Dashboard } from './Pages/Dashboard'
+// import { Dashboard } from './Pages/Dashboard'
 import { Authentication } from './Pages/Authentication'
 import { AdminLayout } from './components/Layouts/AdminLayout'
 import { UserListPage } from './Pages/Admin/UserListPage'
@@ -14,6 +14,7 @@ import { Error404 } from './components/NotFound/Error404'
 import { ProfilePage } from './Pages/User/ProfilePage'
 import { MedicalHistoryPage } from './Pages/User/MedicalHistoryPage'
 import { Calendar } from './components/Calendar/Calendar'
+import { DashboardPage } from './Pages/User/DashboardPage'
 
 export const Router = () => {
     return (
@@ -23,30 +24,28 @@ export const Router = () => {
                     <Route path='/' element={<Home />} />
                     <Route path='/login' element={<Authentication />} />
                     <Route path='/register' element={<Authentication />} />
-                    <Route path='/calendar' element={<Calendar />} />
 
                     <Route element={<ProtectedRoute />}>
-                        <Route path='/dashboard' element={<Dashboard />} />
+                        <Route path='/calendar' element={<Calendar />} />
+                        <Route path='/profile' element={<ProfilePage />} />
+                        <Route path='/dashboard' element={<DashboardPage />} />
 
                         {/* Rutas para el administrador */}
                         <Route path='/admin' element={<AdminLayout />}>
-                            {/* <Route path='/admin/profile' element={<ProfilePage />} /> */}
                             <Route path='/admin/userList/' element={<UserListPage />} />
                         </Route>
 
                         {/* Rutas para el doctor */}
                         <Route path='/doc' element={<DoctorLayout />}>
-                            {/* <Route path='/doc/profile' element={<ProfilePage />} /> */}
                             <Route path='/doc/clinicalHistory/' element={<ClinicalHistoryPage />} />
                             <Route path='/doc/medicalHistory/' element={<MedicalHistoryPage />} />
                         </Route>
 
                         {/* Rutas para el usuario */}
                         <Route path='/user' element={<UserLayout />}>
-                            {/* <Route path='/user/profile' element={<ProfilePage />} /> */}
                             <Route path='/user/medicalHistory/' element={<MedicalHistoryPage />} />
                         </Route>
-                        <Route path='/profile' element={<ProfilePage />} />
+
                     </Route>
                     <Route path='/*' element={<Error404 />} />
                 </Route>
