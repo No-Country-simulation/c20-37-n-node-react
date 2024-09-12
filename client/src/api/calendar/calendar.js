@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../axios";
 
 export const getCalendarByOwner = (ownerId) => axios.get(`/api/calendar/${ownerId}`);
 
