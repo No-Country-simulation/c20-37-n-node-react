@@ -86,6 +86,7 @@ export const CalendarProvider = ({ children }) => {
     const getAvailableTimeByRangeDate = async (doctorId, startDate, endDate) => {
         try {
             setLoading(true)
+            
             const response = await getAvailableTimeByDoctorAndRangeDate(doctorId, startDate, endDate)
             if (!response) {
                 return toast.error('No se pudo obtener los horarios disponibles')
@@ -193,6 +194,7 @@ export const CalendarProvider = ({ children }) => {
     const getConsultationByDoctor = async (doctorId, startDate, endDate) => {
         try {
             setLoading(true)
+            
             const response = await getConsultationByDoctorAndRangeDate(doctorId, startDate, endDate)
             if (!response) {
                 return toast.error('No se pudo obtener las consultas')

@@ -16,6 +16,8 @@ import { MedicalHistoryPage } from './Pages/User/MedicalHistoryPage'
 import { Calendar } from './components/Calendar/Calendar'
 import { DashboardPage } from './Pages/User/DashboardPage'
 
+
+
 export const Router = () => {
     return (
         <BrowserRouter>

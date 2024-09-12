@@ -10,7 +10,7 @@ export const UserDashboard = () => {
   const { logued } = useGeneralContext()
   // Estos datos normalmente vendrían de una API o estado global
   const nextAppointment = {
-    date: '2023-06-15',
+    date: '2023-06-14',
     time: '14:30 a 15:30',
     doctor: 'Dra. María García',
     specialty: 'Cardiología'

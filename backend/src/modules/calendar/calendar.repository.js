@@ -1,8 +1,8 @@
 import { Calendar } from "./calendar.model.js";
 
 const getByOwner = async (ownerId) => {
-    const calendar = await Calendar.findById({
-        owner: doctorId
+    const calendar = await Calendar.findOne({
+        owner: ownerId
     }).populate('consultations')
         .exec();
 
@@ -16,7 +16,7 @@ const create = async (data) => {
 }
 
 const removeByOwner = async (ownerId) => {
-    await Calendar.findByIdAndDelete({
+    await Calendar.findOneAndDelete({
         owner: ownerId
     })
     return { success: true, message: 'Calendar deleted successfully' };

@@ -13,8 +13,8 @@ const getConsultationByID = async (req, res) => {
 const getConsultationByDoctorAndRangeTime = async (req, res) => {
     try {
         const {doctorId, start, end} = req.params;
-        const consultation = await consultationServices.getByDoctorAndRangeTime(doctorId, start, end);
-        return res.status(200).json({ status: "ok", playload:consultation })
+        const consultations = await consultationServices.getByDoctorAndRangeTime(doctorId, start, end);
+        return res.status(200).json({ status: "ok", playload:consultations })
     } catch (error) {
         res.status(500).json({status:"error", msg:"Internal server error"});
     }
@@ -22,9 +22,9 @@ const getConsultationByDoctorAndRangeTime = async (req, res) => {
 
 const getConsultationByPatientAndRangeTime = async (req, res) => {
     try {
-        const {doctorId, start, end} = req.params;
-        const consultation = await consultationServices.getByPatientAndRangeTime(doctorId, start, end);
-        return res.status(200).json({ status: "ok", playload:consultation })
+        const {patientId, start, end} = req.params;
+        const consultations = await consultationServices.getByPatientAndRangeTime(patientId, start, end);
+        return res.status(200).json({ status: "ok", playload:consultations })
     } catch (error) {
         res.status(500).json({status:"error", msg:"Internal server error"});
     }
@@ -33,6 +33,8 @@ const getConsultationByPatientAndRangeTime = async (req, res) => {
 const create = async (req, res) => {
     try {
         const body = req.body;
+        console.log(body);
+        
         const consultation = await consultationServices.create(body);
         return res.status(201).json({ status: "ok", msg: "consultation created", playload: consultation });
     } catch (error) {
@@ -44,6 +46,7 @@ const updateByID = async (req, res) => {
     try {
         const {id} = req.params;
         const body = req.body;
+        
         const consultation = await consultationServices.updateByID(id, body);
         return res.status(201).json({ status: "ok", msg: "consultation updated", playload: consultation });
     } catch (error) {

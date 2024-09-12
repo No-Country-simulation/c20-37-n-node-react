@@ -1,6 +1,7 @@
 import calendarRepository from "./calendar.repository.js";
 
-const getByOwner = async (doctorId) => { return await calendarRepository.getByOwner(ownerId); };
+const getByOwner = async (ownerId) => { 
+ return await calendarRepository.getByOwner(ownerId); };
 
 const create = async (data) => { return await calendarRepository.create(data); };
 

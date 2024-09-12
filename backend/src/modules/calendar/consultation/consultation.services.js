@@ -16,8 +16,8 @@ const getByPatientAndRangeTime = async (patientId, start, end) => {
 
 const create = async (data) => { return await consultationRepository.create(data); };
 
-const updateByID= async (id) => { 
-    return await consultationRepository.updateByID(id); 
+const updateByID= async (id, data) => { 
+    return await consultationRepository.updateByID(id, data); 
 };
 
 const removeByID = async (id) => { 
