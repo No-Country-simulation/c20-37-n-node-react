@@ -1,11 +1,11 @@
-import { Calendar } from "./calendar.model";
+import { Calendar } from "./calendar.model.js";
 
 const getByOwner = async (ownerId) => {
     const calendar = await Calendar.findById({
         owner: doctorId
     }).populate('consultations')
-    .exec();
-  
+        .exec();
+
     return calendar;
 }
 
@@ -23,26 +23,26 @@ const removeByOwner = async (ownerId) => {
 };
 
 const updateCalendarByConsultation = async (doctorId, patientId, consultationId) => {
-        const doctorCalendar = await Calendar.findOne({ owner: doctorId });
-        const patientCalendar = await Calendar.findOne({ owner: patientId });
-        
-        if (!doctorCalendar || !patientCalendar) {
-            throw new Error("Calendars not found");
+    const doctorCalendar = await Calendar.findOne({ owner: doctorId });
+    const patientCalendar = await Calendar.findOne({ owner: patientId });
+
+    if (!doctorCalendar || !patientCalendar) {
+        throw new Error("Calendars not found");
+    }
+
+    const updateCalendar = async (calendar) => {
+        if (!calendar.consultations.includes(consultationId)) {
+            calendar.consultations.push(consultationId);
         }
+        await calendar.save();
+    };
 
-        const updateCalendar = async (calendar) => {
-            if (!calendar.consultations.includes(consultationId)) {
-                calendar.consultations.push(consultationId);
-            }
-            await calendar.save();
-        };
+    await Promise.all([
+        updateCalendar(doctorCalendar),
+        updateCalendar(patientCalendar)
+    ]);
 
-        await Promise.all([
-            updateCalendar(doctorCalendar),
-            updateCalendar(patientCalendar)
-        ]);
-
-        return { success: true, message: 'Calendars updated successfully' };
+    return { success: true, message: 'Calendars updated successfully' };
 };
 
-export default {getByOwner, create, removeByOwner, updateCalendarByConsultation}
+export default { getByOwner, create, removeByOwner, updateCalendarByConsultation }

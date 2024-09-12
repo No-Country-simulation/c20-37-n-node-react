@@ -1,4 +1,4 @@
-import consultationServices from "./consultation.services";
+import consultationServices from "./consultation.services.js";
 
 const getConsultationByID = async (req, res) => {
     try {
