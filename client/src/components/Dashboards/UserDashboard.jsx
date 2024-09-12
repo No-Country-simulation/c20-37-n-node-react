@@ -43,10 +43,16 @@ export const UserDashboard = () => {
               Especialidad: {nextAppointment.specialty}
             </p>
           </div>
-          <div className="mt-4">
-            <Button className="bg-gray-200 hover:bg-gray-300 duration-200 transition-colors" color="primary">
+          <div className="flex gap-x-2 justify-between mt-4">
+            <Button className="bg-gray-200 hover:bg-gray-400 duration-200 transition-colors" color="primary" >
               Ver detalles de la consulta
             </Button>
+            <Button className="bg-gray-200 hover:bg-gray-400 duration-200 transition-colors" color="primary" >
+              Ver consultas anteriores
+            </Button>
+          </div>
+          <div className="mt-4">
+
           </div>
         </Card>
 
@@ -59,7 +65,7 @@ export const UserDashboard = () => {
             </Button>
             <Button className="bg-gray-200 hover:bg-gray-300 duration-200 transition-colors"
               onClick={() => navigate('/user/medicalHistory')}
-              color="secondary">
+              color="primary">
               <FaFileAlt className="mr-2 h-5 w-5" />
               Ver Ficha Médica
             </Button>
