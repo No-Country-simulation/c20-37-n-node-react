@@ -73,14 +73,34 @@ Convertirnos en la plataforma líder de telemedicina en Argentina, promoviendo u
 <hr/>
 
 <h2>Equipo de Desarrollo</h2>
-
 <ul>
-  <li><strong>Front-End Developer:</strong> Leandro Martínez</li>
-  <li><strong>Back-End Developer:</strong> Facundo Gómez</li>
-  <li><strong>Full Stack Developer:</strong> Fernanda Sivila</li>
-  <li><strong>Agile Project Manager:</strong> Noemí Zalazar</li>
-  <li><strong>Team Leader:</strong> Luciano Pardo</li>
+  <li><strong>Front-End Developer:</strong> 
+    <a href="https://www.linkedin.com/in/leandromartinezuy/" target="_blank">Leandro Martínez</a>
+    <br>
+    <img src="https://i.postimg.cc/26QfQYmK/in-foto-lean.jpg" alt="Leandro Martínez" width="100">
+  </li>
+  <li><strong>Back-End Developer:</strong> 
+    <a href="https://www.linkedin.com/in/facundo-javier-gomez-b53034219/" target="_blank">Facundo Gómez</a>
+    <br>
+    <img src="https://i.postimg.cc/y8LxRFnZ/in-foto-facu.jpg" alt="Facundo Gómez" width="100">
+  </li>
+  <li><strong>Full Stack Developer:</strong> 
+    <a href="https://www.linkedin.com/in/fernanda-sivila" target="_blank">Fernanda Sivila</a>
+    <br>
+    <img src="https://i.postimg.cc/htcQT4BH/in-foto-fer.jpg" alt="Fernanda Sivila" width="100">
+  </li>
+  <li><strong>Agile Project Manager:</strong> 
+    <a href="https://www.linkedin.com/in/noemizalazar" target="_blank">Noemí Zalazar</a>
+    <br>
+    <img src="https://i.postimg.cc/zDyCGfz7/in-foto-noe.jpg" alt="Noemí Zalazar" width="100">
+  </li>
+  <li><strong>Team Leader:</strong> 
+    <a href="https://www.linkedin.com/in/luciobio/" target="_blank">Luciano Pardo</a>
+    <br>
+    <img src="https://i.postimg.cc/pX13nrzd/in-foto-luciano.jpg" alt="Luciano Pardo" width="100">
+  </li>
 </ul>
+
 
 <hr/>
 
@@ -135,11 +155,13 @@ Convertirnos en la plataforma líder de telemedicina en Argentina, promoviendo u
 
 <hr>
 <h2>Deploy</h2>
-<p>Acceder a la plataforma <a href="link al deploy">aquí</a>.</p>
+<p>Acceder a la plataforma <a href="https://c20-37-n-node-react.vercel.app/">aquí</a>.</p>
+
 
 <hr>
 <h2>Video de Demostración</h2>
 <p>Mirar el video demostrativo <a href="link al video">aquí</a>.</p>
+
 
 
 <hr>
