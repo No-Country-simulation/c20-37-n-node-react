@@ -10,7 +10,7 @@ import { createConsultation, getConsultationByDoctorAndRangeDate, getConsultatio
 export const CalendarContext = createContext();
 
 export const CalendarProvider = ({ children }) => {
-    const { loading, setLoading, calendar, setCalendar, availableTime, setAvailableTime, doctorAvailability, setDoctorAvailability, consultations, setConsultations } = useGeneralContext()
+    const { loading, setLoading, calendar, setCalendar, availableTime, setAvailableTime, doctorAvailability, setDoctorAvailability, consultations, setConsultations, consultation, setConsultation } = useGeneralContext()
 
     //Calendar
     const getCalendar = async (ownerId) => {
@@ -182,7 +182,7 @@ export const CalendarProvider = ({ children }) => {
             if (!response) {
                 return toast.error('No se pudo obtener la consulta')
             }
-            setConsultations([response.data.playload]);
+            setConsultation(response.data.playload);
         } catch (error) {
             toast.error('No se pudo obtener la consulta', error)
         }
@@ -199,6 +199,7 @@ export const CalendarProvider = ({ children }) => {
             if (!response) {
                 return toast.error('No se pudo obtener las consultas')
             }
+            
             setConsultations(response.data.playload)
         } catch (error) {
             toast.error('No se pudo obtener las consultas', error)

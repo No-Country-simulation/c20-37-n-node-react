@@ -10,16 +10,29 @@ const getByID = async (id) => {
 const getByDoctorAndRangeTime = async (doctorId, start, end) => {
     const startDate = new Date(start);
     const endDate = new Date(end);
-    const consultations = await Consultation.find(
-        {
-            doctor: doctorId,
-            startTime: {
-                $gte: startDate,
-                $lt: endDate
-            }
+
+    const consultations = await Consultation.find({
+        doctor: doctorId,
+        startTime: {
+            $gte: startDate,
+            $lt: endDate
+        }
+    }).populate('patient');
+
+    let consultationsSlots = [];
+
+    consultations.forEach(consultation => {
+        consultationsSlots.push({
+            _id: consultation._id,
+            title: consultation.patient.firstName + ' ' + consultation.patient.lastName,
+            start: consultation.startTime.toISOString(),
+            end: consultation.endTime.toISOString(),
+            type: 'consultation'
         });
-    return consultations;
-}
+    });
+
+    return consultationsSlots;
+};
 
 const getByPatientAndRangeTime = async (patientId, start, end) => {
     const startDate = new Date(start);
@@ -36,14 +49,11 @@ const getByPatientAndRangeTime = async (patientId, start, end) => {
 }
 
 const getByDoctorInSchedule = async (doctorId, startTime) => {
-    console.log(startTime);
     
     const consultation = await Consultation.findOne({
         doctor: doctorId,
         startTime: startTime,
     });
-
-    console.log(consultation);
     
     return consultation;
 }

@@ -52,8 +52,7 @@ p {
   }
 
 .fc-event{
-    background-color: #08A39F;
-    font-size: small;
+    font-size: smaller;
     color: white;
 }
 

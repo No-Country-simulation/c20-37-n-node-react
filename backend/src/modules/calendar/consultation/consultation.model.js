@@ -4,12 +4,12 @@ import { Schema } from 'mongoose';
 const consultationSchema = new Schema({
     patient: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'user',
       required: true
     },
     doctor: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'user',
       required: true
     },
     startTime: {

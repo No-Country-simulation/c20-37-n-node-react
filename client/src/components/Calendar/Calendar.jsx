@@ -6,69 +6,88 @@ import esLocale from '@fullcalendar/core/locales/es'
 import { useAuth } from "../../hooks/useAuthContext";
 import { useCalendar } from "../../hooks/useCalendarContext";
 import { useGeneralContext } from '../../hooks/useGeneralContext';
-import { useEffect, useState } from 'react';
+import {useEffect, useState } from 'react';
 import { useRef } from 'react';
+import { ModalConsulation } from './Doctor/modalConsultation';
 
 export const Calendar = () => {
 
   const { logued } = useAuth();
-  //const { , availableTime, setAvailableTime} = useGeneralContext();
-  const { availableTime, consultations} = useGeneralContext();
+  const { availableTime, consultations, setSlot} = useGeneralContext();
   //const { getConsultation, , getAvailableTimeByRangeDate,  createNewConsultation, updateConsultation, deleteConsultation} = useCalendar();
   const { getAvailableTimeByRangeDate, getConsultationByDoctor} = useCalendar();
   const [events, setEvents] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const calendarRef = useRef(null);
 
-  /* useEffect(() => {
-    const calendarApi = calendarRef.current.getApi();
-    const start = calendarApi.view.activeStart.toISOString();
-    const end = calendarApi.view.activeEnd.toISOString();
-
-    // LLAMADAS A TUS FUNCIONES DE CONTEXTO
-    getAvailableTimeByRangeDate(logued._id, start, end);
-    getConsultationByDoctor(logued._id, start, end);
-  }, [logued._id, getAvailableTimeByRangeDate, getConsultationByDoctor]);
-
-  // ESTE useEffect REACCIONA CUANDO SE ACTUALIZAN availableTime Y consultations
-  useEffect(() => {
-    // COMBINA LOS EVENTOS DISPONIBLES Y LAS CONSULTAS EN EL ESTADO events
-    setEvents([...availableTime, ...consultations]);
-  }, [availableTime, consultations]); */
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const calendarApi = calendarRef.current.getApi();
-      const start = calendarApi.view.activeStart.toISOString();
-      const end = calendarApi.view.activeEnd.toISOString();
-
-      // Llamada para obtener los horarios disponibles y las consultas una vez
+  const fetchData = (start, end) => {
+    
       getAvailableTimeByRangeDate(logued._id, start, end);
       getConsultationByDoctor(logued._id, start, end);
 
-      // Actualizamos el estado con los datos combinados
       setEvents([...availableTime, ...consultations]);
-    };
+  };
+ 
 
-    fetchData();
+  useEffect(() => {
+    const calendarApi = calendarRef.current.getApi();
+    const start = calendarApi.view.activeStart.toISOString();
+    const endDate = new Date(calendarApi.view.activeEnd);
+    endDate.setDate(endDate.getUTCDate() - 1);
+    const end = endDate.toISOString();
+
+    console.log("RENDERIZADO");
+
+    fetchData(start, end);
   }, []);
 
-  const handleDateClick = (info) => {
-    console.log("Fecha seleccionada: ", info.dateStr);
+  const handleDatesSet = (dateInfo) => {
+    const viewType = dateInfo.view.type;
+    let start = new Date(dateInfo.startStr);
+    let end = new Date(dateInfo.end);
+
+    if (viewType === 'timeGridDay') {
+      //end.setHours(23, 59, 59, 999); // Set end of the day
+      start = start.toISOString();
+      end = end.toISOString();
+    } else if (viewType === 'dayGridMonth') {
+      start = new Date(start.getUTCFullYear(), start.getUTCMonth() + 1); 
+      start.setUTCDate(1);
+      start.setUTCHours(0, 0, 0, 0);
+      end = new Date(end.getUTCFullYear(), end.getUTCMonth(), 0);
+      end.setUTCHours(0, 0, 0, 0);
+      start = start.toISOString();
+      end = end.toISOString();
+    } else {
+      start = start.toISOString();
+      end = new Date(end.setDate(end.getDate() - 1)).toISOString(); // Default for other views
+    }
+    console.log("CAMBIO DE FECHAAAAS")
+
+    //fetchData(start, end); 
   };
 
   const handleEventClick = (eventInfo) => {
-    console.log("Evento seleccionado: ", eventInfo.event.title);
+    console.log("Evento seleccionado: ", eventInfo);
+    setSlot(eventInfo.event);
+  };
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   const renderEventContent = (eventInfo) => {
-    console.log(eventInfo);
-
     return (
-      <div className="p-2 flex flex-col">
+      //<div className={`p-2 ${eventInfo.event._def.extendedProps.type == 'consultation'? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} flex flex-col`}>
+      <button onClick={handleOpenModal} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className={`w-full h-full flex flex-col text-white ${eventInfo.event._def.extendedProps.type == 'consultation'? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} rounded-sm text-sm px-5 py-1 text-center `} type="button">
         <b>{eventInfo.timeText}</b>
         <i>{eventInfo.event.title}</i>
-      </div>
+      </button>
     );
   }
 
@@ -90,8 +109,8 @@ export const Calendar = () => {
           selectable={true}
           events={events}
           eventContent={renderEventContent}
-          dateClick={handleDateClick}
           eventClick={handleEventClick}
+          datesSet={handleDatesSet}
           select={(info) => {
             console.log("Seleccionado de ", info.startStr, " hasta ", info.endStr);
           }}
@@ -103,6 +122,7 @@ export const Calendar = () => {
           }}
         />
       </div>
+          <ModalConsulation show={showModal} handleClose={handleCloseModal}/>
     </div>
   )
 }
