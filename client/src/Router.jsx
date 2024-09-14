@@ -14,7 +14,7 @@ import { Error404 } from './components/NotFound/Error404'
 import { ProfilePage } from './Pages/User/ProfilePage'
 import { MedicalHistoryPage } from './Pages/User/MedicalHistoryPage'
 import { Calendar } from './components/Calendar/Calendar'
-import { DashboardPage } from './Pages/User/DashboardPage'
+import { Dashboard } from './Pages/Dashboard'
 
 
 
@@ -30,7 +30,7 @@ export const Router = () => {
                     <Route element={<ProtectedRoute />}>
                         <Route path='/calendar' element={<Calendar />} />
                         <Route path='/profile' element={<ProfilePage />} />
-                        <Route path='/dashboard' element={<DashboardPage />} />
+                        <Route path='/dashboard' element={<Dashboard />} />
 
                         {/* Rutas para el administrador */}
                         <Route path='/admin' element={<AdminLayout />}>
