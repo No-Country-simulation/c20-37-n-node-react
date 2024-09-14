@@ -20,6 +20,7 @@ export const GeneralProvider = ({ children }) => {
     const [errors, setErrors] = useState('');
     const [activeMenu, setActiveMenu] = useState('dashboard');
     const [activeTab, setActiveTab] = useState(0);
+    const [onCall, setOnCall] = useState(false);
 
 
     return (
@@ -51,7 +52,9 @@ export const GeneralProvider = ({ children }) => {
             activeMenu,
             setActiveMenu,
             activeTab,
-            setActiveTab
+            setActiveTab,
+            onCall,
+            setOnCall
         }}>
             {children}
         </GeneralContext.Provider>

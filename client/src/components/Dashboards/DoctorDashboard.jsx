@@ -4,6 +4,7 @@ import {
   Badge,
   Button
 } from 'flowbite-react';
+import { VideoCall } from '../VideoCall/VideoCall'
 
 export const DoctorDashboard = () => {
   // Datos de ejemplo para las citas
@@ -81,6 +82,7 @@ export const DoctorDashboard = () => {
           </Table.Body>
         </Table>
       </Card>
+      <VideoCall />
     </div>
   );
 }

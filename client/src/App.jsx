@@ -1,3 +1,4 @@
+import { ScrollToTop } from "./components/ScrollToTop/ScrollToTop"
 import { AuthProvider } from "./context/authContext"
 import { CalendarProvider } from "./context/calendarContext"
 import { GeneralProvider } from "./context/generalContext"
@@ -13,6 +14,7 @@ function App() {
         <UsersProvider>
           <CalendarProvider>
             <Router />
+            <ScrollToTop />
           </CalendarProvider>
         </UsersProvider>
       </AuthProvider>
