@@ -36,7 +36,7 @@ const consultationSchema = new Schema({
     },
     diagnosis: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Diagnosis'
+      ref: 'diagnosis'
     }
 }, {
   timestamps: true

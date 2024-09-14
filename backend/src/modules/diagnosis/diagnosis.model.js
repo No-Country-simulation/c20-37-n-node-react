@@ -10,7 +10,7 @@ const diagnosisSchema = new mongoose.Schema({
     },
     medicoId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'user',
         required: true
     },
     descripcion: {
