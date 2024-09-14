@@ -18,6 +18,8 @@ export const GeneralProvider = ({ children }) => {
     const [consultation, setConsultation] = useState([]);
     const [slot, setSlot] = useState({});
     const [errors, setErrors] = useState('');
+    const [activeMenu, setActiveMenu] = useState('dashboard');
+    const [activeTab, setActiveTab] = useState(0);
 
 
     return (
@@ -45,7 +47,11 @@ export const GeneralProvider = ({ children }) => {
             authenticated,
             setAuthenticated,
             errors,
-            setErrors
+            setErrors,
+            activeMenu,
+            setActiveMenu,
+            activeTab,
+            setActiveTab
         }}>
             {children}
         </GeneralContext.Provider>

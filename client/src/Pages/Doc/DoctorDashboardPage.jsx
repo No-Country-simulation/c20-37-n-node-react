@@ -4,10 +4,11 @@ import { ClinicalHistoryPage } from './ClinicalHistoryPage'
 import { DoctorDashboard } from '../../components/Dashboards/DoctorDashboard'
 import { Calendar } from '../../components/Calendar/Calendar'
 import { DoctorSidebar } from '../../components/Dashboards/Sidebar/DoctorSidebar'
+import { useGeneralContext } from '../../hooks/useGeneralContext'
 
 export const DoctorDashboardPage = () => {
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
-    const [activeMenu, setActiveMenu] = useState('dashboard')
+    const { activeMenu, setActiveMenu } = useGeneralContext()
 
     const toggleSidebar = () => {
         setIsSidebarCollapsed(!isSidebarCollapsed)

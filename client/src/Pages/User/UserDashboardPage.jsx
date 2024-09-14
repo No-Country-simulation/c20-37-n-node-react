@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { useGeneralContext } from "../../hooks/useGeneralContext";
 import { Tabs } from "flowbite-react";
 import { HiClipboardList, HiInformationCircle, HiCalendar } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
@@ -8,8 +9,8 @@ import { Calendar } from "../../components/Calendar/Calendar";
 import { ScrollToTop } from "../../components/ScrollToTop/ScrollToTop";
 
 export const UserDashboardPage = () => {
+    const { activeTab, setActiveTab } = useGeneralContext()
     const tabsRef = useRef(null);
-    const [activeTab, setActiveTab] = useState(0);
 
     return (
         <>
