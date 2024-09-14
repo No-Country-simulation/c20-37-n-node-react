@@ -1,74 +1,59 @@
-import { useState, useEffect, useRef } from 'react'
-import { Button, TextInput, Card, Select } from 'flowbite-react'
+import { useRef, useState } from 'react'
 import { useGeneralContext } from '../../hooks/useGeneralContext'
-
+import { JitsiMeeting } from '@jitsi/react-sdk'
+import { Button, TextInput, Card, Select } from 'flowbite-react'
 
 export const VideoCall = () => {
-
-    const { onCall, setOnCall } = useGeneralContext()
+    const { logued, onCall, setOnCall } = useGeneralContext()
     const [roomName, setRoomName] = useState('')
-    const [name, setName] = useState('')
-    const [role, setRole] = useState('patient')
-    const jitsiContainerRef = useRef(null)
 
-    useEffect(() => {
-        if (onCall) {
-            const domain = 'meet.jit.si'
-            const options = {
-                roomName: roomName,
-                width: '100%',
-                height: 500,
-                parentNode: jitsiContainerRef.current,
-                userInfo: {
-                    displayName: name
-                }
-            }
+    const role = useRef(logued?.role)
+    const name = useRef(logued?.firstName + ' ' + logued?.lastName)
 
-            const api = new window.JitsiMeetExternalAPI(domain, options)
-
-            api.addEventListener('videoConferenceLeft', () => {
-                setOnCall(false)
-            })
-
-            return () => api.dispose()
-        }
-    }, [onCall, roomName, name])
 
     const generateRoomId = () => {
-        return 'room_' + Math.random().toString(36).substr(2, 9)
+        return 'room_' + Math.random().toString(36)
     }
-
     const startCall = () => {
-        if (role === 'doctor' && !roomName) {
+        console.log(role.current, name.current, roomName)
+        if (role.current === 'doctor' && !roomName) {
             setRoomName(generateRoomId())
+            console.log('roomName', roomName)
         }
-        if (name && (role === 'doctor' || (role === 'patient' && roomName))) {
+        if (name.current && (role.current === 'doctor' || (role.current === 'user' && roomName))) {
+            console.log('start call')
             setOnCall(true)
         }
     }
 
+    const handleJitsiIFrameRef1 = (iframeRef) => {
+        iframeRef.style.height = '600px'
+        iframeRef.style.width = '100%'
+    }
+
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto w-full">
             <Card>
-                <h1 className="text-2xl font-bold mb-4">Videollamada con Jitsi</h1>
+                <h1 className="text-2xl font-bold mb-4">Ingresar a la videollamada agendada</h1>
+                <p>Para ingresar, debe escribir el nombre de la Sala que su médico definió anteriormente.</p>
+                <p>En caso de no recordar el nombre, lo puede ver en los detalles de su consulta agendada.</p>
                 {!onCall ? (
                     <div className="space-y-4">
                         <Select
+                            disabled
                             id="role"
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
+                            value={role.current}
                         >
-                            <option value="patient">Paciente</option>
-                            <option value="doctor">Médico</option>
+                            <option value={role.current}>{role.current === 'user' ? 'Paciente' : 'Doctor'}</option>
                         </Select>
                         <TextInput
+                            disabled
                             id="name"
                             type="text"
                             placeholder="Tu nombre"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={name.current}
                         />
-                        {role === 'patient' && (
+                        {role.current === 'user' && (
                             <TextInput
                                 id="roomName"
                                 type="text"
@@ -77,14 +62,40 @@ export const VideoCall = () => {
                                 onChange={(e) => setRoomName(e.target.value)}
                             />
                         )}
-                        <Button onClick={startCall} disabled={!name || (role === 'patient' && !roomName)}>
-                            {role === 'doctor' ? 'Iniciar llamada' : 'Unirse a la llamada'}
+                        <Button
+                            color={'success'}
+                            onClick={startCall}
+                            disabled={!name.current || (role.current === 'user' && !roomName)}
+                        >
+                            {role.current === 'doctor' ? 'Iniciar llamada' : 'Unirse a la llamada'}
                         </Button>
                     </div>
                 ) : (
                     <div>
-                        <div ref={jitsiContainerRef} />
+                        <JitsiMeeting
+                            roomName={roomName}
+                            configOverwrite={{
+                                startWithAudioMuted: true,
+                                disableModeratorIndicator: true,
+                                startScreenSharing: true,
+                                enableEmailInStats: false
+                            }}
+                            interfaceConfigOverwrite={{
+                                DISABLE_JOIN_LEAVE_NOTIFICATIONS: true
+                            }}
+                            userInfo={{
+                                displayName: name.current
+                            }}
+                            onApiReady={(externalApi) => {
+                                // here you can attach custom event listeners to the Jitsi Meet External API
+                                // you can also store it in state for later use
+                            }}
+                            getIFrameRef={handleJitsiIFrameRef1}
+                        />
                         <p className="mt-4">ID de la sala: {roomName}</p>
+                        <Button color={'failure'} onClick={() => setOnCall(false)} className="mt-4 duration-200 ">
+                            Finalizar llamada
+                        </Button>
                     </div>
                 )}
             </Card>

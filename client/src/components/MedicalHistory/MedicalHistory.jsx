@@ -7,17 +7,22 @@ import { useState } from 'react'
 export const MedicalHistory = ({ tabsRef, setActiveTab }) => {
 
     const { logued } = useAuth()
-    const { medicalHistory, getMedicalHistoryById } = useUsers()
+    const { users, medicalHistory, getMedicalHistoryById } = useUsers()
     const [idClient, setIdClient] = useState('')
+    const { patientData, setPatientData } = useState({})
 
     const refreshData = async () => {
         if (logued?.role === 'doctor') {
             await getMedicalHistoryById(idClient)
+            setPatientData(users.find(user => user.dni === idClient)[0])
+            // Modificar esta función para que busque por dni
             return;
         }
+        setPatientData(users.find(user => user.dni === logued?.dni)[0])
         await getMedicalHistoryById(logued?.dni)
-    }
 
+    }
+    // Faltaria un endpoint para poder buscar a un usuario por su historial medico, para poder mostrar los datos de el usuario que se busco
     return (
         <Card className="w-full max-w-6xl mx-auto roboto">
             <h1 className="font-bold text-center mb-2">Historial medico</h1>
@@ -51,15 +56,15 @@ export const MedicalHistory = ({ tabsRef, setActiveTab }) => {
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Nombre</Table.Cell>
-                        <Table.Cell>{logued?.firstName} {logued?.lastName}</Table.Cell>
+                        <Table.Cell>{patientData?.firstName} {patientData?.lastName}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">DNI</Table.Cell>
-                        <Table.Cell>{logued?.dni}</Table.Cell>
+                        <Table.Cell>{patientData?.dni}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Fecha de Nacimiento</Table.Cell>
-                        <Table.Cell>{new Date(logued?.birthdate).toLocaleDateString()}</Table.Cell>
+                        <Table.Cell>{new Date(patientData?.birthdate).toLocaleDateString()}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Género</Table.Cell>

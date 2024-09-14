@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
+import { useGeneralContext } from '../../hooks/useGeneralContext'
 import { Card, Button } from 'flowbite-react'
 import { FaCalendarAlt, FaFileAlt, FaClock, FaUserMd, FaHospital } from 'react-icons/fa'
-import { useNavigate } from "react-router-dom"
-import { useGeneralContext } from '../../hooks/useGeneralContext'
 
 export const UserDashboard = ({ tabsRef, setActiveTab }) => {
 
@@ -14,7 +13,6 @@ export const UserDashboard = ({ tabsRef, setActiveTab }) => {
     doctor: 'Dra. María García',
     specialty: 'Cardiología'
   }
-  const navigate = useNavigate()
 
   return (
     <div className="container mx-auto p-4">
