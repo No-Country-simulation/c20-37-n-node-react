@@ -15,6 +15,8 @@ export const GeneralProvider = ({ children }) => {
     const [availableTime, setAvailableTime] = useState([]);
     const [doctorAvailability, setDoctorAvailability] = useState([]);
     const [consultations, setConsultations] = useState([]);
+    const [consultation, setConsultation] = useState([]);
+    const [slot, setSlot] = useState({});
     const [errors, setErrors] = useState('');
 
 
@@ -36,6 +38,10 @@ export const GeneralProvider = ({ children }) => {
             setDoctorAvailability,
             consultations,
             setConsultations,
+            consultation,
+            setConsultation,
+            slot,
+            setSlot,
             authenticated,
             setAuthenticated,
             errors,

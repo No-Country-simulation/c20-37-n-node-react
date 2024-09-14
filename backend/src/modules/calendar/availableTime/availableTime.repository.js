@@ -48,6 +48,7 @@ const getByDoctorAndRangeTime = async (doctorId, start, end) => {
             title: 'Disponible',
             start: startTime.toISOString(),
             end: endTime.toISOString(),
+            type: 'available'
           });
         }
       }
