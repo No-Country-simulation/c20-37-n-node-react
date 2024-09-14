@@ -9,13 +9,13 @@ import { useGeneralContext } from '../../hooks/useGeneralContext';
 import { useEffect, useState } from 'react';
 import { useRef } from 'react';
 
-export const Calendar = () => {
+export const Calendar = ({ tabsRef, setActiveTab }) => {
 
   const { logued } = useAuth();
   //const { , availableTime, setAvailableTime} = useGeneralContext();
-  const { availableTime, consultations} = useGeneralContext();
+  const { availableTime, consultations } = useGeneralContext();
   //const { getConsultation, , getAvailableTimeByRangeDate,  createNewConsultation, updateConsultation, deleteConsultation} = useCalendar();
-  const { getAvailableTimeByRangeDate, getConsultationByDoctor} = useCalendar();
+  const { getAvailableTimeByRangeDate, getConsultationByDoctor } = useCalendar();
   const [events, setEvents] = useState([]);
 
   const calendarRef = useRef(null);
@@ -73,8 +73,10 @@ export const Calendar = () => {
   }
 
   return (
-    <div className='w-full flex justify-center'>
-      <div className='w-10/12'>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6">Agendar consulta</h1>
+      {/* <div className='w-screen min-h-screen my-24 flex justify-center'> */}
+      <div className='w-10/12 mx-auto'>
         <FullCalendar
           ref={calendarRef}
           headerToolbar={{
@@ -104,5 +106,6 @@ export const Calendar = () => {
         />
       </div>
     </div>
+    // </div>
   )
 }
