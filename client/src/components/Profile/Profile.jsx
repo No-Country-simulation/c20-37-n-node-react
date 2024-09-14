@@ -7,6 +7,7 @@ import { DatePick } from '../DatePicker/DatePicker'
 import { Link } from 'react-router-dom'
 import { HiMail, HiPhone, HiIdentification } from "react-icons/hi";
 import { AddressForm } from './AddressForm'
+import { DoctorInfo } from './DoctorInfo'
 
 export const Profile = ({ user }) => {
     const { setLogued } = useGeneralContext()
@@ -140,10 +141,18 @@ export const Profile = ({ user }) => {
                         <option value={'Other'}>Otro</option>
                     </Select>
                 </div>
-                <Button className='bg-black text-white w-1/4' onClick={openModal}>Ingresar Dirección</Button>
-                <AddressForm show={showModal} onClose={closeModal}
-                    handleAddress={handleAddress} addressInfo={address}
-                />
+                <div>
+                    <Button className='bg-black text-white w-1/4' onClick={openModal}>Ingresar Dirección</Button>
+                    <AddressForm show={showModal} onClose={closeModal}
+                        handleAddress={handleAddress} addressInfo={address}
+                    />
+                </div>
+                {profile.role === 'doctor' &&
+                    <div >
+                        <Button className='w-1/4' onClick={openModal}>Información profesional</Button>
+                        <DoctorInfo show={showModal} onClose={closeModal} handleChange={handleChange} profile={profile} />
+                    </div>
+                }
                 <div>
                     <div className="mb-2 block">
                         <Label htmlFor="birthdate" value="Fecha de nacimiento" />
@@ -153,6 +162,7 @@ export const Profile = ({ user }) => {
                         setStartDate={handleDateChange}
                     />
                 </div>
+
                 <Button className=' text-white hover:bg-blue-900 duration-200' color='success' type="submit">
                     Actualizar Perfil
                 </Button>

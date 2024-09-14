@@ -4,10 +4,11 @@ import { Doctors } from '../../components/Dashboards/Menu/Doctors'
 import { AdminSidebar } from '../../components/Dashboards/Sidebar/AdminSidebar'
 import { Info } from '../../components/Dashboards/Menu/Info'
 import { Calendar } from '../../components/Calendar/Calendar'
+import { useGeneralContext } from '../../hooks/useGeneralContext'
 
 export const AdminDashboardPage = () => {
+  const { activeMenu, setActiveMenu } = useGeneralContext()
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
-  const [activeMenu, setActiveMenu] = useState('dashboard')
 
   const toggleSidebar = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed)

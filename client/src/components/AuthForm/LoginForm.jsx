@@ -5,9 +5,11 @@ import { ErrorText } from '../Error/ErrorText'
 import { useAuth } from "../../hooks/useAuthContext"
 import { Button, Label, TextInput, Card } from 'flowbite-react'
 import { HiEye, HiEyeOff } from 'react-icons/hi'
+import { RecoverPassword } from "../RecoverPass/RecoverPassword"
 
 export const LoginForm = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
     const { register,
         handleSubmit,
         formState: { errors } } = useForm()
@@ -16,8 +18,8 @@ export const LoginForm = () => {
     const onSubmit = handleSubmit(async (values) => {
         // Logica de autenticacion
         await loginRequest(values)
-
     })
+
     return (
         <div className="flex flex-col h-[calc(100vh-200px)] roboto justify-center">
             <Card className="w-full max-w-md mx-auto ">
@@ -71,13 +73,14 @@ export const LoginForm = () => {
                         Iniciar Sesión
                     </Button>
                     <div>
-                        <Link to={'#'} className="px-4 font-bold text-xs text-blue-500 hover:text-blue-800 focus:border-black p-2" href="#">
+                        <button onClick={() => setOpenModal(true)} className="px-4 font-bold text-xs text-blue-500 hover:text-blue-800 focus:border-black p-2" href="#">
                             Olvidaste la contraseña?
-                        </Link>
+                        </button>
                     </div>
                     <Link to={'/register'} className="text-sm justify-end text-red-500 hover:text-red-800 duration-200">Registrarse</Link>
                 </form>
             </Card>
+            <RecoverPassword openModal={openModal} setOpenModal={setOpenModal} />
         </div>
     )
 }
