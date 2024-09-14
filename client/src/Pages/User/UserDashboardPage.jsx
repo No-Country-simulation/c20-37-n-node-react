@@ -7,7 +7,7 @@ import { MedicalHistory } from "../../components/MedicalHistory/MedicalHistory";
 import { Calendar } from "../../components/Calendar/Calendar";
 import { ScrollToTop } from "../../components/ScrollToTop/ScrollToTop";
 
-export const DashboardPage = () => {
+export const UserDashboardPage = () => {
     const tabsRef = useRef(null);
     const [activeTab, setActiveTab] = useState(0);
 

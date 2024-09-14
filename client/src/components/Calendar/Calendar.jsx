@@ -6,14 +6,14 @@ import esLocale from '@fullcalendar/core/locales/es'
 import { useAuth } from "../../hooks/useAuthContext";
 import { useCalendar } from "../../hooks/useCalendarContext";
 import { useGeneralContext } from '../../hooks/useGeneralContext';
-import {useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import { ModalConsulation } from './Doctor/modalConsultation';
 
 export const Calendar = ({ tabsRef, setActiveTab }) => {
 
   const { logued } = useAuth();
-  const { availableTime, consultations, setSlot} = useGeneralContext();
+  const { availableTime, consultations, setSlot } = useGeneralContext();
   //const { getConsultation, , getAvailableTimeByRangeDate,  createNewConsultation, updateConsultation, deleteConsultation} = useCalendar();
   const { getAvailableTimeByRangeDate, getConsultationByDoctor } = useCalendar();
   const [events, setEvents] = useState([]);
@@ -22,25 +22,12 @@ export const Calendar = ({ tabsRef, setActiveTab }) => {
   const calendarRef = useRef(null);
 
   const fetchData = (start, end) => {
-    
-      getAvailableTimeByRangeDate(logued._id, start, end);
-      getConsultationByDoctor(logued._id, start, end);
 
-      setEvents([...availableTime, ...consultations]);
+    getAvailableTimeByRangeDate(logued._id, start, end);
+    getConsultationByDoctor(logued._id, start, end);
+
+    setEvents([...availableTime, ...consultations]);
   };
- 
-
-  useEffect(() => {
-    const calendarApi = calendarRef.current.getApi();
-    const start = calendarApi.view.activeStart.toISOString();
-    const endDate = new Date(calendarApi.view.activeEnd);
-    endDate.setDate(endDate.getUTCDate() - 1);
-    const end = endDate.toISOString();
-
-    console.log("RENDERIZADO");
-
-    fetchData(start, end);
-  }, []);
 
   const handleDatesSet = (dateInfo) => {
     const viewType = dateInfo.view.type;
@@ -52,7 +39,7 @@ export const Calendar = ({ tabsRef, setActiveTab }) => {
       start = start.toISOString();
       end = end.toISOString();
     } else if (viewType === 'dayGridMonth') {
-      start = new Date(start.getUTCFullYear(), start.getUTCMonth() + 1); 
+      start = new Date(start.getUTCFullYear(), start.getUTCMonth() + 1);
       start.setUTCDate(1);
       start.setUTCHours(0, 0, 0, 0);
       end = new Date(end.getUTCFullYear(), end.getUTCMonth(), 0);
@@ -84,12 +71,24 @@ export const Calendar = ({ tabsRef, setActiveTab }) => {
   const renderEventContent = (eventInfo) => {
     return (
       //<div className={`p-2 ${eventInfo.event._def.extendedProps.type == 'consultation'? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} flex flex-col`}>
-      <button onClick={handleOpenModal} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className={`w-full h-full flex flex-col text-white ${eventInfo.event._def.extendedProps.type == 'consultation'? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} rounded-sm text-sm px-5 py-1 text-center `} type="button">
+      <button onClick={handleOpenModal} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className={`w-full h-full flex flex-col text-white ${eventInfo.event._def.extendedProps.type == 'consultation' ? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} rounded-sm text-sm px-5 py-1 text-center `} type="button">
         <b>{eventInfo.timeText}</b>
         <i>{eventInfo.event.title}</i>
       </button>
     );
   }
+
+  useEffect(() => {
+    const calendarApi = calendarRef.current.getApi();
+    const start = calendarApi.view.activeStart.toISOString();
+    const endDate = new Date(calendarApi.view.activeEnd);
+    endDate.setDate(endDate.getUTCDate() - 1);
+    const end = endDate.toISOString();
+
+    console.log("RENDERIZADO");
+
+    fetchData(start, end);
+  }, []); 
 
   return (
     <div className="container mx-auto p-4">
@@ -124,7 +123,7 @@ export const Calendar = ({ tabsRef, setActiveTab }) => {
           }}
         />
       </div>
-          <ModalConsulation show={showModal} handleClose={handleCloseModal}/>
+      <ModalConsulation show={showModal} handleClose={handleCloseModal} />
     </div>
     // </div>
   )
