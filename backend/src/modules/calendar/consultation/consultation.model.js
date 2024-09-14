@@ -33,6 +33,10 @@ const consultationSchema = new Schema({
       type: String,
       enum: ['in person', 'virtual'],
       default: 'virtual'
+    },
+    diagnosis: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Diagnosis'
     }
 }, {
   timestamps: true
