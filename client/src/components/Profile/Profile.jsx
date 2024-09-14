@@ -49,7 +49,6 @@ export const Profile = ({ user }) => {
     }
 
     useEffect(() => {
-        console.log(profile)
     }, [profile])
 
     return (
