@@ -3,7 +3,7 @@ import { useGeneralContext } from '../../hooks/useGeneralContext'
 import { Card, Button } from 'flowbite-react'
 import { FaCalendarAlt, FaFileAlt, FaClock, FaUserMd, FaHospital } from 'react-icons/fa'
 
-export const UserDashboard = ({ tabsRef, setActiveTab }) => {
+export const UserDashboard = ({ setActiveMenu }) => {
 
   const { logued } = useGeneralContext()
   // Estos datos normalmente vendrían de una API o estado global
@@ -15,11 +15,11 @@ export const UserDashboard = ({ tabsRef, setActiveTab }) => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Panel de Usuario</h1>
+    <div className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 shadow-md">
+      <h1 className="text-3xl font-bold mb-2">Panel de Usuario</h1>
       <h2>Bienvenido/a {logued.firstName} {logued.lastName}</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start align-top justify-start">
-        <Card>
+        <Card className=''>
           <h2 className="text-xl font-semibold mb-4">Próxima Consulta</h2>
           <div className="space-y-2">
             <p className="flex items-center">
@@ -52,12 +52,12 @@ export const UserDashboard = ({ tabsRef, setActiveTab }) => {
         <Card>
           <h2 className="text-xl font-semibold mb-4">Acciones Rápidas</h2>
           <div className="space-y-2">
-            <Button onClick={() => tabsRef.current?.setActiveTab(2)} className="bg-gray-200 hover:bg-gray-300 duration-200 transition-colors" color="primary">
+            <Button onClick={() => setActiveMenu('agendas')} className="bg-gray-200 hover:bg-gray-300 duration-200 transition-colors" color="primary">
               <FaCalendarAlt className="mr-2 h-5 w-5" />
               Agendar Consulta
             </Button>
             <Button className="bg-gray-200 hover:bg-gray-300 duration-200 transition-colors"
-              onClick={() => tabsRef.current?.setActiveTab(1)}
+              onClick={() => setActiveMenu('historyForm')}
               color="primary">
               <FaFileAlt className="mr-2 h-5 w-5" />
               Ver Ficha Médica

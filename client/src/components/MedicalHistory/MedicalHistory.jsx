@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import { Card, Table, Label, TextInput } from 'flowbite-react'
+import { Card, Table, Label, TextInput, Button } from 'flowbite-react'
 import { useUsers } from '../../hooks/useUsersContext'
 import { useAuth } from '../../hooks/useAuthContext'
 import { useState } from 'react'
 
-export const MedicalHistory = ({ tabsRef, setActiveTab }) => {
+export const MedicalHistory = () => {
 
     const { logued } = useAuth()
     const { users, medicalHistory, getMedicalHistoryById } = useUsers()
@@ -14,18 +14,23 @@ export const MedicalHistory = ({ tabsRef, setActiveTab }) => {
     const refreshData = async () => {
         if (logued?.role === 'doctor') {
             await getMedicalHistoryById(idClient)
-            setPatientData(users.find(user => user.dni === idClient)[0])
+            const userFounded = users.find(user => user.dni === idClient)
+            console.log(userFounded)
+            // setPatientData(users.find(user => user.dni === idClient)[0])
             // Modificar esta función para que busque por dni
             return;
         }
-        setPatientData(users.find(user => user.dni === logued?.dni)[0])
+        const userFounded = users.find(user => user.dni === logued.dni)
+        console.log(userFounded)
+
         await getMedicalHistoryById(logued?.dni)
 
     }
     // Faltaria un endpoint para poder buscar a un usuario por su historial medico, para poder mostrar los datos de el usuario que se busco
     return (
-        <Card className="w-full max-w-6xl mx-auto roboto">
-            <h1 className="font-bold text-center mb-2">Historial medico</h1>
+        <Card className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 rounded-none">
+            <h1 className="text-3xl font-bold mb-2">Historial medico</h1>
+            <p className='text-center text-base'>Si no se muestran datos, porfavor presione el botón para refrescar.</p>
             {logued?.role === 'doctor' &&
                 <div>
                     <Label className='font-medium text-md' htmlFor="idClient" value="Buscar por DNI de paciente" />
@@ -38,8 +43,7 @@ export const MedicalHistory = ({ tabsRef, setActiveTab }) => {
                     />
                 </div>
             }
-            <button className='bg-black py-2 text-white w-full hover:bg-gray-800 duration-300' onClick={refreshData}>Obtener Datos o Refrescar</button>
-            <p className='text-center text-base'>Si no se muestran datos, porfavor presione el botón para refrescar.</p>
+            <Button className='w-full duration-300 hover:cursor-pointer' onClick={refreshData}>Refrescar datos</Button>
             <Table>
                 <Table.Body className="divide-y">
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">

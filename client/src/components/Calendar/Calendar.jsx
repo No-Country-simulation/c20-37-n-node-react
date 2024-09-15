@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import { ModalConsulation } from './Doctor/modalConsultation';
 
-export const Calendar = ({ tabsRef, setActiveTab }) => {
+export const Calendar = () => {
 
   const { logued } = useAuth();
   const { availableTime, consultations, setSlot } = useGeneralContext();
@@ -91,7 +91,7 @@ export const Calendar = ({ tabsRef, setActiveTab }) => {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 shadow-md">
       <h1 className="text-3xl font-bold mb-6">Agendar consulta</h1>
       {/* <div className='w-screen min-h-screen my-24 flex justify-center'> */}
       <div className='w-10/12 mx-auto max-h-lvh'>
