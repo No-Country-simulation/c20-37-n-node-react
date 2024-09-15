@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 import { Sidebar } from "flowbite-react";
-import { HiChartPie, HiCalendar, HiArrowSmLeft, HiArrowSmRight, HiDocumentAdd } from "react-icons/hi";
+import { HiClipboardList, HiInformationCircle, HiCalendar, HiVideoCamera, HiArrowSmRight, HiArrowSmLeft } from "react-icons/hi";
 
-export const DoctorSidebar = ({ isSidebarCollapsed,
+export const UserSidebar = ({ isSidebarCollapsed,
     setActiveMenu,
     activeMenu,
     toggleSidebar
 }) => {
 
     return (
-        <div className={`${isSidebarCollapsed ? 'w-16' : 'w-40'} transition-all duration-300 ease-in-out`}>
+        <div className={`${isSidebarCollapsed ? 'w-16' : 'w-44'} transition-all duration-300 ease-in-out`}>
             <Sidebar collapsed={isSidebarCollapsed}>
 
                 <div className={`cursor-pointer flex ${isSidebarCollapsed ? 'justify-center' : null}`}>
@@ -21,7 +21,7 @@ export const DoctorSidebar = ({ isSidebarCollapsed,
                     <Sidebar.ItemGroup>
                         <Sidebar.Item
                             className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
-                            icon={HiChartPie}
+                            icon={HiInformationCircle}
                             onClick={() => setActiveMenu('dashboard')}
                             active={activeMenu === 'dashboard'}
                         >
@@ -30,12 +30,13 @@ export const DoctorSidebar = ({ isSidebarCollapsed,
                         </Sidebar.Item>
                         <Sidebar.Item
                             className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
-                            icon={HiDocumentAdd}
+                            icon={HiClipboardList}
                             onClick={() => setActiveMenu('historyForm')}
                             active={activeMenu === 'historyForm'}
                         >
-                            {!isSidebarCollapsed && <span>Formulario</span>}
-                            {isSidebarCollapsed && <span>Formulario</span>}
+                            {!isSidebarCollapsed && <span>Historia</span>}
+                            {isSidebarCollapsed && <span>Historia</span>}
+
                         </Sidebar.Item>
                         <Sidebar.Item
                             className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -45,6 +46,15 @@ export const DoctorSidebar = ({ isSidebarCollapsed,
                         >
                             {!isSidebarCollapsed && <span>Agendas</span>}
                             {isSidebarCollapsed && <span>Agendas</span>}
+                        </Sidebar.Item>
+                        <Sidebar.Item
+                            className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 "
+                            icon={HiVideoCamera}
+                            onClick={() => setActiveMenu('videocall')}
+                            active={activeMenu === 'videocall'}
+                        >
+                            {!isSidebarCollapsed && <span>Videollamada</span>}
+                            {isSidebarCollapsed && <span>Videollamada</span>}
                         </Sidebar.Item>
                     </Sidebar.ItemGroup>
                 </Sidebar.Items>

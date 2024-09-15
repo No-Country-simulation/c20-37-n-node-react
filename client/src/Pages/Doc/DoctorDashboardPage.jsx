@@ -27,7 +27,7 @@ export const DoctorDashboardPage = () => {
         }
     }
     return (
-        <div className="flex h-screen w-full bg-gray-50 dark:bg-gray-900">
+        <div className="flex h-screen w-full bg-gray-50 dark:bg-gray-900 overflow-x-auto">
             <DoctorSidebar
                 isSidebarCollapsed={isSidebarCollapsed}
                 setActiveMenu={setActiveMenu}

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from 'react';
+import { createContext, useState, useRef } from 'react';
 
 // Crear el contexto
 export const GeneralContext = createContext();
@@ -21,6 +21,9 @@ export const GeneralProvider = ({ children }) => {
     const [activeMenu, setActiveMenu] = useState('dashboard');
     const [activeTab, setActiveTab] = useState(0);
     const [onCall, setOnCall] = useState(false);
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+
+    const tabsRef = useRef(null);
 
 
     return (
@@ -54,7 +57,10 @@ export const GeneralProvider = ({ children }) => {
             activeTab,
             setActiveTab,
             onCall,
-            setOnCall
+            setOnCall,
+            tabsRef,
+            isSidebarCollapsed,
+            setIsSidebarCollapsed
         }}>
             {children}
         </GeneralContext.Provider>

@@ -10,9 +10,9 @@ export const Layout = () => {
     if (loading) return <LoadingPage />
     return (
 
-        <div className="">
+        <div >
             <Header />
-            <main className="mt-12 mb-12 max-w-screen-2xl min-h-screen mx-auto">
+            <main className="mt-4 mb-12 max-w-screen-2xl min-h-screen mx-auto">
                 <Outlet />
             </main>
             <Footer />

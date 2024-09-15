@@ -1,41 +1,38 @@
-import { useRef } from "react";
-import { useGeneralContext } from "../../hooks/useGeneralContext";
-import { Tabs } from "flowbite-react";
-import { HiClipboardList, HiInformationCircle, HiCalendar, HiVideoCamera } from "react-icons/hi";
-import { MdDashboard } from "react-icons/md";
-import { UserDashboard } from "../../components/Dashboards/UserDashboard";
-import { MedicalHistory } from "../../components/MedicalHistory/MedicalHistory";
-import { Calendar } from "../../components/Calendar/Calendar";
-import { ScrollToTop } from "../../components/ScrollToTop/ScrollToTop";
-import { VideoCall } from "../../components/VideoCall/VideoCall";
+import { Calendar } from "../../components/Calendar/Calendar"
+import { UserDashboard } from '../../components/Dashboards/UserDashboard'
+import { useGeneralContext } from '../../hooks/useGeneralContext'
+import { UserSidebar } from '../../components/Dashboards/Sidebar/UserSidebar'
+import { MedicalHistory } from '../../components/MedicalHistory/MedicalHistory'
+import { VideoCall } from '../../components/VideoCall/VideoCall'
 
 export const UserDashboardPage = () => {
-    const { activeTab, setActiveTab } = useGeneralContext()
-    const tabsRef = useRef(null);
+    const { activeMenu, setActiveMenu, isSidebarCollapsed, setIsSidebarCollapsed } = useGeneralContext()
 
+    const toggleSidebar = () => {
+        setIsSidebarCollapsed(!isSidebarCollapsed)
+    }
+
+    const renderContent = () => {
+        switch (activeMenu) {
+            case 'dashboard':
+                return <UserDashboard setActiveMenu={setActiveMenu} />
+            case 'historyForm':
+                return <MedicalHistory />
+            case 'agendas':
+                return <Calendar />
+            case 'videocall':
+                return <VideoCall />
+        }
+    }
     return (
-        <>
-            <Tabs
-                ref={tabsRef} onActiveTabChange={(tab) => setActiveTab(tab)}
-                active={activeTab}
-                aria-label="Default tabs" className="w-full" variant="default">
-                <Tabs.Item active title="Tablero" icon={MdDashboard}>
-                    <UserDashboard tabsRef={tabsRef} setActiveTab={setActiveTab} />
-                </Tabs.Item>
-                <Tabs.Item title="Historial médico" icon={HiInformationCircle}>
-                    <MedicalHistory tabsRef={tabsRef} setActiveTab={setActiveTab} />
-                </Tabs.Item>
-                <Tabs.Item className="w-full" title="Agendarse" icon={HiCalendar}>
-                    < Calendar tabsRef={tabsRef} setActiveTab={setActiveTab} />
-                </Tabs.Item>
-                <Tabs.Item title="Especialistas" icon={HiClipboardList}>
-                    Especialistas
-                </Tabs.Item>
-                <Tabs.Item title="Videollamada" icon={HiVideoCamera}>
-                    <VideoCall />
-                </Tabs.Item>
-            </Tabs>
-            <ScrollToTop />
-        </>
-    );
+        <div className="flex bg-gray-50 dark:bg-gray-900 overflow-x-auto">
+            <UserSidebar
+                isSidebarCollapsed={isSidebarCollapsed}
+                setActiveMenu={setActiveMenu}
+                activeMenu={activeMenu}
+                toggleSidebar={toggleSidebar}
+            />
+            {renderContent()}
+        </div>
+    )
 }
