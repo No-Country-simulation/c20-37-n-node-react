@@ -19,7 +19,9 @@ export const initializePassport = () => {
     passport.use("register", new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
         try {
             const { firstName, lastName, phone, role, birthdate, address, dni } = req.body;
-            const user = await userService.getByEmail(username);    
+            const user = await userService.getByEmail(username); 
+            const userDni = await userService.getUserByDni(dni);
+            if (userDni) { return done(null, false, { message: "DNI already exists" }); }   
             if (user) { return done(null, false, { message: "User already exists" }); }
             const medicalHistory = await medicalHistoryService.create()
             const newUser = {
