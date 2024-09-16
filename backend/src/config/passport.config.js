@@ -7,6 +7,8 @@ import { createHash, isValidPassword } from '../utils/hashPassword.js';
 import { cookieExtractor } from '../utils/cookieExtractor.js';
 import { verifyToken } from '../utils/jwt.js';
 import { sendEmail } from '../utils/sendEmail.js';
+import { emailTemplate } from './emailMessages.js';
+import envs from '../config/envs.config.js';
 
 
 const LocalStrategy = passportLocal.Strategy;
@@ -16,14 +18,8 @@ const CustomStrategy = passportCustom.Strategy;
 export const initializePassport = () => {
     passport.use("register", new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
         try {
-            console.log(req.body);
-            
             const { firstName, lastName, phone, role, birthdate, address, dni } = req.body;
-            const user = await userService.getByEmail(username);
-            console.log("MAIL:",username);
-            
-            console.log(user);
-            
+            const user = await userService.getByEmail(username);    
             if (user) { return done(null, false, { message: "User already exists" }); }
             const medicalHistory = await medicalHistoryService.create()
             const newUser = {
@@ -39,7 +35,7 @@ export const initializePassport = () => {
                 dni
             }
             const userCreate = await userService.create(newUser)
-            await sendEmail(newUser.email, "Welcome to SaludNet", `Welcome ${newUser.firstName} ${newUser.lastName} to SaludNet, registered user`)
+            await sendEmail(newUser.email, "Welcome to SaludNet", emailTemplate.welcome(userCreate.firstName, envs.FRONTEND_URL))//
             return done(null, userCreate);
         } catch (error) {
             return done(error)

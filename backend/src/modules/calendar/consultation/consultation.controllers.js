@@ -33,7 +33,6 @@ const getConsultationByPatientAndRangeTime = async (req, res) => {
 const create = async (req, res) => {
     try {
         const body = req.body;
-        console.log(body);
         
         const consultation = await consultationServices.create(body);
         return res.status(201).json({ status: "ok", msg: "consultation created", playload: consultation });
