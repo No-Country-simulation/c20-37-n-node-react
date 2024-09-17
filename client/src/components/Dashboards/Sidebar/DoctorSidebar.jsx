@@ -9,7 +9,7 @@ export const DoctorSidebar = ({ isSidebarCollapsed,
 }) => {
 
     return (
-        <div className={`${isSidebarCollapsed ? 'w-16' : 'w-40'} transition-all duration-300 ease-in-out`}>
+        <div className={`${isSidebarCollapsed ? 'w-16' : 'w-44'} transition-all duration-300 ease-in-out`}>
             <Sidebar collapsed={isSidebarCollapsed}>
 
                 <div className={`cursor-pointer flex ${isSidebarCollapsed ? 'justify-center' : null}`}>

@@ -17,7 +17,7 @@ export const Authentication = () => {
   }, [isAuthenticated])
 
   return (
-    <div className="mt-24">
+    <div className="w-full max-w-2xl flex flex-col mx-auto p-4 mt-14 lg:mt-24">
       {window.location.pathname === '/register' ?
         <RegisterForm />
         : <LoginForm />}

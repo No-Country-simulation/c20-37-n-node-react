@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Sidebar } from "flowbite-react";
-import { HiChartPie, HiUserGroup, HiUsers, HiCalendar, HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
+import { HiChartPie, HiUserGroup, HiUsers, HiCalendar, HiArrowSmLeft, HiArrowSmRight, HiVideoCamera } from "react-icons/hi";
 
 export const AdminSidebar = ({ isSidebarCollapsed,
   setActiveMenu,
@@ -9,7 +9,7 @@ export const AdminSidebar = ({ isSidebarCollapsed,
 }) => {
 
   return (
-    <div className={`${isSidebarCollapsed ? 'w-16' : 'w-40'} transition-all duration-300 ease-in-out`}>
+    <div className={`${isSidebarCollapsed ? 'w-16' : 'w-44'} transition-all duration-300 ease-in-out`}>
       <Sidebar collapsed={isSidebarCollapsed}>
 
         <div className={`cursor-pointer flex ${isSidebarCollapsed ? 'justify-center' : null}`}>
@@ -54,6 +54,15 @@ export const AdminSidebar = ({ isSidebarCollapsed,
             >
               {!isSidebarCollapsed && <span>Agendas</span>}
               {isSidebarCollapsed && <span>Agendas</span>}
+            </Sidebar.Item>
+            <Sidebar.Item
+              className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 "
+              icon={HiVideoCamera}
+              onClick={() => setActiveMenu('videocall')}
+              active={activeMenu === 'videocall'}
+            >
+              {!isSidebarCollapsed && <span>Videollamada</span>}
+              {isSidebarCollapsed && <span>Videollamada</span>}
             </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>

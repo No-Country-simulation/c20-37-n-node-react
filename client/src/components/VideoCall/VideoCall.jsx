@@ -32,12 +32,12 @@ export const VideoCall = () => {
     }
 
     return (
-        <Card className='w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 shadow-md'>
-            <h1 className="text-2xl font-bold mb-4">Ingresar a la videollamada agendada</h1>
+        <Card className='w-full flex flex-col align-top items-start justify-start mx-auto bg-gray-100 dark:bg-gray-800 shadow-md'>
+            <h1 className="text-3xl font-bold mb-2">Ingresar a la videollamada agendada</h1>
             <p>Para ingresar, debe escribir el nombre de la Sala que su médico definió anteriormente.</p>
             <p>En caso de no recordar el nombre, lo puede ver en los detalles de su consulta agendada.</p>
             {!onCall ? (
-                <div className="space-y-4">
+                <div className="flex-1 space-y-4">
                     <Select
                         disabled
                         id="role"
@@ -85,7 +85,7 @@ export const VideoCall = () => {
                         userInfo={{
                             displayName: name.current
                         }}
-                        onApiReady={(externalApi) => {
+                        onApiReady={() => {
                             // here you can attach custom event listeners to the Jitsi Meet External API
                             // you can also store it in state for later use
                         }}

@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
 import { useGeneralContext } from '../../../hooks/useGeneralContext'
-import { VideoCall } from '../../VideoCall/VideoCall'
 
 export const Info = () => {
     const { users } = useGeneralContext()
@@ -50,9 +49,7 @@ export const Info = () => {
                         </li>
                     </ul>
                 </div>
-            </div>
-            <VideoCall />
-        </div>
+            </div>          </div>
     )
 }
 

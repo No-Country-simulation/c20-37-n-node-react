@@ -1,46 +1,104 @@
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useAuth } from '../../hooks/useAuthContext'
+import { useForm } from 'react-hook-form'
 import { ErrorText } from '../Error/ErrorText'
-import { useAuth } from "../../hooks/useAuthContext"
-import { DatePick } from "../DatePicker/DatePicker"
-import { Button, Label, TextInput } from 'flowbite-react'
-import { HiEye, HiEyeOff } from 'react-icons/hi'
-import toast from "react-hot-toast"
+import { DoctorInfo } from '../Profile/DoctorInfo'
+import { Label, TextInput, Button, Select } from 'flowbite-react'
+import { DatePick } from '../DatePicker/DatePicker'
+import toast from 'react-hot-toast'
 
-export const RegisterForm = () => {
+import { HiEye, HiEyeOff } from 'react-icons/hi'
+
+
+export const AddUser = () => {
+
     const { register: registerRequest } = useAuth()
-    const navigate = useNavigate()
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [startDate, setStartDate] = useState(new Date());
-    const { register,
-        handleSubmit,
-        formState: { errors } } = useForm()
+    const [selectedRole, setSelectedRole] = useState('')
+    const [showDoctorInfo, setShowDoctorInfo] = useState(false)
+    const [profile, setProfile] = useState({
+        licenseNumber: '',
+        yearsExperience: 0,
+        professionalInfo: '',
+        specialty: ''
+    })
+
 
     const handleDateChange = (date) => {
         setStartDate(date)
     }
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setProfile(prevProfile => ({
+            ...prevProfile,
+            [name]: value
+        }))
+    }
+
+    const openModal = () => setShowDoctorInfo(true);
+    const closeModal = () => setShowDoctorInfo(false);
+
     const onSubmit = handleSubmit(async (values) => {
         // Logica de autenticacion
         if (values.password !== values.confirmPassword) {
             toast.error('Las contraseñas no coinciden')
             return;
         }
+        // Si el usuario a crear es medico y tiene algun campo vacio, no se envia la peticion
+        if (selectedRole === "doctor" && Object.values(profile).includes('')) return toast.error('Aun falta completar la información profesional del médico')
+
+        // Eliminamos confirmPassword
         const { confirmPassword, ...userWithoutPassword } = {
             ...values,
-            birthdate: startDate
-        }	// Eliminamos confirmPassword
-        const response = await registerRequest(userWithoutPassword)
-        // Redireccionar
-        if (!response) return;
-        navigate('/login')
+            ...profile,
+            birthdate: startDate,
+            role: selectedRole
+        }
+        console.log(userWithoutPassword)
+        await registerRequest(userWithoutPassword)
     })
     return (
-        <div className="p-4 shadow-md mb-12">
+        <div>
             <form className="flex flex-col gap-4 " onSubmit={onSubmit}>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Registro</h2>
                 <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <Label htmlFor="role" value="Rol" />
+                        <Select
+                            id="role"
+                            name="role"
+                            required
+                            onChange={(e) => setSelectedRole(e.target.value)}
+                        >
+                            <option value="admin">Admin</option>
+                            <option value="doctor">Medico</option>
+                            <option value="user">Paciente</option>
+                        </Select>
+                        {errors.role && <ErrorText text="Rol es requerido" />}
+                        {selectedRole === 'doctor' &&
+                            <Button className='m-1' onClick={() => setShowDoctorInfo(!showDoctorInfo)}>
+                                {showDoctorInfo ? 'Ocultar información de medico' : 'Agregar información de medico'}
+                            </Button>
+                        }
+                    </div>
+
+                    <div>
+                        <Label htmlFor="status" value="Estado" />
+                        <Select
+                            id="status"
+                            name="status"
+                            required
+                        >
+                            <option value={true}>Activo</option>
+                            <option value={false}>Deshabilitado</option>
+                        </Select>
+                        {errors.status && <ErrorText text="Estado es requerido" />}
+                    </div>
+
+                    {showDoctorInfo && <DoctorInfo show={showDoctorInfo} onClose={closeModal} handleChange={handleChange} profile={profile} />}
                     <div>
                         <Label htmlFor="firstName" value="Nombre" />
                         <TextInput
@@ -169,10 +227,6 @@ export const RegisterForm = () => {
                     Registrarse
                 </Button>
             </form>
-            <Link to={'/login'} className=" font-bold text-xs text-red-500 hover:text-red-800" href="#">
-                Ya estas registrado/a?
-            </Link>
         </div>
-
     )
 }

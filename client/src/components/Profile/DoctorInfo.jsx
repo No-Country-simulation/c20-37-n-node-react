@@ -4,6 +4,7 @@ import { doctorSpecialties } from '../../utils/specialities';
 import toast from 'react-hot-toast';
 
 export const DoctorInfo = ({ show, onClose, handleChange, profile }) => {
+
     const handleSubmit = (e) => {
         e.preventDefault();
         toast.success('Información profesional guardada');
@@ -22,7 +23,7 @@ export const DoctorInfo = ({ show, onClose, handleChange, profile }) => {
                             <TextInput
                                 id="licenseNumber"
                                 name="licenseNumber"
-                                value={profile.licenseNumber}
+                                value={profile?.licenseNumber}
                                 onChange={handleChange}
                                 required
                             />
@@ -34,7 +35,7 @@ export const DoctorInfo = ({ show, onClose, handleChange, profile }) => {
                                 name="yearsExperience"
                                 type="number"
                                 min={0}
-                                value={profile.yearsExperience}
+                                value={profile?.yearsExperience}
                                 onChange={handleChange}
                                 required
                             />
@@ -44,7 +45,7 @@ export const DoctorInfo = ({ show, onClose, handleChange, profile }) => {
                             <Textarea
                                 id="professionalInfo"
                                 name="professionalInfo"
-                                value={profile.professionalInfo}
+                                value={profile?.professionalInfo}
                                 onChange={handleChange}
                                 required
                             />
@@ -54,7 +55,7 @@ export const DoctorInfo = ({ show, onClose, handleChange, profile }) => {
                             <Select
                                 id="specialty"
                                 name="specialty"
-                                value={profile.specialty}
+                                value={profile?.specialty}
                                 onChange={handleChange}
                                 required
                             >
