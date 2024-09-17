@@ -60,24 +60,21 @@ export const MedicalHistory = () => {
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Nombre</Table.Cell>
-                        <Table.Cell>{patientData?.firstName} {patientData?.lastName}</Table.Cell>
+                        <Table.Cell>{ patientData ? patientData?.firstName + patientData?.lastName : 'No hay registros cargados'}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">DNI</Table.Cell>
-                        <Table.Cell>{patientData?.dni}</Table.Cell>
+                        <Table.Cell>{patientData ? patientData?.dni : 'No hay registros cargados'}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Fecha de Nacimiento</Table.Cell>
-                        <Table.Cell>{new Date(patientData?.birthdate).toLocaleDateString()}</Table.Cell>
+                        <Table.Cell>{patientData ? new Date(patientData?.birthdate).toLocaleDateString() : 'No hay registros cargados'}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Género</Table.Cell>
                         <Table.Cell>{medicalHistory?.gender ? medicalHistory.gender : 'Sin definir aún'}</Table.Cell>
                     </Table.Row>
-                    {/* <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <Table.Cell className="font-medium">Tipo de Sangre</Table.Cell>
-                        <Table.Cell>{userMedicalInfo.bloodType}</Table.Cell>
-                    </Table.Row> */}
+
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Alergias</Table.Cell>
                         <Table.Cell className='flex flex-wrap gap-1'>
