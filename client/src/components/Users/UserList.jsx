@@ -1,16 +1,14 @@
 import { useState } from "react"
 import { useGeneralContext } from "../../hooks/useGeneralContext";
 import { useUsers } from "../../hooks/useUsersContext"
-import { useAuth } from "../../hooks/useAuthContext";
 import { EditUser } from "./EditUser";
-import { RegisterForm } from "../AuthForm/RegisterForm"
-import { Table, Dropdown, TextInput, Button, Modal, ModalBody } from 'flowbite-react'
+import { Table, Dropdown, TextInput, Button, Modal } from 'flowbite-react'
 import { HiDotsVertical, HiPencil, HiTrash, HiSearch } from 'react-icons/hi'
+import { AddUser } from "./AddUser";
 
 export const UserList = ({ filterUsed }) => {
 
   const { users, setUsers } = useGeneralContext()
-  const { register } = useAuth()
   const { getUsers, updateUserById, deleteUserByDni } = useUsers()
   const [selectedUser, setSelectedUser] = useState({});
   const [showModal, setShowModal] = useState(false);
@@ -39,11 +37,6 @@ export const UserList = ({ filterUsed }) => {
     await updateUserById(updatedUser._id, updatedUser);
     handleCloseModal();
   };
-
-  const handleAdded = async (newUser) => {
-    await register(newUser);
-  }
-
 
   return (
     <section className="bg-gray-100 dark:bg-gray-800 p-4 shadow-md sm:p-5 w-full">
@@ -127,10 +120,8 @@ export const UserList = ({ filterUsed }) => {
         <Modal className="mx-auto" size="7xl" onClose={() => setShowAddModal(false)} show={showAddModal}>
           <Modal.Header>Agregar usuario</Modal.Header>
           <Modal.Body>
-            <RegisterForm />
+            <AddUser />
           </Modal.Body>
-
-          <p>Aca va el resto de los datos</p>
         </Modal>
       }
     </section >

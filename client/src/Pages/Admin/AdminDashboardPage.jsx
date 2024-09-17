@@ -30,7 +30,7 @@ export const AdminDashboardPage = () => {
     }
   }
   return (
-    <div className="flex w-full bg-gray-50 dark:bg-gray-900 overflow-x-auto">
+    <div className="flex w-full min-h-screen bg-gray-50 dark:bg-gray-90 overflow-x-auto">
       <AdminSidebar
         isSidebarCollapsed={isSidebarCollapsed}
         setActiveMenu={setActiveMenu}

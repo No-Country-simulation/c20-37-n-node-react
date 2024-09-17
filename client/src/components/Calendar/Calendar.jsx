@@ -92,7 +92,7 @@ export const Calendar = () => {
 
   return (
     <div className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 shadow-md">
-      <h1 className="text-3xl font-bold mb-6">Agendar consulta</h1>
+      <h1 className="text-3xl font-bold mb-2">Agendar consulta</h1>
       {/* <div className='w-screen min-h-screen my-24 flex justify-center'> */}
       <div className='w-10/12 mx-auto max-h-lvh'>
         <FullCalendar

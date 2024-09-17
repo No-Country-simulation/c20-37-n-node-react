@@ -108,6 +108,10 @@ export const AuthProvider = ({ children }) => {
             setLogued(response.data.playload)
             setAuthenticated(true)
         } catch (error) {
+            if (error.response.data.msg === 'Expired Session') {
+                Cookies.remove("access_token")
+                toast.error('Su sesión ha expirado, ingrese nuevamente')
+            }
             setAuthenticated(false)
             setLogued({})
         }

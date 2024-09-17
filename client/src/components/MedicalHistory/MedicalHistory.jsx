@@ -28,9 +28,9 @@ export const MedicalHistory = () => {
     }
     // Faltaria un endpoint para poder buscar a un usuario por su historial medico, para poder mostrar los datos de el usuario que se busco
     return (
-        <Card className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 rounded-none">
+        <Card className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 rounded-none">
             <h1 className="text-3xl font-bold mb-2">Historial medico</h1>
-            <p className='text-center text-base'>Si no se muestran datos, porfavor presione el botón para refrescar.</p>
+            <p className='text-base'>Si no se muestran datos, porfavor presione el botón para refrescar.</p>
             {logued?.role === 'doctor' &&
                 <div>
                     <Label className='font-medium text-md' htmlFor="idClient" value="Buscar por DNI de paciente" />
@@ -60,19 +60,21 @@ export const MedicalHistory = () => {
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Nombre</Table.Cell>
-                        <Table.Cell>{ patientData ? patientData?.firstName + patientData?.lastName : 'No hay registros cargados'}</Table.Cell>
+                        <Table.Cell>{patientData ? patientData?.firstName + ' ' + patientData?.lastName : logued?.firstName + ' ' + logued?.lastName}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">DNI</Table.Cell>
-                        <Table.Cell>{patientData ? patientData?.dni : 'No hay registros cargados'}</Table.Cell>
+                        <Table.Cell>{patientData ? patientData?.dni : logued?.dni}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Fecha de Nacimiento</Table.Cell>
-                        <Table.Cell>{patientData ? new Date(patientData?.birthdate).toLocaleDateString() : 'No hay registros cargados'}</Table.Cell>
+                        <Table.Cell>{patientData ? new Date(patientData?.birthdate).toLocaleDateString() : new Date(logued?.birthdate).toLocaleDateString()}</Table.Cell>
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Género</Table.Cell>
-                        <Table.Cell>{medicalHistory?.gender ? medicalHistory.gender : 'Sin definir aún'}</Table.Cell>
+                        <Table.Cell>
+                            {patientData ? patientData?.gender : logued.gender}
+                            {!patientData?.gender && !logued?.gender && 'No hay datos'}</Table.Cell>
                     </Table.Row>
 
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">

@@ -16,6 +16,9 @@ export const DoctorDashboard = () => {
 
   return (
     <div className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-800 p-4">
+      <h1 className="text-3xl font-bold mb-2">Panel de control Médicos
+
+      </h1>
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card>
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
