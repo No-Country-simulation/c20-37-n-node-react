@@ -73,6 +73,7 @@ const logout = (req, res, next) => {
     }
 };
 
+
 const getByDni = async (req = request, res = response) => {
     try {
         const { dni } = req.params;
@@ -97,4 +98,15 @@ const deleteByDni = async (req = request, res = response) => {
     }
 }
 
-export default { userRegister, userLogin, userUpdate, getAll, verificationSessions, logout, getByDni, deleteByDni }
+const getUserByDni = async (req = request, res = response) => {
+    try {
+        const { dni } = req.params;
+        const user = await userService.getUserByDni(dni);
+        if (!user) return res.status(404).json({ status: "error", msg: "User not found" });
+        return res.status(200).json({ status: "ok", playload: user });
+    } catch (error) {
+        res.status(500).json({ status: "error", msg: "Internal server error" });
+    }
+}
+
+export default { userRegister, userLogin, userUpdate, getAll, verificationSessions, logout, getByDni, deleteByDni, getUserByDni };

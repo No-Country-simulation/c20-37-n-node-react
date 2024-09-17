@@ -75,10 +75,4 @@ const sessionSchema = new mongoose.Schema({
 });
 
 
-
-
-
-
-
-
 export const userSession = mongoose.model(userSessionCollection, sessionSchema);

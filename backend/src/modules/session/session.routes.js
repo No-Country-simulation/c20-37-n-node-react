@@ -12,6 +12,7 @@ router.get("/usersAll", passportCall("current"), authorization(["admin", "doctor
 router.get("/verify-session", passportCall("current", { session: false }), sessionController.verificationSessions);
 router.get("/logout", passportCall("current"), sessionController.logout);
 router.get("/medicalHistory/:dni", passportCall("current"), authorization(["admin", "doctor", "user"]), sessionController.getByDni);
+router.get("/:dni", passportCall("current"), authorization(["admin", "doctor", "user"]), sessionController.getUserByDni);
 router.delete("/delete/:dni", passportCall("current"), authorization(["admin"]), sessionController.deleteByDni);
 
 export default router;
