@@ -1,16 +1,20 @@
 import { useState } from "react"
 import { useGeneralContext } from "../../hooks/useGeneralContext";
 import { useUsers } from "../../hooks/useUsersContext"
+import { useAuth } from "../../hooks/useAuthContext";
 import { EditUser } from "./EditUser";
-import { Table, Dropdown, TextInput, Button } from 'flowbite-react'
+import { RegisterForm } from "../AuthForm/RegisterForm"
+import { Table, Dropdown, TextInput, Button, Modal, ModalBody } from 'flowbite-react'
 import { HiDotsVertical, HiPencil, HiTrash, HiSearch } from 'react-icons/hi'
 
 export const UserList = ({ filterUsed }) => {
 
   const { users, setUsers } = useGeneralContext()
+  const { register } = useAuth()
   const { getUsers, updateUserById, deleteUserByDni } = useUsers()
   const [selectedUser, setSelectedUser] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [search, setSearch] = useState('');
 
   const handleEditClick = (user) => {
@@ -22,9 +26,7 @@ export const UserList = ({ filterUsed }) => {
     const confirm = window.confirm('¿Estás seguro de eliminar este usuario?');
     if (!confirm) return alert('Operación cancelada');
 
-    const response = await deleteUserByDni(dni);
-    console.log(response);
-    alert('Usuario eliminado correctamente');
+    await deleteUserByDni(dni);
   };
 
   const handleCloseModal = () => {
@@ -35,19 +37,19 @@ export const UserList = ({ filterUsed }) => {
   const handleSaveUser = async (updatedUser) => {
     setUsers(users.map(user => user.id === updatedUser.id ? updatedUser : user));
     await updateUserById(updatedUser._id, updatedUser);
-    getUsers();
     handleCloseModal();
   };
 
+  const handleAdded = async (newUser) => {
+    await register(newUser);
+  }
+
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+    <section className="bg-gray-100 dark:bg-gray-800 p-4 shadow-md sm:p-5 w-full">
       <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
         Panel de usuarios
       </h1>
-
-      {/* <div className="mx-auto max-w-screen-2xl px-4 lg:px-12"> */}
-      {/* <div className="bg-white dark:bg-gray-800 shadow-md sm:rounded-lg overflow-hidden"> */}
       <div className="flex">
         <TextInput
           id="search"
@@ -58,9 +60,12 @@ export const UserList = ({ filterUsed }) => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Button className="ml-2" onClick={() => getUsers()}>Recargar lista</Button>
+        <div className="flex w-full justify-between">
+          <Button className="ml-2" onClick={() => getUsers()}>Recargar lista</Button>
+          <Button className="ml-2 bg-primary" onClick={() => setShowAddModal(true)}>Agregar usuario</Button>
+        </div>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto my-2">
         <Table striped>
           <Table.Head>
             <Table.HeadCell>Email</Table.HeadCell>
@@ -109,8 +114,6 @@ export const UserList = ({ filterUsed }) => {
           </Table.Body>
         </Table>
       </div>
-      {/* </div> */}
-      {/* </div > */}
       {selectedUser && (
         <EditUser
           show={showModal}
@@ -120,6 +123,16 @@ export const UserList = ({ filterUsed }) => {
           setSelectedUser={setSelectedUser}
         />
       )}
+      {showAddModal &&
+        <Modal className="mx-auto" size="7xl" onClose={() => setShowAddModal(false)} show={showAddModal}>
+          <Modal.Header>Agregar usuario</Modal.Header>
+          <Modal.Body>
+            <RegisterForm />
+          </Modal.Body>
+
+          <p>Aca va el resto de los datos</p>
+        </Modal>
+      }
     </section >
   )
 }

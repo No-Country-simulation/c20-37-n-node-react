@@ -1,0 +1,20 @@
+{
+  "name": "c20-37-n-node-react",
+  "version": "1.0.0",
+  "workspaces": [
+    "backend",
+    "client"
+  ],
+  "scripts": {
+    "dev:client": "npm --workspace client run dev",
+    "dev:backend": "npm --workspace backend run dev",
+    "dev:all": "npm-run-all --parallel dev:client dev:backend"
+  },
+  "description": "HealthTech App",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}

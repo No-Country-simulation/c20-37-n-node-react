@@ -85,7 +85,7 @@ export const VideoCall = () => {
                         userInfo={{
                             displayName: name.current
                         }}
-                        onApiReady={(externalApi) => {
+                        onApiReady={() => {
                             // here you can attach custom event listeners to the Jitsi Meet External API
                             // you can also store it in state for later use
                         }}
