@@ -13,9 +13,9 @@ import { ModalConsulation } from './Doctor/modalConsultation';
 export const Calendar = () => {
 
   const { logued } = useAuth();
-  const { availableTime, consultations, setSlot } = useGeneralContext();
+  const { setSlot } = useGeneralContext();
   //const { getConsultation, , getAvailableTimeByRangeDate,  createNewConsultation, updateConsultation, deleteConsultation} = useCalendar();
-  const { getAvailableTimeByRangeDate, getConsultationByDoctor } = useCalendar();
+  const { getAvailableTimeByRangeDate, getConsultationByDoctor, availableTime, consultations } = useCalendar();
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -48,9 +48,9 @@ export const Calendar = () => {
       end = end.toISOString();
     } else {
       start = start.toISOString();
-      end = new Date(end.setDate(end.getDate() - 1)).toISOString(); // Default for other views
+      end = new Date(end.setDate(end.getDate() - 1)).toISOString();
     }
-    console.log("CAMBIO DE FECHAAAAS")
+    console.log("CAMBIO DE FECHAAAAS", start, end)
 
     //fetchData(start, end); 
   };
@@ -70,8 +70,7 @@ export const Calendar = () => {
 
   const renderEventContent = (eventInfo) => {
     return (
-      //<div className={`p-2 ${eventInfo.event._def.extendedProps.type == 'consultation'? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} flex flex-col`}>
-      <button onClick={handleOpenModal} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className={`w-full h-full flex flex-col text-white ${eventInfo.event._def.extendedProps.type == 'consultation' ? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} rounded-sm text-sm px-5 py-1 text-center `} type="button">
+      <button onClick={handleOpenModal} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className={`w-full h-full flex flex-col text-white ${eventInfo.event._def.extendedProps.type == 'consultation'? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} rounded-sm text-sm px-5 py-1 text-center `} type="button">     
         <b>{eventInfo.timeText}</b>
         <i>{eventInfo.event.title}</i>
       </button>
@@ -84,7 +83,7 @@ export const Calendar = () => {
     const endDate = new Date(calendarApi.view.activeEnd);
     endDate.setDate(endDate.getUTCDate() - 1);
     const end = endDate.toISOString();
-
+    
     console.log("RENDERIZADO");
 
     fetchData(start, end);

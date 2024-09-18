@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Sidebar } from "flowbite-react";
-import { HiChartPie, HiCalendar, HiArrowSmLeft, HiArrowSmRight, HiDocumentAdd } from "react-icons/hi";
+import { HiChartPie, HiCalendar, HiArrowSmLeft, HiArrowSmRight, HiDocumentAdd, HiOutlineCalendar } from "react-icons/hi";
 
 export const DoctorSidebar = ({ isSidebarCollapsed,
     setActiveMenu,
@@ -45,6 +45,15 @@ export const DoctorSidebar = ({ isSidebarCollapsed,
                         >
                             {!isSidebarCollapsed && <span>Agendas</span>}
                             {isSidebarCollapsed && <span>Agendas</span>}
+                        </Sidebar.Item>
+                        <Sidebar.Item
+                            className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
+                            icon={HiOutlineCalendar}
+                            onClick={() => setActiveMenu('availability')}
+                            active={activeMenu === 'availability'}
+                        >
+                            {!isSidebarCollapsed && <span>Disponibilidad</span>}
+                            {isSidebarCollapsed && <span>Disponibilidad</span>}
                         </Sidebar.Item>
                     </Sidebar.ItemGroup>
                 </Sidebar.Items>

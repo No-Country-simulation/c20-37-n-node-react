@@ -13,9 +13,9 @@ export const GeneralProvider = ({ children }) => {
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [calendar, setCalendar] = useState([]);
     const [availableTime, setAvailableTime] = useState([]);
-    const [doctorAvailability, setDoctorAvailability] = useState([]);
+    const [doctorAvailability, setDoctorAvailability] = useState(null);
     const [consultations, setConsultations] = useState([]);
-    const [consultation, setConsultation] = useState([]);
+    const [consultation, setConsultation] = useState(null);
     const [slot, setSlot] = useState({});
     const [errors, setErrors] = useState('');
     const [activeMenu, setActiveMenu] = useState('dashboard');
