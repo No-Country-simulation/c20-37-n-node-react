@@ -7,7 +7,8 @@ import { connectMongoDB } from './config/mongoDB.config.js';
 import { initializePassport } from "./config/passport.config.js";
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
-import cors from "cors"
+import cors from "cors";
+import "./utils/sendEmail.js";
 
 const app = express();
 

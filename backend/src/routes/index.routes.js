@@ -4,6 +4,8 @@ import medicalHistoryRoutes from "../modules/medicalHistory/medicalHistory.route
 import availableTimeRoutes  from "../modules/calendar/availableTime/availableTime.routes.js";
 import calendarRoutes  from "../modules/calendar/calendar.routes.js";
 import consultationRoutes  from "../modules/calendar/consultation/consultation.routes.js";
+import diagnosis from "../modules/diagnosis/diagnosis.routes.js";
+
 const router = Router();
 
 router.use("/session", sessionRoutes);
@@ -11,5 +13,6 @@ router.use("/medicalHistory", medicalHistoryRoutes);
 router.use("/calendar", calendarRoutes);
 router.use("/calendar/availableTime", availableTimeRoutes);
 router.use("/calendar/consultation", consultationRoutes);
+router.use("/diagnosis", diagnosis);
 
 export default router;

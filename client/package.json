@@ -20,6 +20,7 @@
     "@fullcalendar/interaction": "^6.1.15",
     "@fullcalendar/react": "^6.1.15",
     "@fullcalendar/timegrid": "^6.1.15",
+    "@jitsi/react-sdk": "^1.4.0",
     "axios": "^1.7.7",
     "flowbite": "^2.5.1",
     "flowbite-react": "^0.10.1",

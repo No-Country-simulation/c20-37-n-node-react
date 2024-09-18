@@ -66,7 +66,7 @@ export const Header = () => {
                     <div className={`w-full ${isMobileMenuOpen ? 'block' : 'hidden'} justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu`}>
                         <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                             <li>
-                                <Link to={'/dashboard'} className="block py-2 pr-4 pl-3  text-primary border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-gray-400 lg:p-0">Inicio</Link>
+                                <Link to={'/'} className="block py-2 pr-4 pl-3  text-primary border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-gray-400 lg:p-0">Inicio</Link>
                             </li>
                             {role === 'admin' &&
                                 <AdminNav />

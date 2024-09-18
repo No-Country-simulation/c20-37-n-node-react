@@ -1,6 +1,9 @@
 import { Consultation } from "./consultation.model.js";
 import calendarServices from "../calendar.services.js";
+import userService from "../../session/session.services.js"
 import availableTimeServices from "../availableTime/availableTime.services.js";
+import { emailTemplate } from "../../../config/emailMessages.js";
+import { sendEmail } from "../../../utils/sendEmail.js";
 
 const getByID = async (id) => {
     const consultation = await Consultation.findById(id);
@@ -60,8 +63,10 @@ const getByDoctorInSchedule = async (doctorId, startTime) => {
 
 const create = async (data) => {
     const consultation = await Consultation.create(data);
-    console.log(consultation);
+    const patient = await userService.getById(consultation.patient);
+    const doctor = await userService.getById(consultation.doctor);
     
+    await sendEmail(patient.email,"Nueva Cita", emailTemplate.consultationCreatedHtml(patient,doctor, consultation));
     await calendarServices.updateCalendarByConsultation(consultation.doctor, consultation.patient, consultation);
 
     return consultation;

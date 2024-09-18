@@ -49,8 +49,7 @@ export const Info = () => {
                         </li>
                     </ul>
                 </div>
-            </div>
-        </div>
+            </div>          </div>
     )
 }
 

@@ -15,6 +15,11 @@ const getByDni = async (dni) => {
     return user;
 }
 
+const getUserByDni = async (dni) => {
+    const user = await userSession.findOne({ dni: dni });
+    return user;
+}
+
 const getByEmail = async (email) => {
     const user = await userSession.findOne({ email: email});
     return user;
@@ -66,4 +71,4 @@ const deleteOne = async (id) => {
 }
 
 
-export default { getAll, getById, getByEmail, create, update, deleteOne, getByDni }
+export default { getAll, getById, getByEmail, create, update, deleteOne, getByDni, getUserByDni };

@@ -9,7 +9,7 @@ export const AdminSidebar = ({ isSidebarCollapsed,
 }) => {
 
   return (
-    <div className={`${isSidebarCollapsed ? 'w-16' : 'w-40'} transition-all duration-300 ease-in-out`}>
+    <div className={`${isSidebarCollapsed ? 'w-16' : 'w-44'} transition-all duration-300 ease-in-out`}>
       <Sidebar collapsed={isSidebarCollapsed}>
 
         <div className={`cursor-pointer flex ${isSidebarCollapsed ? 'justify-center' : null}`}>
@@ -26,6 +26,7 @@ export const AdminSidebar = ({ isSidebarCollapsed,
               active={activeMenu === 'dashboard'}
             >
               {!isSidebarCollapsed && <span>Tablero</span>}
+              {isSidebarCollapsed && <span>Tablero</span>}
             </Sidebar.Item>
             <Sidebar.Item
               className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -34,6 +35,7 @@ export const AdminSidebar = ({ isSidebarCollapsed,
               active={activeMenu === 'doctors'}
             >
               {!isSidebarCollapsed && <span>Médicos</span>}
+              {isSidebarCollapsed && <span>Médicos</span>}
             </Sidebar.Item>
             <Sidebar.Item
               className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -42,6 +44,7 @@ export const AdminSidebar = ({ isSidebarCollapsed,
               active={activeMenu === 'patients'}
             >
               {!isSidebarCollapsed && <span>Pacientes</span>}
+              {isSidebarCollapsed && <span>Pacientes</span>}
             </Sidebar.Item>
             <Sidebar.Item
               className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -50,6 +53,7 @@ export const AdminSidebar = ({ isSidebarCollapsed,
               active={activeMenu === 'agendas'}
             >
               {!isSidebarCollapsed && <span>Agendas</span>}
+              {isSidebarCollapsed && <span>Agendas</span>}
             </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>

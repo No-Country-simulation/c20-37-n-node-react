@@ -12,6 +12,10 @@ html .roboto {
     font-family: 'Roboto', sans-serif;
 }
 
+form {
+    font-family: 'Roboto', sans-serif;
+}
+
 h1 {
     font-size: 32px;
 }
@@ -41,7 +45,7 @@ p {
     min-height: 110vh;
 }
 
-.fc-day{
+.fc-day {
     background-color: #FCFAF9;
 }
 
@@ -49,9 +53,9 @@ p {
     background-color: #4caf50;
     color: white;
     padding: 10px;
-  }
+}
 
-.fc-event{
+.fc-event {
     font-size: smaller;
     color: white;
 }
@@ -60,12 +64,12 @@ p {
     background-color: #0E588F;
     color: white;
     padding: 10px;
-  }
+}
 
-.fc-toolbar h2{
+.fc-toolbar h2 {
     font-weight: 600;
 }
 
-.fc-prev-button{
+.fc-prev-button {
     background-color: #FCFAF9;
 }

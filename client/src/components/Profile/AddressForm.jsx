@@ -3,11 +3,10 @@ import { Modal, Label, TextInput, Select, Button } from 'flowbite-react';
 import { countries } from '../../utils/countries';
 import toast from 'react-hot-toast';
 
-export const AddressForm = (({ show, onClose, handleAddress, addressInfo }) => {
+export const AddressForm = ({ show, onClose, handleAddress, addressInfo }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        toast.success('Dirección guardada correctamente');
         toast.success('Para finalizar la edición, presione Actualizar Perfil');
         onClose();
     }
@@ -56,9 +55,8 @@ export const AddressForm = (({ show, onClose, handleAddress, addressInfo }) => {
                 </form>
             </Modal.Body>
             <Modal.Footer>
-                <Button color={'red'} onClick={onClose}>Cerrar</Button>
+                <Button color={'failure'} onClick={onClose}>Cerrar</Button>
             </Modal.Footer>
         </Modal>
     );
-}
-)
+};
