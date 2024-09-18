@@ -111,7 +111,6 @@ const create = async (data) => {
 }
 
 const updateByDoctorAndDate = async (doctorId, date, data) => {
-
   const newTimeSlots = data.timeSlots;
 
   const availableTime = await AvailableTime.findOne({ doctor: doctorId });
