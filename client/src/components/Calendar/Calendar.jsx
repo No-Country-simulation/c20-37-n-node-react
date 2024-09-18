@@ -83,7 +83,6 @@ export const Calendar = () => {
 
   const renderEventContent = (eventInfo) => {
     return (
-      //<div className={`p-2 ${eventInfo.event._def.extendedProps.type == 'consultation'? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} flex flex-col`}>
       <button onClick={handleOpenModal} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className={`w-full h-full flex flex-col text-white ${eventInfo.event._def.extendedProps.type == 'consultation'? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} rounded-sm text-sm px-5 py-1 text-center `} type="button">
         <b>{eventInfo.timeText}</b>
         <i>{eventInfo.event.title}</i>
