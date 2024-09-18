@@ -5,7 +5,6 @@ import { AdminSidebar } from '../../components/Dashboards/Sidebar/AdminSidebar'
 import { Info } from '../../components/Dashboards/Menu/Info'
 import { Calendar } from '../../components/Calendar/Calendar'
 import { useGeneralContext } from '../../hooks/useGeneralContext'
-import { VideoCall } from '../../components/VideoCall/VideoCall'
 
 export const AdminDashboardPage = () => {
   const { activeMenu, setActiveMenu } = useGeneralContext()
@@ -25,8 +24,6 @@ export const AdminDashboardPage = () => {
         return <Users />
       case 'agendas':
         return <Calendar />
-      case 'videocall':
-        return <VideoCall />
     }
   }
   return (

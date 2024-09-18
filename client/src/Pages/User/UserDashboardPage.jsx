@@ -25,7 +25,7 @@ export const UserDashboardPage = () => {
         }
     }
     return (
-        <div className="flex bg-gray-50 dark:bg-gray-900 overflow-x-auto">
+        <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-auto">
             <UserSidebar
                 isSidebarCollapsed={isSidebarCollapsed}
                 setActiveMenu={setActiveMenu}

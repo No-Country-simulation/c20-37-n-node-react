@@ -15,6 +15,7 @@ import { ProfilePage } from './Pages/User/ProfilePage'
 import { MedicalHistoryPage } from './Pages/User/MedicalHistoryPage'
 import { Calendar } from './components/Calendar/Calendar'
 import { DashboardPage } from './Pages/DashboardPage'
+import { ActiveDoctorsPage } from './Pages/ActiveDoctorsPage'
 
 
 
@@ -27,12 +28,14 @@ export const Router = () => {
                     <Route path='/' element={<Home />} />
                     <Route path='/login' element={<Authentication />} />
                     <Route path='/register' element={<Authentication />} />
-
+                    <Route path='/specialists' element={<ActiveDoctorsPage />} />
                     <Route element={<ProtectedRoute />}>
                         {/* Rutas generales users autenticados */}
                         <Route path='/calendar' element={<Calendar />} />
                         <Route path='/profile' element={<ProfilePage />} />
                         <Route path='/dashboard' element={<DashboardPage />} />
+
+
 
                         {/* Rutas para el administrador */}
                         <Route path='/admin' element={<AdminLayout />}>
