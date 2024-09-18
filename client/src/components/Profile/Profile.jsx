@@ -4,18 +4,19 @@ import { Card, Label, TextInput, Button, Select } from 'flowbite-react'
 import { useGeneralContext } from '../../hooks/useGeneralContext'
 import { useUsers } from '../../hooks/useUsersContext'
 import { DatePick } from '../DatePicker/DatePicker'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { HiMail, HiPhone, HiIdentification } from "react-icons/hi";
 import { AddressForm } from './AddressForm'
 import { DoctorInfo } from './DoctorInfo'
 
 export const Profile = ({ user }) => {
-    const { setLogued } = useGeneralContext()
+    const { setLogued, setActiveMenu } = useGeneralContext()
     const { updateUserById } = useUsers()
     const [profile, setProfile] = useState(user)
     const [showModal, setShowModal] = useState(false);
     const [address, setAddress] = useState(profile?.address)
 
+    const navigate = useNavigate()
     const openModal = () => setShowModal(true);
     const closeModal = () => setShowModal(false);
 
@@ -40,6 +41,10 @@ export const Profile = ({ user }) => {
             ...prevProfile,
             birthdate: date
         }))
+    }
+    const navigateToMedicalHistory = () => {
+        setActiveMenu('historyForm')
+        navigate('/dashboard')
     }
 
     const handleSubmit = async (e) => {
@@ -169,11 +174,9 @@ export const Profile = ({ user }) => {
             </form>
             {profile.role === 'user' &&
                 <div className="mt-2">
-                    <Link color='primary' to={"/user/medicalHistory"}>
-                        <Button className="w-full hover:bg-green-900 duration-200">
-                            Ver Historial Médico
-                        </Button>
-                    </Link>
+                    <Button onClick={() => navigateToMedicalHistory()} className="w-full hover:bg-green-900 duration-200">
+                        Ver Historial Médico
+                    </Button>
                 </div>
             }
         </Card>

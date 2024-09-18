@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react"
 import { useGeneralContext } from "../../hooks/useGeneralContext";
 import { useUsers } from "../../hooks/useUsersContext"
@@ -118,7 +119,7 @@ export const UserList = ({ filterUsed }) => {
       )}
       {showAddModal &&
         <Modal className="mx-auto" size="7xl" onClose={() => setShowAddModal(false)} show={showAddModal}>
-          <Modal.Header>Agregar usuario</Modal.Header>
+          <Modal.Header>Creacion de usuarios</Modal.Header>
           <Modal.Body>
             <AddUser />
           </Modal.Body>

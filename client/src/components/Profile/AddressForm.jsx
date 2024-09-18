@@ -55,7 +55,7 @@ export const AddressForm = ({ show, onClose, handleAddress, addressInfo }) => {
                 </form>
             </Modal.Body>
             <Modal.Footer>
-                <Button color={'red'} onClick={onClose}>Cerrar</Button>
+                <Button color={'failure'} onClick={onClose}>Cerrar</Button>
             </Modal.Footer>
         </Modal>
     );
