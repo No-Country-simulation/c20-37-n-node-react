@@ -61,9 +61,9 @@ export const Calendar = ({ tabsRef, setActiveTab }) => {
       end = end.toISOString();
     } else {
       start = start.toISOString();
-      end = new Date(end.setDate(end.getDate() - 1)).toISOString(); // Default for other views
+      end = new Date(end.setDate(end.getDate() - 1)).toISOString();
     }
-    console.log("CAMBIO DE FECHAAAAS")
+    console.log("CAMBIO DE FECHAAAAS", start, end)
 
     //fetchData(start, end); 
   };
