@@ -52,7 +52,6 @@ const getByPatientAndRangeTime = async (patientId, start, end) => {
 }
 
 const getByDoctorInSchedule = async (doctorId, startTime) => {
-    
     const consultation = await Consultation.findOne({
         doctor: doctorId,
         startTime: startTime,

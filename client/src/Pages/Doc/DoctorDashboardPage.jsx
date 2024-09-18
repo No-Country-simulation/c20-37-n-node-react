@@ -5,6 +5,7 @@ import { DoctorDashboard } from '../../components/Dashboards/DoctorDashboard'
 import { Calendar } from '../../components/Calendar/Calendar'
 import { DoctorSidebar } from '../../components/Dashboards/Sidebar/DoctorSidebar'
 import { useGeneralContext } from '../../hooks/useGeneralContext'
+import { FormAvailability } from '../../components/Calendar/FormAvailability'
 
 export const DoctorDashboardPage = () => {
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
@@ -24,6 +25,8 @@ export const DoctorDashboardPage = () => {
                 return <Users />
             case 'agendas':
                 return <Calendar />
+            case 'availability':
+                return <FormAvailability />
         }
     }
     return (

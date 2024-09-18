@@ -11,15 +11,34 @@ const getByDoctor = async (doctorId) => {
 };
 
 const getByDoctorAndRangeTime = async (doctorId, start, end) => {
-    const availableTime = await AvailableTime.findOne({
+    let availableTime = await AvailableTime.findOne({
       doctor: doctorId,
-    });
-  
+    }).lean();;
+
+    const timeSlotsByHour = getTimeSlots(availableTime.timeSlots);
+    
+
+    const exceptionsByHour = availableTime.exceptions.map(exception => {
+      const timeSlotsByHour = getTimeSlots(exception.timeSlots);
+      return {
+        ...exception,
+        timeSlots: timeSlotsByHour
+      }
+    })
+
+    availableTime = {
+      ...availableTime,
+      timeSlots: timeSlotsByHour,
+      exceptions: exceptionsByHour
+    };
+
+
     const availableSlots = [];
     const startDate = new Date(start);
     const endDate = new Date(end);
   
-    for (let currentDate = startDate; currentDate <= endDate; currentDate.setDate(currentDate.getDate() + 1)) {
+    for (let d= startDate; d <= endDate; d.setUTCDate(d.getUTCDate() + 1)) {
+      const currentDate = new Date(d);
       const weekDay = currentDate.getUTCDay();
 
       const exception = availableTime.exceptions.find(
@@ -27,6 +46,7 @@ const getByDoctorAndRangeTime = async (doctorId, start, end) => {
       );
   
       const timeSlots = exception ? exception.timeSlots : availableTime.timeSlots;
+
 
       if (!exception && !availableTime.daysOfWeek.includes(weekDay)) {
         continue;
@@ -41,8 +61,8 @@ const getByDoctorAndRangeTime = async (doctorId, start, end) => {
         const [endHour, endMinute] = slot.endTime.split(':');
         endTime.setUTCHours(endHour, endMinute);
 
-        const isBooked = await consultationServices.getByDoctorInSchedule(doctorId, startTime, endTime);
-  
+        const isBooked = await consultationServices.getByDoctorInSchedule(doctorId, startTime);
+
         if (!isBooked) {
           availableSlots.push({
             title: 'Disponible',
@@ -57,6 +77,34 @@ const getByDoctorAndRangeTime = async (doctorId, start, end) => {
     return availableSlots;
 };
 
+const getTimeSlots = (timeSlots) => {
+  const timeSlotsByHour = [];
+
+  for (let timeSlot of timeSlots) {
+      const [startHour, startMinute] = timeSlot.startTime.split(':');
+      const [endHour, endMinute] = timeSlot.endTime.split(':');
+
+      let startTime = new Date();
+      startTime.setHours(startHour, startMinute, 0, 0);
+      let endTime = new Date();
+      endTime.setHours(endHour, endMinute, 0, 0); 
+
+      while (startTime < endTime) {
+          let nextHour = new Date(startTime);
+          nextHour.setHours(startTime.getHours() + 1);
+
+          timeSlotsByHour.push({
+              startTime: `${startTime.getHours().toString().padStart(2, '0')}:${startTime.getMinutes().toString().padStart(2, '0')}`,
+              endTime: `${nextHour.getHours().toString().padStart(2, '0')}:${nextHour.getMinutes().toString().padStart(2, '0')}`
+          });
+
+          startTime = nextHour;
+      }
+  }
+
+  return timeSlotsByHour;
+}
+
 const create = async (data) => {
   const availableTime = await AvailableTime.create(data);
   return availableTime;
@@ -69,10 +117,12 @@ const updateByDoctorAndDate = async (doctorId, date, data) => {
   const availableTime = await AvailableTime.findOne({ doctor: doctorId });
 
   const newDate = new Date(date);
+  
 
   const existingException = availableTime.exceptions.find(
-    exception => Date(exception.date).getTime() === newDate.getTime()
+    exception => new Date(exception.date).getTime() === newDate.getTime()
   );
+  
 
   if (existingException) {
     existingException.timeSlots = newTimeSlots;
