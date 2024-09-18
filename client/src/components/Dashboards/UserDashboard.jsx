@@ -1,12 +1,11 @@
+/* eslint-disable react/prop-types */
 import { Card, Button } from 'flowbite-react'
 import { FaCalendarAlt, FaFileAlt, FaClock, FaUserMd, FaHospital } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom"
-// import { useAuth } from '../../contexts/AuthContext'
 import { useGeneralContext } from '../../hooks/useGeneralContext'
 
-export const UserDashboard = () => {
+export const UserDashboard = ({ tabsRef, setActiveTab }) => {
 
-  // const { logued } = useAuth()
   const { logued } = useGeneralContext()
   // Estos datos normalmente vendrían de una API o estado global
   const nextAppointment = {
@@ -15,7 +14,6 @@ export const UserDashboard = () => {
     doctor: 'Dra. María García',
     specialty: 'Cardiología'
   }
-
   const navigate = useNavigate()
 
   return (
@@ -44,27 +42,24 @@ export const UserDashboard = () => {
             </p>
           </div>
           <div className="flex gap-x-2 justify-between mt-4">
-            <Button className="bg-gray-200 hover:bg-gray-400 duration-200 transition-colors" color="primary" >
+            <Button className="bg-gray-200 hover:bg-gray-400 dura tion-200 transition-colors" color="primary" >
               Ver detalles de la consulta
             </Button>
             <Button className="bg-gray-200 hover:bg-gray-400 duration-200 transition-colors" color="primary" >
               Ver consultas anteriores
             </Button>
           </div>
-          <div className="mt-4">
-
-          </div>
         </Card>
 
         <Card>
           <h2 className="text-xl font-semibold mb-4">Acciones Rápidas</h2>
           <div className="space-y-2">
-            <Button onClick={() => navigate('/calendar')} className="bg-gray-200 hover:bg-gray-300 duration-200 transition-colors" color="primary">
+            <Button onClick={() => tabsRef.current?.setActiveTab(2)} className="bg-gray-200 hover:bg-gray-300 duration-200 transition-colors" color="primary">
               <FaCalendarAlt className="mr-2 h-5 w-5" />
               Agendar Consulta
             </Button>
             <Button className="bg-gray-200 hover:bg-gray-300 duration-200 transition-colors"
-              onClick={() => navigate('/user/medicalHistory')}
+              onClick={() => tabsRef.current?.setActiveTab(1)}
               color="primary">
               <FaFileAlt className="mr-2 h-5 w-5" />
               Ver Ficha Médica

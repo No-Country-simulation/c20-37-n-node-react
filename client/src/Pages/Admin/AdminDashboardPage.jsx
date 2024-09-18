@@ -3,7 +3,7 @@ import { Users } from "../../components/Dashboards/Menu/Users"
 import { Doctors } from '../../components/Dashboards/Menu/Doctors'
 import { AdminSidebar } from '../../components/Dashboards/Sidebar/AdminSidebar'
 import { Info } from '../../components/Dashboards/Menu/Info'
-import { Agenda } from '../../components/Dashboards/Menu/Agenda'
+import { Calendar } from '../../components/Calendar/Calendar'
 
 export const AdminDashboardPage = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
@@ -22,7 +22,7 @@ export const AdminDashboardPage = () => {
       case 'patients':
         return <Users />
       case 'agendas':
-        return <Agenda />
+        return <Calendar />
     }
   }
   return (
