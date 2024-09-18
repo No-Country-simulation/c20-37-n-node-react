@@ -13,9 +13,9 @@ import { ModalConsulation } from './Doctor/modalConsultation';
 export const Calendar = () => {
 
   const { logued } = useAuth();
-  const { availableTime, consultations, setSlot } = useGeneralContext();
+  const { setSlot } = useGeneralContext();
   //const { getConsultation, , getAvailableTimeByRangeDate,  createNewConsultation, updateConsultation, deleteConsultation} = useCalendar();
-  const { getAvailableTimeByRangeDate, getConsultationByDoctor } = useCalendar();
+  const { getAvailableTimeByRangeDate, getConsultationByDoctor, availableTime, consultations } = useCalendar();
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -83,7 +83,7 @@ export const Calendar = () => {
     const endDate = new Date(calendarApi.view.activeEnd);
     endDate.setDate(endDate.getUTCDate() - 1);
     const end = endDate.toISOString();
-
+    
     console.log("RENDERIZADO");
 
     fetchData(start, end);

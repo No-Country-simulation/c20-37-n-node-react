@@ -6,7 +6,7 @@ import { emailTemplate } from "../../../config/emailMessages.js";
 import { sendEmail } from "../../../utils/sendEmail.js";
 
 const getByID = async (id) => {
-    const consultation = await Consultation.findById(id);
+    const consultation = await Consultation.findById(id).populate('patient');
     return consultation;
 }
 
@@ -27,7 +27,7 @@ const getByDoctorAndRangeTime = async (doctorId, start, end) => {
     consultations.forEach(consultation => {
         consultationsSlots.push({
             _id: consultation._id,
-            title: consultation.patient.firstName + ' ' + consultation.patient.lastName,
+            title: consultation.patient? consultation.patient.firstName + ' ' + consultation.patient.lastName : consultation.patientName,
             start: consultation.startTime.toISOString(),
             end: consultation.endTime.toISOString(),
             type: 'consultation'
@@ -62,11 +62,17 @@ const getByDoctorInSchedule = async (doctorId, startTime) => {
 
 const create = async (data) => {
     const consultation = await Consultation.create(data);
+    if(consultation.patient){
+
     const patient = await userService.getById(consultation.patient);
     const doctor = await userService.getById(consultation.doctor);
-    
+
     await sendEmail(patient.email,"Nueva Cita", emailTemplate.consultationCreatedHtml(patient,doctor, consultation));
-    await calendarServices.updateCalendarByConsultation(consultation.doctor, consultation.patient, consultation);
+    await calendarServices.updateCalendarByConsultation(consultation.doctor,consultation);
+    await calendarServices.updateCalendarByConsultation(consultation.patient,consultation);
+    }
+
+    await calendarServices.updateCalendarByConsultation(consultation.doctor,consultation);
 
     return consultation;
 }

@@ -5,7 +5,15 @@ const consultationSchema = new Schema({
     patient: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
-      required: true
+      required: false
+    },
+    patientName: {
+      type: String,
+      required: false
+    },
+    patientDNI: {
+      type: String,
+      required: false
     },
     doctor: {
       type: mongoose.Schema.Types.ObjectId,
@@ -22,7 +30,7 @@ const consultationSchema = new Schema({
     },
     status: {
       type: String,
-      enum: ['scheduled', 'completed', 'cancelled', 'rescheduled','cancellation requested', 'rescheduling requested'],
+      enum: ['scheduled', 'completed', 'cancelled', 'rescheduled'],
       default: 'scheduled'
     },
     reason: {

@@ -22,13 +22,9 @@ const removeByOwner = async (ownerId) => {
     return { success: true, message: 'Calendar deleted successfully' };
 };
 
-const updateCalendarByConsultation = async (doctorId, patientId, consultationId) => {
-    const doctorCalendar = await Calendar.findOne({ owner: doctorId });
-    const patientCalendar = await Calendar.findOne({ owner: patientId });
-
-    if (!doctorCalendar || !patientCalendar) {
-        throw new Error("Calendars not found");
-    }
+const updateCalendarByConsultation = async (ownerId, consultationId) => {
+    
+    const ownerCalendar = await Calendar.findOne({ owner: ownerId });
 
     const updateCalendar = async (calendar) => {
         if (!calendar.consultations.includes(consultationId)) {
@@ -37,12 +33,9 @@ const updateCalendarByConsultation = async (doctorId, patientId, consultationId)
         await calendar.save();
     };
 
-    await Promise.all([
-        updateCalendar(doctorCalendar),
-        updateCalendar(patientCalendar)
-    ]);
+    await updateCalendar(ownerCalendar)
 
-    return { success: true, message: 'Calendars updated successfully' };
+    return { success: true, message: 'Calendar updated successfully' };
 };
 
 export default { getByOwner, create, removeByOwner, updateCalendarByConsultation }
