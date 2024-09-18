@@ -100,7 +100,7 @@ export const UsersProvider = ({ children }) => {
         }
     }
     useEffect(() => {
-        if (logued.role === 'admin' || logued.role === 'doctor') {
+        if (logued.role === 'admin' || logued.role === 'doctor' || logued.role === 'user') {
             getUsers()
         }
         if (logued.role === 'user') {

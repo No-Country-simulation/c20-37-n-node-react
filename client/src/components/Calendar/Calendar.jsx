@@ -50,13 +50,13 @@ export const Calendar = () => {
       start = start.toISOString();
       end = new Date(end.setDate(end.getDate() - 1)).toISOString();
     }
-    console.log("CAMBIO DE FECHAAAAS", start, end)
+    // console.log("CAMBIO DE FECHAAAAS", start, end)
 
-    //fetchData(start, end); 
+    // fetchData(start, end); 
   };
 
   const handleEventClick = (eventInfo) => {
-    console.log("Evento seleccionado: ", eventInfo);
+    // console.log("Evento seleccionado: ", eventInfo);
     setSlot(eventInfo.event);
   };
 
@@ -70,7 +70,7 @@ export const Calendar = () => {
 
   const renderEventContent = (eventInfo) => {
     return (
-      <button onClick={handleOpenModal} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className={`w-full h-full flex flex-col text-white ${eventInfo.event._def.extendedProps.type == 'consultation'? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} rounded-sm text-sm px-5 py-1 text-center `} type="button">     
+      <button onClick={handleOpenModal} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className={`w-full h-full flex flex-col text-white ${eventInfo.event._def.extendedProps.type == 'consultation' ? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} rounded-sm text-sm px-5 py-1 text-center `} type="button">
         <b>{eventInfo.timeText}</b>
         <i>{eventInfo.event.title}</i>
       </button>
@@ -83,9 +83,6 @@ export const Calendar = () => {
     const endDate = new Date(calendarApi.view.activeEnd);
     endDate.setDate(endDate.getUTCDate() - 1);
     const end = endDate.toISOString();
-    
-    console.log("RENDERIZADO");
-
     fetchData(start, end);
   }, []);
 

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext} from "react";
+import { createContext, useEffect } from "react";
 import { useGeneralContext } from "../hooks/useGeneralContext";
 import toast from "react-hot-toast";
 import { getCalendarByOwner, createCalendar, removeByOwner } from "../api/calendar/calendar";
@@ -10,7 +10,7 @@ import { createConsultation, getConsultationByDoctorAndRangeDate, getConsultatio
 export const CalendarContext = createContext();
 
 export const CalendarProvider = ({ children }) => {
-    const { loading, setLoading, calendar, setCalendar, availableTime, setAvailableTime, doctorAvailability, setDoctorAvailability, consultations, setConsultations, consultation, setConsultation } = useGeneralContext()
+    const { loading, setLoading, calendar, setCalendar, availableTime, setAvailableTime, doctorAvailability, setDoctorAvailability, consultations, setConsultations, consultation, setConsultation, logued } = useGeneralContext()
 
     //Calendar
     const getCalendar = async (ownerId) => {
@@ -56,7 +56,7 @@ export const CalendarProvider = ({ children }) => {
                 return toast.error('No se pudo eliminar el calendario')
             }
             toast.success('Calendario borrado correctamente')
-            setCalendar([]); 
+            setCalendar([]);
         } catch (error) {
             toast.error('No se pudo eliminar el calendario')
             toast.error(error.response.data.msg)
@@ -67,7 +67,7 @@ export const CalendarProvider = ({ children }) => {
     }
 
     // AvailableTime
-    const getDoctorAvalability= async (doctorId) => {
+    const getDoctorAvalability = async (doctorId) => {
         try {
             setLoading(true)
             const response = await getAvailableTimeByDoctor(doctorId)
@@ -86,7 +86,7 @@ export const CalendarProvider = ({ children }) => {
     const getAvailableTimeByRangeDate = async (doctorId, startDate, endDate) => {
         try {
             setLoading(true)
-            
+
             const response = await getAvailableTimeByDoctorAndRangeDate(doctorId, startDate, endDate)
             if (!response) {
                 return toast.error('No se pudo obtener los horarios disponibles')
@@ -172,7 +172,7 @@ export const CalendarProvider = ({ children }) => {
             setLoading(false)
         }
     }
-    
+
     //Consultation
 
     const getConsultation = async (id) => {
@@ -194,12 +194,12 @@ export const CalendarProvider = ({ children }) => {
     const getConsultationByDoctor = async (doctorId, startDate, endDate) => {
         try {
             setLoading(true)
-            
+
             const response = await getConsultationByDoctorAndRangeDate(doctorId, startDate, endDate)
             if (!response) {
                 return toast.error('No se pudo obtener las consultas')
             }
-            
+
             setConsultations(response.data.playload)
         } catch (error) {
             toast.error('No se pudo obtener las consultas', error)
@@ -208,7 +208,7 @@ export const CalendarProvider = ({ children }) => {
             setLoading(false)
         }
     }
-   
+
     const getConsultationByPatient = async (patientId, startDate, endDate) => {
         try {
             setLoading(true)
@@ -279,6 +279,14 @@ export const CalendarProvider = ({ children }) => {
             setLoading(false)
         }
     }
+
+    useEffect(() => {
+
+        if (logued.role === 'doctor') {
+            getDoctorAvalability(logued._id)
+        }
+        console.log('renderizado calendar')
+    }, [availableTime])
 
     return (
         <CalendarContext.Provider value={{
