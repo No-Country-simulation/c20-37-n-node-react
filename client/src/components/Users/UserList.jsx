@@ -44,19 +44,19 @@ export const UserList = ({ filterUsed }) => {
       <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
         Panel de usuarios
       </h1>
-      <div className="flex">
+      <div className="flex align-middle justify-center items-center">
+        <HiSearch className="text-gray-500 dark:text-gray-400 size-10" />
         <TextInput
           id="search"
           type="text"
-          icon={HiSearch}
           placeholder="Buscar por email"
           required={true}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         <div className="flex w-full justify-between">
-          <Button className="ml-2" onClick={() => getUsers()}>Recargar lista</Button>
-          <Button className="ml-2 bg-primary" onClick={() => setShowAddModal(true)}>Agregar usuario</Button>
+          <Button size={'xs'} className="ml-2 bg-primary hover:bg-primaryHover" onClick={() => getUsers()}>Recargar lista</Button>
+          <Button size={'xs'} className="ml-2 bg-primary hover:bg-primaryHover" onClick={() => setShowAddModal(true)}>Agregar usuario</Button>
         </div>
       </div>
       <div className="overflow-x-auto my-2">
