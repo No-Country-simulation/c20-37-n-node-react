@@ -1,7 +1,7 @@
 <h1 align="center">📱 Proyecto: SaludNet</h1>
 <h1 align="center">👩‍⚕️👨‍⚕️ Equipo: C20-37-N-Node-React | No Country</h1>
 <p align="center">
-  <img src="https://i.postimg.cc/ryDqFX5k/Logo-Salud-Net.jpg" alt="Logo de SaludNet" width="300"/>
+  <img src="https://i.postimg.cc/nr92xk9g/Logo-Slogan.jpg" alt="Logo de SaludNet" width="300"/>
 </p>
 
 <hr/>
