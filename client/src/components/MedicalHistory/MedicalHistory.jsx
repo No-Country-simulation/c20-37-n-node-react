@@ -2,30 +2,26 @@
 import { Card, Table, Label, TextInput, Button } from 'flowbite-react'
 import { useUsers } from '../../hooks/useUsersContext'
 import { useAuth } from '../../hooks/useAuthContext'
-import { useState } from 'react'
+import { useGeneralContext } from '../../hooks/useGeneralContext'
 
 export const MedicalHistory = () => {
 
+    const { users, medicalHistory, patientData, setPatientData, idClient, setIdClient } = useGeneralContext()
     const { logued } = useAuth()
-    const { users, medicalHistory, getMedicalHistoryById } = useUsers()
-    const [idClient, setIdClient] = useState('')
-    const { patientData, setPatientData } = useState({})
+    const { getMedicalHistoryById } = useUsers()
 
     const refreshData = async () => {
         if (logued?.role === 'doctor') {
             await getMedicalHistoryById(idClient)
             const userFounded = users.find(user => user.dni === idClient)
             console.log(userFounded)
-            // setPatientData(users.find(user => user.dni === idClient)[0])
+            setPatientData(userFounded)
             // Modificar esta función para que busque por dni
             return;
         }
-        const userFounded = users.find(user => user.dni === logued.dni)
-        console.log(userFounded)
-
         await getMedicalHistoryById(logued?.dni)
-
     }
+
     // Faltaria un endpoint para poder buscar a un usuario por su historial medico, para poder mostrar los datos de el usuario que se busco
     return (
         <Card className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 rounded-none">
@@ -60,21 +56,23 @@ export const MedicalHistory = () => {
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Nombre</Table.Cell>
-                        <Table.Cell>{patientData ? patientData?.firstName + ' ' + patientData?.lastName : logued?.firstName + ' ' + logued?.lastName}</Table.Cell>
+                        {logued.role === 'user' && <Table.Cell>{logued ? logued?.firstName + ' ' + logued?.lastName : 'No hay datos cargados'}</Table.Cell>}
+                        {logued.role === 'doctor' && <Table.Cell>{patientData?._id ? patientData?.firstName + ' ' + patientData?.lastName : 'No hay datos cargados'}</Table.Cell>}
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">DNI</Table.Cell>
-                        <Table.Cell>{patientData ? patientData?.dni : logued?.dni}</Table.Cell>
+                        {logued.role === 'user' && <Table.Cell>{logued ? logued?.dni : 'No hay datos cargados'}</Table.Cell>}
+                        {logued.role === 'doctor' && <Table.Cell>{patientData?._id ? patientData.dni : 'No hay datos cargados'}</Table.Cell>}
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Fecha de Nacimiento</Table.Cell>
-                        <Table.Cell>{patientData ? new Date(patientData?.birthdate).toLocaleDateString() : new Date(logued?.birthdate).toLocaleDateString()}</Table.Cell>
+                        {logued.role === 'user' && <Table.Cell>{logued ? new Date(logued?.birthdate).toLocaleDateString() : 'No hay datos cargados'}</Table.Cell>}
+                        {logued.role === 'doctor' && <Table.Cell>{patientData?._id ? new Date(patientData?.birthdate).toLocaleDateString() : 'No hay datos cargados'}</Table.Cell>}
                     </Table.Row>
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="font-medium">Género</Table.Cell>
-                        <Table.Cell>
-                            {patientData ? patientData?.gender : logued.gender}
-                            {!patientData?.gender && !logued?.gender && 'No hay datos'}</Table.Cell>
+                        {logued.role === 'user' && <Table.Cell>{logued ? logued?.gender : 'No hay datos cargados'}</Table.Cell>}
+                        {logued.role === 'doctor' && <Table.Cell>{patientData?._id ? patientData.gender : 'No hay datos cargados'}</Table.Cell>}
                     </Table.Row>
 
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">

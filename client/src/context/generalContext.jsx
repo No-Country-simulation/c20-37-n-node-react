@@ -22,6 +22,9 @@ export const GeneralProvider = ({ children }) => {
     const [activeTab, setActiveTab] = useState(0);
     const [onCall, setOnCall] = useState(false);
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+    const [patientData, setPatientData] = useState({
+    });
+    const [idClient, setIdClient] = useState('')
 
     const tabsRef = useRef(null);
 
@@ -60,7 +63,11 @@ export const GeneralProvider = ({ children }) => {
             setOnCall,
             tabsRef,
             isSidebarCollapsed,
-            setIsSidebarCollapsed
+            setIsSidebarCollapsed,
+            patientData,
+            setPatientData,
+            idClient,
+            setIdClient
         }}>
             {children}
         </GeneralContext.Provider>

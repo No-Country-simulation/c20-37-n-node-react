@@ -74,7 +74,10 @@ export const UsersProvider = ({ children }) => {
             }
             setMedicalHistory(response.data.playload)
         } catch (error) {
-            console.log(error)
+            if (error.status === 404) {
+                setMedicalHistory([])
+                return toast.error('El usuario no existe o aun no posee historia clínica asociada')
+            }
             toast.error('No se pudo obtener la historia clínica, pruebe refrescando la pagina, en caso de persisitir contactar al administrador')
             setMedicalHistory([])
         }
@@ -100,7 +103,7 @@ export const UsersProvider = ({ children }) => {
         }
     }
     useEffect(() => {
-        if (logued.role === 'admin' || logued.role === 'doctor') {
+        if (logued.role === 'admin' || logued.role === 'doctor' || logued.role === 'user') {
             getUsers()
         }
         if (logued.role === 'user') {

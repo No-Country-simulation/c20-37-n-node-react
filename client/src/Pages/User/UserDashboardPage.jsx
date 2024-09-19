@@ -1,9 +1,10 @@
-import { Calendar } from "../../components/Calendar/Calendar"
+// import { Calendar } from "../../components/Calendar/Calendar"
 import { UserDashboard } from '../../components/Dashboards/UserDashboard'
 import { useGeneralContext } from '../../hooks/useGeneralContext'
 import { UserSidebar } from '../../components/Dashboards/Sidebar/UserSidebar'
 import { MedicalHistory } from '../../components/MedicalHistory/MedicalHistory'
 import { VideoCall } from '../../components/VideoCall/VideoCall'
+import { Schedule } from "../../components/Schedule/Schedule"
 
 export const UserDashboardPage = () => {
     const { activeMenu, setActiveMenu, isSidebarCollapsed, setIsSidebarCollapsed } = useGeneralContext()
@@ -19,7 +20,7 @@ export const UserDashboardPage = () => {
             case 'historyForm':
                 return <MedicalHistory />
             case 'agendas':
-                return <Calendar />
+                return <Schedule />
             case 'videocall':
                 return <VideoCall />
         }
@@ -32,7 +33,9 @@ export const UserDashboardPage = () => {
                 activeMenu={activeMenu}
                 toggleSidebar={toggleSidebar}
             />
-            {renderContent()}
+            <div className='w-full'>
+                {renderContent()}
+            </div>
         </div>
     )
 }

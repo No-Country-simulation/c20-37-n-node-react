@@ -3,9 +3,11 @@ import { useUsers } from '../../hooks/useUsersContext'
 import { Button, Label, TextInput, Textarea } from 'flowbite-react'
 import toast from 'react-hot-toast'
 import 'flowbite/dist/flowbite.css';
+import { useGeneralContext } from '../../hooks/useGeneralContext';
 
 
 export const ClinicalForm = () => {
+    const { patientData: medicalPatientData } = useGeneralContext()
     const [patientData, setPatientData] = useState({
         allergies: '',
         medicalHistory: '',
@@ -29,15 +31,17 @@ export const ClinicalForm = () => {
         toast.success('Se guardó correctamente el formulario de ' + patientData.firstName + ' ' + patientData.lastName)
     }
 
+    console.log(medicalPatientData)
     return (
         <div className='w-full max-w-xl mx-auto'>
             <form onSubmit={handleSubmit} className="roboto p-6 bg-white rounded-lg shadow-md mx-auto">
-                <h1 className="font-bold text-center mb-6">Formulario de historia clinica</h1>
+                <h1 className="font-bold mb-6">Editar historial medico</h1>
                 <div>
                     <Label htmlFor="idClient" value="ID de la historia medica" />
                     <TextInput
                         id="idClient"
                         name="idClient"
+                        value={medicalPatientData?.medicalHistory && medicalPatientData.medicalHistory.toString()}
                         onChange={(e) => setIdClient(e.target.value)}
                         required
                     />
@@ -48,6 +52,7 @@ export const ClinicalForm = () => {
                         id="allergies"
                         name="allergies"
                         type="string"
+                        placeholder='Alergias del paciente'
                         value={patientData.allergies}
                         onChange={handleInputChange}
                         required
@@ -60,7 +65,7 @@ export const ClinicalForm = () => {
                         name="medicalHistory"
                         value={patientData.medicalHistory}
                         onChange={handleInputChange}
-                        placeholder="Past medical conditions, surgeries, etc."
+                        placeholder="Condiciones médicas pasadas, cirugías, etc."
                         rows={4}
                     />
                 </div>
@@ -84,7 +89,7 @@ export const ClinicalForm = () => {
                         name="medications"
                         value={patientData.medications}
                         onChange={handleInputChange}
-                        placeholder="List current medications and dosages"
+                        placeholder="Listar medicamentos actuales y dosis"
                         rows={3}
                     />
                 </div>
@@ -96,7 +101,7 @@ export const ClinicalForm = () => {
                         name="vaccines"
                         value={patientData.vaccines}
                         onChange={handleInputChange}
-                        placeholder="List received vaccines and dates"
+                        placeholder="Listar vacunas recibidas y fechas"
                         rows={3}
                     />
                 </div>
@@ -108,7 +113,7 @@ export const ClinicalForm = () => {
                         name="diagnoses"
                         value={patientData.diagnoses}
                         onChange={handleInputChange}
-                        placeholder="Current medical diagnosis, if any"
+                        placeholder="Diagnostico médico actual"
                         rows={3}
                     />
                 </div>
