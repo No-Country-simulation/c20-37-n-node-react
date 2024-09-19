@@ -68,7 +68,7 @@ export const LoginForm = () => {
                     </div>
                     {errors.password && <ErrorText text="Contraseña es requerida" />}
                 </div>
-                <Button type="submit" className="mt-2">
+                <Button type="submit" className="mt-2 bg-primary hover:bg-primary-900 duration-200">
                     Iniciar Sesión
                 </Button>
                 <div>
