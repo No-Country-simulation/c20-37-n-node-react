@@ -39,7 +39,7 @@ export const MedicalHistory = () => {
                     />
                 </div>
             }
-            <Button className='w-full duration-300 hover:cursor-pointer' onClick={refreshData}>Refrescar datos</Button>
+            <Button className='w-full bg-primary hover:bg-primaryHover duration-300 hover:cursor-pointer' onClick={refreshData}>Refrescar datos</Button>
             <Table>
                 <Table.Body className="divide-y">
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">

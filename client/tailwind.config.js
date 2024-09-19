@@ -14,6 +14,7 @@ export default {
         /* 'primary': '#00598e',
         'secondary': '#0bb3a8', */
         'primary': '#0E588F',
+        'primaryHover': '#0a3c62',
         'secondary': '#08A39F',
         'background': '#FCFAF9',
         'accent': '#5FB49C',
