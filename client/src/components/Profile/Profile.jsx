@@ -5,7 +5,6 @@ import { useGeneralContext } from '../../hooks/useGeneralContext'
 import { useUsers } from '../../hooks/useUsersContext'
 import { DatePick } from '../DatePicker/DatePicker'
 import { useNavigate } from 'react-router-dom'
-import { HiMail, HiPhone, HiIdentification } from "react-icons/hi";
 import { AddressForm } from './AddressForm'
 import { DoctorInfo } from './DoctorInfo'
 
@@ -13,12 +12,16 @@ export const Profile = ({ user }) => {
     const { setLogued, setActiveMenu } = useGeneralContext()
     const { updateUserById } = useUsers()
     const [profile, setProfile] = useState(user)
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false)
+    const [showDoctorInfo, setShowDoctorInfo] = useState(false)
     const [address, setAddress] = useState(profile?.address)
 
     const navigate = useNavigate()
     const openModal = () => setShowModal(true);
     const closeModal = () => setShowModal(false);
+
+    const openDoctorInfo = () => setShowDoctorInfo(true);
+    const closeDoctorInfo = () => setShowDoctorInfo(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -103,7 +106,6 @@ export const Profile = ({ user }) => {
                         onChange={handleChange}
                         placeholder="ejemplo@hotmail.com"
                         required
-                        icon={HiMail}
                     />
                 </div>
                 <div>
@@ -117,7 +119,6 @@ export const Profile = ({ user }) => {
                         onChange={handleChange}
                         placeholder="12345678"
                         required
-                        icon={HiIdentification}
                     />
                 </div>
                 <div>
@@ -132,7 +133,6 @@ export const Profile = ({ user }) => {
                         type="tel"
                         placeholder="123-456-7890"
                         required
-                        icon={HiPhone}
                     />
                 </div>
                 <div className="max-w-md">
@@ -147,15 +147,15 @@ export const Profile = ({ user }) => {
                     </Select>
                 </div>
                 <div>
-                    <Button className='bg-black text-white w-1/4' onClick={openModal}>Ingresar Dirección</Button>
+                    <Button className='bg-black hover:bg-black text-white w-1/4' onClick={openModal}>Ingresar Dirección</Button>
                     <AddressForm show={showModal} onClose={closeModal}
                         handleAddress={handleAddress} addressInfo={address}
                     />
                 </div>
                 {profile.role === 'doctor' &&
                     <div >
-                        <Button className='w-1/4' onClick={openModal}>Información profesional</Button>
-                        <DoctorInfo show={showModal} onClose={closeModal} handleChange={handleChange} profile={profile} />
+                        <Button className='w-1/4 bg-primary hover:bg-primaryHover' onClick={openDoctorInfo}>Información profesional</Button>
+                        <DoctorInfo show={showDoctorInfo} onClose={closeDoctorInfo} handleChange={handleChange} profile={profile} />
                     </div>
                 }
                 <div>
@@ -168,7 +168,7 @@ export const Profile = ({ user }) => {
                     />
                 </div>
 
-                <Button className=' text-white hover:bg-blue-900 duration-200' color='success' type="submit">
+                <Button className='text-white hover:bg-green-900 duration-200' color='success' type="submit">
                     Actualizar Perfil
                 </Button>
             </form>

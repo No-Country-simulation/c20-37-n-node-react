@@ -66,7 +66,7 @@ export const DoctorDashboard = () => {
             <Table.HeadCell>Acciones</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            {citas.map((cita) => (
+            {citas?.map((cita) => (
               <Table.Row key={cita.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                   {cita.paciente}
@@ -78,7 +78,7 @@ export const DoctorDashboard = () => {
                   </Badge>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button size="xs">Ver Detalles</Button>
+                  <Button className='bg-primary hover:bg-primaryHover' size="xs">Ver Detalles</Button>
                 </Table.Cell>
               </Table.Row>
             ))}

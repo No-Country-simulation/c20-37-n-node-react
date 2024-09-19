@@ -65,10 +65,10 @@ export const DoctorInfo = ({ show, onClose, handleChange, profile }) => {
                             </Select>
                         </div>
                         <div className="flex justify-end space-x-2">
-                            <Button color="gray" onClick={onClose}>
+                            <Button className='bg-red-500 hover:bg-hover-900' color="failure" onClick={onClose}>
                                 Cancel
                             </Button>
-                            <Button onClick={handleSubmit}>Aceptar</Button>
+                            <Button className='bg-primary hover:bg-primaryHover' onClick={handleSubmit}>Aceptar</Button>
                         </div>
                     </form>
                 </Modal.Body>
