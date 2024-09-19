@@ -108,9 +108,6 @@ export const Calendar = () => {
           eventContent={renderEventContent}
           eventClick={handleEventClick}
           datesSet={handleDatesSet}
-          select={(info) => {
-            console.log("Seleccionado de ", info.startStr, " hasta ", info.endStr);
-          }}
           customButtons={{
             addAvailability: {
               text: 'Agendar Disponibilidad',

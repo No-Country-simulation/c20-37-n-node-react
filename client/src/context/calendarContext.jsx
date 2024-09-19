@@ -298,7 +298,6 @@ export const CalendarProvider = ({ children }) => {
         if (logued.role === 'doctor') {
             getDoctorAvalability(logued._id)
         }
-        console.log('renderizado calendar')
     }, [logued.role])
 
     return (
