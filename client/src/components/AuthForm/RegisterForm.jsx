@@ -165,7 +165,7 @@ export const RegisterForm = () => {
                     </div>
                     {errors.confirmPassword && <ErrorText text="Confirmación es requerida" />}
                 </div>
-                <Button type="submit" className="mt-2 bg-primary hover:bg-primary-900 duration-200">
+                <Button type="submit" className="mt-2 bg-primary hover:bg-primaryHover duration-200">
                     Registrarse
                 </Button>
             </form>

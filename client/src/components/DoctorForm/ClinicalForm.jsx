@@ -118,7 +118,7 @@ export const ClinicalForm = () => {
                     />
                 </div>
 
-                <Button type="submit" className="w-full bg-primary">
+                <Button type="submit" className="w-full bg-primary hover:bg-primaryHover">
                     Enviar historia clinica
                 </Button>
             </form>
