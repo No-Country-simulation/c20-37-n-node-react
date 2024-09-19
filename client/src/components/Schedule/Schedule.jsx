@@ -51,8 +51,8 @@ export const Schedule = () => {
                 <div className="mb-4">
                     <Select onChange={handleDoctorChange} value={doctor}>
                         <option value="">Seleccione un doctor</option>
-                        {doctores.filter(doc => doc.specialty.toString() === especialidad.toString())
-                            .map((doc) => (
+                        {doctores?.filter(doc => doc.specialty === especialidad)
+                            ?.map((doc) => (
                                 <option key={doc._id} value={doc._id}>{doc.firstName} {doc.lastName}</option>
                             ))}
                     </Select>
@@ -64,7 +64,7 @@ export const Schedule = () => {
                 <Card className="mb-4">
                     <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {/* Mostrar nombre del doctor seleccionado */}
-                        {doctores.find(d => d._id === doctor)?.firstName} {doctores.find(d => d._id === doctor)?.lastName}
+                        {doctores?.find(d => d._id === doctor)?.firstName} {doctores.find(d => d._id === doctor)?.lastName}
                     </h5>
                     <p className="font-normal text-gray-700 dark:text-gray-400">
                         Especialidad: {especialidad}
