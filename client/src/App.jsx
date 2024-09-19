@@ -1,3 +1,6 @@
+
+import 'flowbite/dist/flowbite.min.js';
+import 'flowbite-react';
 import { ScrollToTop } from "./components/ScrollToTop/ScrollToTop"
 import { AuthProvider } from "./context/authContext"
 import { CalendarProvider } from "./context/calendarContext"
