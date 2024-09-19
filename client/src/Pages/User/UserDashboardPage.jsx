@@ -33,7 +33,9 @@ export const UserDashboardPage = () => {
                 activeMenu={activeMenu}
                 toggleSidebar={toggleSidebar}
             />
-            {renderContent()}
+            <div className='w-full'>
+                {renderContent()}
+            </div>
         </div>
     )
 }

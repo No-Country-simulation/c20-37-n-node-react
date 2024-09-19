@@ -1,62 +1,42 @@
-import { useEffect, useState } from 'react'
 import { useGeneralContext } from '../../hooks/useGeneralContext'
 import { useCalendar } from '../../hooks/useCalendarContext'
-import { Card, Select, Button, Table } from 'flowbite-react'
+import { Card, Select, Button, Table, Spinner } from 'flowbite-react'
 import { doctorSpecialties } from '../../utils/specialities'
 
 export const Schedule = () => {
     const { users } = useGeneralContext()
-    const { doctorAvailability, getDoctorAvalability } = useCalendar()
-    const [especialidad, setEspecialidad] = useState('')
-    const [doctor, setDoctor] = useState('')
-    const [horarios, setHorarios] = useState([])
+    const { getDoctorAvalability, especialidad, setEspecialidad, doctor, setDoctor, horarios, setHorarios, loading } = useCalendar()
 
-    // Datos de ejemplo (en una aplicación real, estos vendrían de una API)
     const especialidades = doctorSpecialties
     const doctores = users?.filter(doct => doct.role === 'doctor')
 
-
-    // {
-    //     'Cardiología': [{ id: 1, nombre: 'Dr. Juan Pérez' }, { id: 2, nombre: 'Dra. Ana García' }],
-    //         'Dermatología': [{ id: 3, nombre: 'Dra. María López' }],
-    //             'Pediatría': [{ id: 4, nombre: 'Dr. Carlos Rodríguez' }, { id: 5, nombre: 'Dra. Laura Martínez' }],
-    //                 'Oftalmología': [{ id: 6, nombre: 'Dr. Roberto Sánchez' }]
-    // }
-
     const handleEspecialidadChange = (e) => {
         setEspecialidad(e.target.value)
-        setDoctor('')
-        setHorarios([])
+        setDoctor('') // Resetea el doctor al cambiar la especialidad
+        setHorarios([]) // Resetea los horarios al cambiar la especialidad
     }
 
-    const handleDoctorChange = (e) => {
-        setDoctor(e.target.value)
-        // Simular la obtención de horarios (en una app real, esto sería una llamada a la API)
-        if (e.target.value === '') {
-            setHorarios([])
+    const handleDoctorChange = async (e) => {
+        const selectedDoctorId = e.target.value
+        setDoctor(selectedDoctorId)
+        if (selectedDoctorId === '') {
+            setHorarios([]) // Si no se selecciona un doctor, resetea los horarios
         } else {
-            setHorarios([
-                { fecha: '2023-06-01', hora: '09:00' },
-                { fecha: '2023-06-01', hora: '11:00' },
-                { fecha: '2023-06-02', hora: '10:00' },
-                { fecha: '2023-06-02', hora: '15:00' },
-            ])
+            // Llama al backend para obtener los horarios disponibles del doctor seleccionado
+            const res = await getDoctorAvalability(selectedDoctorId)
+            console.log(res)
+            if (!res) {
+                setHorarios([])
+                return; // Si no hay horarios, deja el array vacío
+            }
+            setHorarios(res.timeSlots) // Si no hay horarios, deja el array vacío
         }
     }
-    useEffect(() => {
-        const getDoctorAv = async () => {
-            if (doctor) {
-                const filteredDoc = doctores.find(doc => doc._id === doctor)
-                const doctorAvalability = await getDoctorAvalability(filteredDoc._id)
-                console.log(doctorAvalability)
-            }
-        }
-        getDoctorAv()
-    }, [doctor])
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Agendar Cita Médica</h1>
+        <div className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 rounded-none p-4">
+            <h1 className="text-3xl font-bold mb-2">Agendar Cita Médica</h1>
 
+            {/* Selección de especialidad */}
             <div className="mb-4">
                 <Select onChange={handleEspecialidadChange} value={especialidad}>
                     <option value="">Seleccione una especialidad</option>
@@ -66,22 +46,25 @@ export const Schedule = () => {
                 </Select>
             </div>
 
+            {/* Selección de doctor */}
             {especialidad && (
                 <div className="mb-4">
                     <Select onChange={handleDoctorChange} value={doctor}>
                         <option value="">Seleccione un doctor</option>
                         {doctores.filter(doc => doc.specialty.toString() === especialidad.toString())
                             .map((doc) => (
-                                <option key={doc._id} value={doc._id}>{doc.firstName}</option>
+                                <option key={doc._id} value={doc._id}>{doc.firstName} {doc.lastName}</option>
                             ))}
                     </Select>
                 </div>
             )}
 
+            {/* Información del doctor seleccionado */}
             {doctor && (
                 <Card className="mb-4">
                     <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        {/* {doctores[especialidad].find(d => d.id === parseInt(doctor)).nombre} */}
+                        {/* Mostrar nombre del doctor seleccionado */}
+                        {doctores.find(d => d._id === doctor)?.firstName} {doctores.find(d => d._id === doctor)?.lastName}
                     </h5>
                     <p className="font-normal text-gray-700 dark:text-gray-400">
                         Especialidad: {especialidad}
@@ -89,30 +72,41 @@ export const Schedule = () => {
                 </Card>
             )}
 
-            {horarios.length > 0 && (
-                <div className="mb-4">
-                    <h2 className="text-xl font-bold mb-2">Horarios Disponibles</h2>
-                    <Table>
-                        <Table.Head>
-                            <Table.HeadCell>Fecha</Table.HeadCell>
-                            <Table.HeadCell>Hora</Table.HeadCell>
-                            <Table.HeadCell>Acción</Table.HeadCell>
-                        </Table.Head>
-                        <Table.Body className="divide-y">
-                            {horarios.map((horario, index) => (
-                                <Table.Row key={index} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                        {horario.fecha}
-                                    </Table.Cell>
-                                    <Table.Cell>{horario.hora}</Table.Cell>
-                                    <Table.Cell>
-                                        <Button size="sm">Agendar</Button>
-                                    </Table.Cell>
-                                </Table.Row>
-                            ))}
-                        </Table.Body>
-                    </Table>
+            {/* Mostrar los horarios disponibles o spinner de carga */}
+            {loading ? (
+                <div className="flex justify-center mb-4">
+                    <Spinner aria-label="Cargando horarios disponibles" size="xl" />
                 </div>
+            ) : (
+                doctor && horarios?.length > 0 && (
+                    <div className="mb-4">
+                        <h2 className="text-xl font-bold mb-2">Horarios Disponibles</h2>
+                        <Table>
+                            <Table.Head>
+                                <Table.HeadCell>Desde</Table.HeadCell>
+                                <Table.HeadCell>Hasta</Table.HeadCell>
+                                <Table.HeadCell>Acción</Table.HeadCell>
+                            </Table.Head>
+                            <Table.Body className="divide-y">
+                                {horarios?.map((horario, index) => (
+                                    <Table.Row key={index} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                            {horario.startTime}
+                                        </Table.Cell>
+                                        <Table.Cell>{horario.endTime}</Table.Cell>
+                                        <Table.Cell>
+                                            <Button size="sm">Agendar</Button>
+                                        </Table.Cell>
+                                    </Table.Row>
+                                ))}
+                            </Table.Body>
+                        </Table>
+                    </div>
+                )
+            )}
+
+            {!loading && doctor && horarios.length === 0 && (
+                <p>No hay horarios disponibles para este doctor.</p>
             )}
         </div>
     )
