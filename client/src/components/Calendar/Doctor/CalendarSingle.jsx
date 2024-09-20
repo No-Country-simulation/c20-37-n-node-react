@@ -9,6 +9,7 @@ import { useGeneralContext } from "../../../hooks/useGeneralContext";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import { ModalConsulation } from "../Patient/ScheduleConsultation";
+import { ControlConsultation } from "../Admin/ControlConsultation";
 
 export const Calendar = ({ doctorId }) => {
   const { logued } = useAuth();
@@ -113,7 +114,7 @@ export const Calendar = ({ doctorId }) => {
     <div className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 shadow-md">
       <h1 className="text-3xl font-bold mb-2">Agendar consulta</h1>
       {/* <div className='w-screen min-h-screen my-24 flex justify-center'> */}
-      <div className="w-10/12 mx-auto max-h-lvh">
+      <div className="w-11/12 mx-auto max-h-lvh">
         <FullCalendar
           ref={calendarRef}
           headerToolbar={{
@@ -139,11 +140,22 @@ export const Calendar = ({ doctorId }) => {
           }}
         />
       </div>
+      {
+        logued.role == "admin" && 
+        <ControlConsultation
+        show={showModal}
+        handleClose={handleCloseModal}
+        doctorId={doctorId}
+      />
+      }
+      {
+        logued.role == "user" &&
       <ModalConsulation
         show={showModal}
         handleClose={handleCloseModal}
         doctorId={doctorId}
       />
+      }
     </div>
     // </div>
   );

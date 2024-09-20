@@ -3,7 +3,7 @@ import { Users } from "../../components/Dashboards/Menu/Users"
 import { Doctors } from '../../components/Dashboards/Menu/Doctors'
 import { AdminSidebar } from '../../components/Dashboards/Sidebar/AdminSidebar'
 import { Info } from '../../components/Dashboards/Menu/Info'
-import { Calendar } from '../../components/Calendar/Calendar'
+import { Schedule } from '../../components/Schedule/Schedule'
 import { useGeneralContext } from '../../hooks/useGeneralContext'
 
 export const AdminDashboardPage = () => {
@@ -23,7 +23,7 @@ export const AdminDashboardPage = () => {
       case 'patients':
         return <Users />
       case 'agendas':
-        return <Calendar />
+        return <Schedule />
     }
   }
   return (
