@@ -33,7 +33,7 @@ export const Schedule = () => {
         }
     }
     return (
-        <div className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 rounded-none p-4">
+        <div className="w-full h-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 rounded-none p-4">
             <h1 className="text-3xl font-bold mb-2">Agendar Cita Médica</h1>
 
             {/* Selección de especialidad */}

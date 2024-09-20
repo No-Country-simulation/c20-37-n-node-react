@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useGeneralContext } from '../../hooks/useGeneralContext'
 import { Card, Button } from 'flowbite-react'
-import { FaCalendarAlt, FaFileAlt, FaClock, FaUserMd, FaHospital } from 'react-icons/fa'
+import { FaCalendarAlt, FaFileAlt, FaClock, FaUserMd, FaHospital, FaFilePrescription } from 'react-icons/fa'
 
 export const UserDashboard = ({ setActiveMenu }) => {
 
@@ -15,7 +15,7 @@ export const UserDashboard = ({ setActiveMenu }) => {
   }
 
   return (
-    <div className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 shadow-md">
+    <div className="w-full h-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 shadow-md">
       <h1 className="text-3xl font-bold mb-2">Panel de Usuario</h1>
       <h2>Bienvenido/a {logued.firstName} {logued.lastName}</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start align-top justify-start">
@@ -61,6 +61,12 @@ export const UserDashboard = ({ setActiveMenu }) => {
               color="primary">
               <FaFileAlt className="mr-2 h-5 w-5" />
               Ver Ficha Médica
+            </Button>
+            <Button className="bg-gray-200 hover:bg-gray-300 duration-200 transition-colors"
+              onClick={() => setActiveMenu('prescription')}
+              color="primary">
+              <FaFilePrescription className="mr-2 h-5 w-5" />
+              Ver Recetas
             </Button>
           </div>
         </Card>
