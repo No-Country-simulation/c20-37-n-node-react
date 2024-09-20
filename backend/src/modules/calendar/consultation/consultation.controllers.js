@@ -1,4 +1,5 @@
 import consultationServices from "./consultation.services.js";
+import userService from "./../../session/session.services.js"
 
 const getConsultationByID = async (req, res) => {
     try {
@@ -32,8 +33,18 @@ const getConsultationByPatientAndRangeTime = async (req, res) => {
 
 const create = async (req, res) => {
     try {
-        const body = req.body;
+        let body = req.body;
+        const patientRegistered = await userService.getByDni(body.patientDNI);
+        console.log(body);
         
+        if(patientRegistered){
+            body = {
+                ...body,
+                patient: patientRegistered._id
+            }
+            console.log(body);
+            
+        }
         const consultation = await consultationServices.create(body);
         return res.status(201).json({ status: "ok", msg: "consultation created", playload: consultation });
     } catch (error) {

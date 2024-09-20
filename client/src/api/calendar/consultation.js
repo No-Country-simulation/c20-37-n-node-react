@@ -8,6 +8,6 @@ export const getConsultationByPatientAndRangeDate = (patientId, startDate, endDa
 
 export const createConsultation = (data) => axios.post("/api/calendar/consultation", data);
 
-export const updateConsultationByID = (id) => axios.put(`/api/calendar/consultation/${id}`);
+export const updateConsultationByID = (id, data) => axios.put(`/api/calendar/consultation/${id}`, data);
 
 export const removeConsultationByID = (id) => axios.delete(`/api/calendar/consultation/${id}`);

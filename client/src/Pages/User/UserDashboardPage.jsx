@@ -6,6 +6,7 @@ import { MedicalHistory } from '../../components/MedicalHistory/MedicalHistory'
 import { VideoCall } from '../../components/VideoCall/VideoCall'
 import { Schedule } from "../../components/Schedule/Schedule"
 import { Prescription } from '../../components/Prescription/Prescription'
+import { Calendar } from '../../components/Calendar/Patient/Calendar'
 
 export const UserDashboardPage = () => {
     const { activeMenu, setActiveMenu, isSidebarCollapsed, setIsSidebarCollapsed } = useGeneralContext()
@@ -26,6 +27,9 @@ export const UserDashboardPage = () => {
                 return <VideoCall />
             case 'prescription':
                 return <Prescription />
+            case 'consultations':
+                return <Calendar />
+    
 
         }
     }

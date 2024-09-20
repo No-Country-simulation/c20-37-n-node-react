@@ -5,7 +5,7 @@ import consultationControllers from "./consultation.controllers.js";
 
 const router = Router();
 
-router.get("/:id", passportCall("current"), authorization(["admin", "doctor"]), consultationControllers.getConsultationByID);
+router.get("/:id", passportCall("current"), authorization(["admin", "doctor", "user"]), consultationControllers.getConsultationByID);
 router.get("/doctor/:doctorId/:start/:end", passportCall("current"), authorization(["admin", "doctor"]), consultationControllers.getConsultationByDoctorAndRangeTime);
 router.get("/patient/:patientId/:start/:end", passportCall("current"), authorization(["admin", "user"]), consultationControllers.getConsultationByPatientAndRangeTime);
 

@@ -6,14 +6,14 @@ import { emailTemplate } from "../../../config/emailMessages.js";
 import { sendEmail } from "../../../utils/sendEmail.js";
 
 const getByID = async (id) => {
-    const consultation = await Consultation.findById(id).populate('patient');
+    const consultation = await Consultation.findById(id).populate('patient').populate('doctor');
     return consultation;
 }
 
 const getByDoctorAndRangeTime = async (doctorId, start, end) => {
     const startDate = new Date(start);
     const endDate = new Date(end);
-
+    
     const consultations = await Consultation.find({
         doctor: doctorId,
         startTime: {
@@ -22,6 +22,8 @@ const getByDoctorAndRangeTime = async (doctorId, start, end) => {
         }
     }).populate('patient');
 
+    console.log(consultations);
+    
     let consultationsSlots = [];
 
     consultations.forEach(consultation => {
@@ -47,8 +49,24 @@ const getByPatientAndRangeTime = async (patientId, start, end) => {
                 $gte: startDate,
                 $lt: endDate
             }
+        }).populate('doctor');
+
+        console.log(consultations);
+        
+        let consultationsSlots = [];
+    
+        consultations.forEach(consultation => {
+            consultationsSlots.push({
+                _id: consultation._id,
+                title: consultation.doctor.firstName + ' ' + consultation.doctor.lastName,
+                specialty: consultation.doctor.specialty,
+                start: consultation.startTime.toISOString(),
+                end: consultation.endTime.toISOString(),
+                type: 'consultation'
+            });
         });
-    return consultations;
+    
+    return consultationsSlots;
 }
 
 const getByDoctorInSchedule = async (doctorId, startTime) => {

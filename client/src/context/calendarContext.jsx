@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { useGeneralContext } from "../hooks/useGeneralContext";
 import { getCalendarByOwner, createCalendar, removeByOwner } from "../api/calendar/calendar";
 import { createDoctorAvailableTime, getAvailableTimeByDoctor, getAvailableTimeByDoctorAndRangeDate, removeByDoctorAndDate, updateByDoctor, updateByDoctorAndDate } from "../api/calendar/availableTime";
-import { createConsultation, getConsultationByDoctorAndRangeDate, getConsultationByID, removeConsultationByID, updateConsultationByID } from "../api/calendar/consultation";
+import { createConsultation, getConsultationByDoctorAndRangeDate, getConsultationByID, getConsultationByPatientAndRangeDate, removeConsultationByID, updateConsultationByID } from "../api/calendar/consultation";
 import toast from "react-hot-toast";
 
 
@@ -225,7 +225,10 @@ export const CalendarProvider = ({ children }) => {
     const getConsultationByPatient = async (patientId, startDate, endDate) => {
         try {
             setLoading(true)
-            const response = await getConsultationByDoctorAndRangeDate(patientId, startDate, endDate)
+            
+            const response = await getConsultationByPatientAndRangeDate(patientId, startDate, endDate)
+            console.log(response);
+            
             if (!response) {
                 return toast.error('No se pudo obtener las consultas')
             }
@@ -242,8 +245,10 @@ export const CalendarProvider = ({ children }) => {
         try {
             setLoading(true)
             const response = await createConsultation(values)
+            console.log("RESPUESTA",response);
+            
             if (response.status !== 201) {
-                return toast.error('No se pudo establecer crear la consulta')
+                return toast.error('No se pudo crear la consulta')
             }
             toast.success('Consulta creada correctamente')
             setConsultations([...consultations, response.data.playload])
@@ -257,10 +262,10 @@ export const CalendarProvider = ({ children }) => {
         }
     }
 
-    const updateConsultation = async (id) => {
+    const updateConsultation = async (id, data) => {
         setLoading(true)
         try {
-            const update = await updateConsultationByID(id)
+            const update = await updateConsultationByID(id, data)
             if (update.status === 400 || update.status === 404) {
                 return toast.error('No se pudo actualizar la consulta, verifique que los datos sean correctos')
             }
@@ -315,6 +320,8 @@ export const CalendarProvider = ({ children }) => {
             modifyAvailableTimesForSpecificDate,
             removeAvailableTime,
             consultations,
+            consultation,
+            setConsultation,
             getConsultation,
             getConsultationByDoctor,
             getConsultationByPatient,

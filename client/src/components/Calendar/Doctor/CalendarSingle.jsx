@@ -1,35 +1,44 @@
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import esLocale from '@fullcalendar/core/locales/es'
-import { useAuth } from "../../hooks/useAuthContext";
-import { useCalendar } from "../../hooks/useCalendarContext";
-import { useGeneralContext } from '../../hooks/useGeneralContext';
-import { useEffect, useState } from 'react';
-import { useRef } from 'react';
-import { ModalConsulation } from './Doctor/modalConsultation';
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import esLocale from "@fullcalendar/core/locales/es";
+import { useAuth } from "../../../hooks/useAuthContext";
+import { useCalendar } from "../../../hooks/useCalendarContext";
+import { useGeneralContext } from "../../../hooks/useGeneralContext";
+import { useEffect, useState } from "react";
+import { useRef } from "react";
+import { ModalConsulation } from "../Patient/ScheduleConsultation";
 
-export const Calendar = () => {
-
+export const Calendar = ({ doctorId }) => {
   const { logued } = useAuth();
+
   const { setSlot } = useGeneralContext();
-  //const { getConsultation, , getAvailableTimeByRangeDate,  createNewConsultation, updateConsultation, deleteConsultation} = useCalendar();
-  const { getAvailableTimeByRangeDate, getConsultationByDoctor, availableTime, consultations, consultation, setConsultation } = useCalendar();
+  const {
+    getAvailableTimeByRangeDate,
+    getConsultationByDoctor,
+    availableTime,
+    consultations,
+    consultation,
+    setConsultation,
+  } = useCalendar();
   const [events, setEvents] = useState([]);
-  const [showModal, setShowModal] = useState(consultation? true : false);
+  const [showModal, setShowModal] = useState(consultation ? true : false);
 
   const calendarRef = useRef(null);
 
   const fetchData = (start, end) => {
-
-    getAvailableTimeByRangeDate(logued._id, start, end);
-    getConsultationByDoctor(logued._id, start, end);
-    
-    setEvents([...availableTime, ...consultations]);
+    if (logued.role == "admin" && doctorId) {
+      getConsultationByDoctor(doctorId, start, end);
+      getAvailableTimeByRangeDate(doctorId, start, end);
+      setEvents([...availableTime, ...consultations]);
+    } else {
+      getAvailableTimeByRangeDate(doctorId, start, end);
+      setEvents([...availableTime]);
+    }
   };
 
-  const handleDatesSet = (dateInfo) => {
+  /*   const handleDatesSet = (dateInfo) => {
     const viewType = dateInfo.view.type;
     let start = new Date(dateInfo.startStr);
     let end = new Date(dateInfo.end);
@@ -54,9 +63,8 @@ export const Calendar = () => {
     console.log(start);
     console.log(end);
     
-    
-    // fetchData(start, end); 
-  };
+    // fetchData(start, end); DESCOMENTAR ESTO Y PROBAR SI SIRVE, HACE LLAMADAS CADA VEZ QUE CAMBIAMOS DE SEMANA , DIA MES
+  }; */
 
   const handleEventClick = (eventInfo) => {
     // console.log("Evento seleccionado: ", eventInfo);
@@ -65,7 +73,6 @@ export const Calendar = () => {
 
   const handleOpenModal = () => {
     console.log(consultation);
-    
     setShowModal(true);
   };
 
@@ -76,12 +83,22 @@ export const Calendar = () => {
 
   const renderEventContent = (eventInfo) => {
     return (
-      <button onClick={handleOpenModal} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className={`w-full h-full flex flex-col text-white ${eventInfo.event._def.extendedProps.type == 'consultation' ? 'bg-primary border-primary hover:bg-blue-900' : 'bg-secondary border-secondary hover:bg-teal-500'} rounded-sm text-sm px-5 py-1 text-center `} type="button">
+      <button
+        onClick={handleOpenModal}
+        data-modal-target="crud-modal"
+        data-modal-toggle="crud-modal"
+        className={`w-full h-full flex flex-col text-white ${
+          eventInfo.event._def.extendedProps.type == "consultation"
+            ? "bg-primary border-primary hover:bg-blue-900"
+            : "bg-secondary border-secondary hover:bg-teal-500"
+        } rounded-sm text-sm px-5 py-1 text-center `}
+        type="button"
+      >
         <b>{eventInfo.timeText}</b>
         <i>{eventInfo.event.title}</i>
       </button>
     );
-  }
+  };
 
   useEffect(() => {
     const calendarApi = calendarRef.current.getApi();
@@ -96,34 +113,38 @@ export const Calendar = () => {
     <div className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 shadow-md">
       <h1 className="text-3xl font-bold mb-2">Agendar consulta</h1>
       {/* <div className='w-screen min-h-screen my-24 flex justify-center'> */}
-      <div className='w-10/12 mx-auto max-h-lvh'>
+      <div className="w-10/12 mx-auto max-h-lvh">
         <FullCalendar
           ref={calendarRef}
           headerToolbar={{
-            end: 'prev,next today',
-            center: 'title',
-            start: 'dayGridMonth,timeGridWeek,timeGridDay'
+            end: "prev,next today",
+            center: "title",
+            start: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
           locale={esLocale}
-          timeZone='UTC'
+          timeZone="UTC"
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          initialView='timeGridWeek'
+          initialView="timeGridWeek"
           editable={true}
           selectable={true}
           events={events}
           eventContent={renderEventContent}
           eventClick={handleEventClick}
-          datesSet={handleDatesSet}
+          //datesSet={handleDatesSet}
           customButtons={{
             addAvailability: {
-              text: 'Agendar Disponibilidad',
-              click: () => alert('Formulario de agendar cita')
-            }
+              text: "Agendar Disponibilidad",
+              click: () => alert("Formulario de agendar cita"),
+            },
           }}
         />
       </div>
-      <ModalConsulation show={showModal} handleClose={handleCloseModal} />
+      <ModalConsulation
+        show={showModal}
+        handleClose={handleCloseModal}
+        doctorId={doctorId}
+      />
     </div>
     // </div>
-  )
-}
+  );
+};

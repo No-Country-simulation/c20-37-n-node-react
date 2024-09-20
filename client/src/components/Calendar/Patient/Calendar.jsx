@@ -3,19 +3,18 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es'
-import { useAuth } from "../../hooks/useAuthContext";
-import { useCalendar } from "../../hooks/useCalendarContext";
-import { useGeneralContext } from '../../hooks/useGeneralContext';
 import { useEffect, useState } from 'react';
 import { useRef } from 'react';
-import { ModalConsulation } from './Doctor/modalConsultation';
+import { ModalConsultation } from './Consultation';
+import { useAuth } from '../../../hooks/useAuthContext';
+import { useGeneralContext } from '../../../hooks/useGeneralContext';
+import { useCalendar } from '../../../hooks/useCalendarContext';
 
 export const Calendar = () => {
 
   const { logued } = useAuth();
   const { setSlot } = useGeneralContext();
-  //const { getConsultation, , getAvailableTimeByRangeDate,  createNewConsultation, updateConsultation, deleteConsultation} = useCalendar();
-  const { getAvailableTimeByRangeDate, getConsultationByDoctor, availableTime, consultations, consultation, setConsultation } = useCalendar();
+  const {getConsultationByPatient, consultations, consultation, setConsultation } = useCalendar();
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(consultation? true : false);
 
@@ -23,13 +22,12 @@ export const Calendar = () => {
 
   const fetchData = (start, end) => {
 
-    getAvailableTimeByRangeDate(logued._id, start, end);
-    getConsultationByDoctor(logued._id, start, end);
+    getConsultationByPatient(logued._id, start, end);
     
-    setEvents([...availableTime, ...consultations]);
+    setEvents([...consultations]);
   };
 
-  const handleDatesSet = (dateInfo) => {
+  /* const handleDatesSet = (dateInfo) => {
     const viewType = dateInfo.view.type;
     let start = new Date(dateInfo.startStr);
     let end = new Date(dateInfo.end);
@@ -56,7 +54,7 @@ export const Calendar = () => {
     
     
     // fetchData(start, end); 
-  };
+  }; */
 
   const handleEventClick = (eventInfo) => {
     // console.log("Evento seleccionado: ", eventInfo);
@@ -65,7 +63,6 @@ export const Calendar = () => {
 
   const handleOpenModal = () => {
     console.log(consultation);
-    
     setShowModal(true);
   };
 
@@ -94,7 +91,7 @@ export const Calendar = () => {
 
   return (
     <div className="w-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 shadow-md">
-      <h1 className="text-3xl font-bold mb-2">Agendar consulta</h1>
+      <h1 className="text-3xl font-bold mb-5">Consultas Programadas</h1>
       {/* <div className='w-screen min-h-screen my-24 flex justify-center'> */}
       <div className='w-10/12 mx-auto max-h-lvh'>
         <FullCalendar
@@ -107,13 +104,13 @@ export const Calendar = () => {
           locale={esLocale}
           timeZone='UTC'
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          initialView='timeGridWeek'
+          initialView='dayGridMonth'
           editable={true}
           selectable={true}
           events={events}
           eventContent={renderEventContent}
           eventClick={handleEventClick}
-          datesSet={handleDatesSet}
+          //datesSet={handleDatesSet}
           customButtons={{
             addAvailability: {
               text: 'Agendar Disponibilidad',
@@ -122,7 +119,7 @@ export const Calendar = () => {
           }}
         />
       </div>
-      <ModalConsulation show={showModal} handleClose={handleCloseModal} />
+      <ModalConsultation show={showModal} handleClose={handleCloseModal} />
     </div>
     // </div>
   )

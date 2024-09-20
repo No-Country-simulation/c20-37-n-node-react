@@ -5,7 +5,6 @@ export const Agenda = () => {
       <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
         Agendaa
       </h1>
-
     </div>
   )
 }

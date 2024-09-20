@@ -2,9 +2,12 @@ import { Card, Avatar, Badge } from 'flowbite-react'
 import { useGeneralContext } from '../hooks/useGeneralContext'
 import { useUsers } from '../hooks/useUsersContext'
 import { useEffect } from 'react'
+import { useAuth } from '../hooks/useAuthContext'
+import { Link } from "react-router-dom"
 
 export const ActiveDoctorsPage = () => {
 
+    const { logued } = useAuth();
     const { users } = useGeneralContext()
     const { getUsers } = useUsers()
 
@@ -37,6 +40,12 @@ export const ActiveDoctorsPage = () => {
                                         Activo
                                     </Badge>
                                 </div>
+                                {logued && 
+                                <div>
+                                    <Link to={`/calendar?doctorId=${doctor._id}`} type='button' className="text-secondary bg-background hover:text-white hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-semibold uppercase px-5 py-2.5 text-center me-2">Agendar Cita</Link>
+                                </div> 
+                                }
+                                
                             </div>
                         </Card>
                     ))}
