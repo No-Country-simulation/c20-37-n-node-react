@@ -14,5 +14,7 @@ router.get("/logout", passportCall("current"), sessionController.logout);
 router.get("/medicalHistory/:dni", passportCall("current"), authorization(["admin", "doctor", "user"]), sessionController.getByDni);
 router.get("/:dni", passportCall("current"), authorization(["admin", "doctor", "user"]), sessionController.getUserByDni);
 router.delete("/delete/:dni", passportCall("current"), authorization(["admin"]), sessionController.deleteByDni);
+router.post("/createPrescription/:dni", passportCall("current"), authorization(["doctor"]), sessionController.createPrescription);
+router.delete("/deletePrescription/:dni/:index", passportCall("current"),authorization(["doctor","doctor", "user"]), sessionController.deletePrescription);
 
 export default router;

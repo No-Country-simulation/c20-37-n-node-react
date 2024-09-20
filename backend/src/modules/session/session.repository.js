@@ -29,6 +29,23 @@ const create = async (data) => {
     const user = await userSession.create(data);
     return user;
 }
+
+const createPrescription = async (user,data) => {
+
+
+    const userUpdate = await userSession.findByIdAndUpdate(user._id,
+        { $push: { prescriptions: data } },
+        { new: true }
+    );
+    return userUpdate;
+}
+
+const deletePrescription = async (user, index) => {
+    user.prescriptions.splice(index, 1);
+    await user.save();
+    return user;
+}
+
 const update = async (id, data) => {
     try {
         const currentUser = await userSession.findById(id);
@@ -71,4 +88,4 @@ const deleteOne = async (id) => {
 }
 
 
-export default { getAll, getById, getByEmail, create, update, deleteOne, getByDni, getUserByDni };
+export default { getAll, getById, getByEmail, create, update, deleteOne, getByDni, getUserByDni, createPrescription, deletePrescription };

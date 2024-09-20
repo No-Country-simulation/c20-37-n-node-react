@@ -12,8 +12,12 @@ const getUserByDni = async (dni) => {return await sessionRepository.getUserByDni
 
 const create = async (data) => {return await sessionRepository.create(data);};
 
-const update = async (id,data) => {return await sessionRepository.update(id,data);};
+const update = async (user,data) => {return await sessionRepository.update(user,data);};
 
 const deleteOne = async (id) => {return await sessionRepository.deleteOne(id);};
 
-export default { getAll, getById, getByEmail, create, update, deleteOne, getByDni, getUserByDni };
+const createPrescription = async (user,data) => {return await sessionRepository.createPrescription(user,data);}
+
+const deletePrescription = async (user,index) => {return await sessionRepository.deletePrescription(user,index);}
+
+export default { getAll, getById, getByEmail, create, update, deleteOne, getByDni, getUserByDni, createPrescription, deletePrescription };
