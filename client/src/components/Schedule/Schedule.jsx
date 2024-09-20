@@ -2,6 +2,7 @@ import { useGeneralContext } from '../../hooks/useGeneralContext'
 import { useCalendar } from '../../hooks/useCalendarContext'
 import { Card, Select, Button, Table, Spinner } from 'flowbite-react'
 import { doctorSpecialties } from '../../utils/specialities'
+import { Calendar } from '../Calendar/Calendar'
 
 export const Schedule = () => {
     const { users } = useGeneralContext()
@@ -35,7 +36,8 @@ export const Schedule = () => {
     return (
         <div className="w-full h-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 rounded-none p-4">
             <h1 className="text-3xl font-bold mb-2">Agendar Cita Médica</h1>
-
+            <p className='text-base py-2'>*Primero elegimos la especialidad, luego el medico que deseamos en caso de conocer uno.</p>
+            <p className='text-base py-2'>*Elegimos el horario deseado y agendamos la consulta.</p>
             {/* Selección de especialidad */}
             <div className="mb-4">
                 <Select onChange={handleEspecialidadChange} value={especialidad}>
@@ -72,7 +74,7 @@ export const Schedule = () => {
                 </Card>
             )}
 
-            {/* Mostrar los horarios disponibles o spinner de carga */}
+            {/* Mostrar los horarios disponibles o spinner de carga
             {loading ? (
                 <div className="flex justify-center mb-4">
                     <Spinner aria-label="Cargando horarios disponibles" size="xl" />
@@ -103,11 +105,14 @@ export const Schedule = () => {
                         </Table>
                     </div>
                 )
-            )}
+            )} */}
 
             {!loading && doctor && horarios.length === 0 && (
                 <p>No hay horarios disponibles para este doctor.</p>
             )}
+            {doctor &&
+                <Calendar />
+            }
         </div>
     )
 }

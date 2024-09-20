@@ -17,7 +17,7 @@ export const UserDashboard = ({ setActiveMenu }) => {
   return (
     <div className="w-full h-full mx-auto flex-1 bg-gray-100 dark:bg-gray-800 p-4 shadow-md">
       <h1 className="text-3xl font-bold mb-2">Panel de Usuario</h1>
-      <h2>Bienvenido/a {logued.firstName} {logued.lastName}</h2>
+      <h2 className='text-xl mb-4'>Bienvenido/a {logued.firstName} {logued.lastName}</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start align-top justify-start">
         <Card className=''>
           <h2 className="text-xl font-semibold mb-4">Próxima Consulta</h2>
