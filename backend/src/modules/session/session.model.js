@@ -69,9 +69,24 @@ const sessionSchema = new mongoose.Schema({
         required: function() { return this.role === 'doctor'; }
     },
     medicalHistory:{
-        type: mongoose.Schema.Types.ObjectId, ref:"medicalHistory"}
+        type: mongoose.Schema.Types.ObjectId, ref:"medicalHistory"},
+    prescriptions: [{
+            medicationName: {
+                type: String,
+            },
+            dosage: {
+                type: String,
+            },
+            frequency: {
+                type: String,
+            },
+            duration: {
+                type: String,
+            }
+        }]
 }, {
-    timestamps: true
+    timestamps: true,
+    default: []
 });
 
 
