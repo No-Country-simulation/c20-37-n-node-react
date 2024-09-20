@@ -6,6 +6,7 @@ import { Calendar } from '../../components/Calendar/Calendar'
 import { DoctorSidebar } from '../../components/Dashboards/Sidebar/DoctorSidebar'
 import { useGeneralContext } from '../../hooks/useGeneralContext'
 import { FormAvailability } from '../../components/Calendar/FormAvailability'
+import { DoctorPrescription } from '../../components/Prescription/DoctorPrescription'
 
 export const DoctorDashboardPage = () => {
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
@@ -27,6 +28,8 @@ export const DoctorDashboardPage = () => {
                 return <Calendar />
             case 'availability':
                 return <FormAvailability />
+            case 'prescription':
+                return <DoctorPrescription />
         }
     }
     return (

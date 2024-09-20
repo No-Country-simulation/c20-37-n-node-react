@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Sidebar } from "flowbite-react";
 import { HiChartPie, HiCalendar, HiArrowSmLeft, HiArrowSmRight, HiDocumentAdd, HiOutlineCalendar } from "react-icons/hi";
+import { FaFilePrescription } from 'react-icons/fa'
 
 export const DoctorSidebar = ({ isSidebarCollapsed,
     setActiveMenu,
@@ -43,8 +44,8 @@ export const DoctorSidebar = ({ isSidebarCollapsed,
                             onClick={() => setActiveMenu('agendas')}
                             active={activeMenu === 'agendas'}
                         >
-                            {!isSidebarCollapsed && <span>Agendas</span>}
-                            {isSidebarCollapsed && <span>Agendas</span>}
+                            {!isSidebarCollapsed && <span>Calendario</span>}
+                            {isSidebarCollapsed && <span>Calendario</span>}
                         </Sidebar.Item>
                         <Sidebar.Item
                             className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -54,6 +55,15 @@ export const DoctorSidebar = ({ isSidebarCollapsed,
                         >
                             {!isSidebarCollapsed && <span>Disponibilidad</span>}
                             {isSidebarCollapsed && <span>Disponibilidad</span>}
+                        </Sidebar.Item>
+                        <Sidebar.Item
+                            className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
+                            icon={FaFilePrescription}
+                            onClick={() => setActiveMenu('prescription')}
+                            active={activeMenu === 'prescription'}
+                        >
+                            {!isSidebarCollapsed && <span>Crear receta</span>}
+                            {isSidebarCollapsed && <span>Crear receta</span>}
                         </Sidebar.Item>
                     </Sidebar.ItemGroup>
                 </Sidebar.Items>

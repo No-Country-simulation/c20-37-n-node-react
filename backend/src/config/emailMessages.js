@@ -10,7 +10,7 @@ export const emailTemplate = {
         <p style="text-align: center;">
             <a href="${link}" 
                style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
-               Iniciar Sesión
+               Iniciar Sesión 
             </a>
         </p>
         <p>Si tienes alguna pregunta, no dudes en contactar con nosotros a través de nuestro soporte.</p>

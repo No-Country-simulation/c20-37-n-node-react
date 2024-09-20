@@ -2,7 +2,7 @@
 import { createContext, useEffect } from "react";
 import { useGeneralContext } from "../hooks/useGeneralContext";
 import { useAuth } from "../hooks/useAuthContext";
-import { deleteUser, getAllUsers, updateUser } from "../api/users"
+import { deleteUser, getAllUsers, updateUser, createPrescription, deletePrescription } from "../api/users"
 import { getMedicalHistory, updateMedicalHistory } from "../api/medicalHistory"
 import toast from "react-hot-toast";
 
@@ -102,6 +102,26 @@ export const UsersProvider = ({ children }) => {
             setLoading(false)
         }
     }
+
+
+    const addPrescription = async (dni, prescriptions) => {
+        try {
+            setLoading(true)
+            const response = await createPrescription(dni, prescriptions)
+            if (!response) {
+                return toast.error('No se pudo crear la receta')
+            }
+            toast.success('Receta creada correctamente')
+            console.log(response.data)
+            return response.data.playload
+        } catch (error) {
+            toast.error('No se pudo crear la receta')
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         if (logued.role === 'admin' || logued.role === 'doctor' || logued.role === 'user') {
             getUsers()
@@ -120,7 +140,8 @@ export const UsersProvider = ({ children }) => {
             getMedicalHistoryById,
             updateMedicalHistoryById,
             medicalHistory,
-            deleteUserByDni
+            deleteUserByDni,
+            addPrescription
         }}>
             {children}
         </UsersContext.Provider>

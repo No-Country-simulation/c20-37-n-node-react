@@ -109,10 +109,10 @@ const getUserByDni = async (req = request, res = response) => {
     }
 }
 
-const createPrescription = async (req = request, res= response) => {
+const createPrescription = async (req = request, res = response) => {
     try {
-        const {dni} = req.params;
-        const { prescriptions } = req.body;
+        const { dni } = req.params;
+        const prescriptions = req.body;
         const user = await userService.getByDni(dni);
         if (!user) return res.status(404).json({ status: "error", msg: "Usuario no encontrado" });
         const userPrescription = await userService.createPrescription(user, prescriptions);
@@ -123,18 +123,18 @@ const createPrescription = async (req = request, res= response) => {
     }
 }
 
-const deletePrescription = async (req = request, res= response) => {
+const deletePrescription = async (req = request, res = response) => {
     try {
-        const {dni, index} = req.params
+        const { dni, index } = req.params
         const user = await userService.getByDni(dni);
         if (!user) return res.status(404).json({ status: "error", msg: "User not found" });
         await userService.deletePrescription(user, index);
         return res.status(200).json({ status: "ok", msg: "Prescription deleted" });
     } catch (error) {
-        
+
     }
 }
 
-const updatePrescription = async (req = request, res= response) => {}
+const updatePrescription = async (req = request, res = response) => { }
 
 export default { userRegister, userLogin, userUpdate, getAll, verificationSessions, logout, getByDni, deleteByDni, getUserByDni, createPrescription, deletePrescription };
