@@ -170,13 +170,13 @@ export const Profile = ({ user }) => {
                     />
                 </div>
 
-                <Button className='text-white hover:bg-green-900 duration-200' color='success' type="submit">
+                <Button className='text-white bg-green-500 hover:bg-green-900 duration-300' type="submit">
                     Actualizar Perfil
                 </Button>
             </form>
             {profile.role === 'user' &&
                 <div className="mt-2">
-                    <Button onClick={() => navigateToMedicalHistory()} className="w-full hover:bg-green-900 duration-200">
+                    <Button onClick={() => navigateToMedicalHistory()} className="w-full bg-primary hover:bg-primaryHover duration-300">
                         Ver Historial Médico
                     </Button>
                 </div>

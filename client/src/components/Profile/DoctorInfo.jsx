@@ -59,6 +59,7 @@ export const DoctorInfo = ({ show, onClose, handleChange, profile }) => {
                                 onChange={handleChange}
                                 required
                             >
+                                <option value="">-- Seleccionar una especialidad --</option>
                                 {doctorSpecialties.map(specialty => (
                                     <option key={specialty} value={specialty}>{specialty}</option>
                                 ))}
