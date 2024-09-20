@@ -77,7 +77,7 @@ export const AddUser = () => {
                     </Select>
                     {errors.role && <ErrorText text="Rol es requerido" />}
                     {selectedRole === 'doctor' &&
-                        <Button className='m-1' onClick={() => openModal()}>
+                        <Button className='m-1 bg-primary hover:bg-primaryHover' onClick={() => openModal()}>
                             {showDoctorInfo ? 'Ocultar información de medico' : 'Agregar información de medico'}
                         </Button>
                     }
@@ -173,6 +173,7 @@ export const AddUser = () => {
                     <TextInput
                         id="password"
                         name="password"
+                        placeholder='********'
                         type={passwordVisible ? 'text' : 'password'}
                         required
                         {...register('password', { required: true })}
@@ -180,7 +181,7 @@ export const AddUser = () => {
                     <button
                         type="button"
                         className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                        onClick={() => setPasswordVisible('password')}
+                        onClick={() => setPasswordVisible(!passwordVisible)}
                     >
                         {passwordVisible ? (
                             <HiEyeOff className="w-4 h-4" />
@@ -200,6 +201,7 @@ export const AddUser = () => {
                     <TextInput
                         id="confirmPassword"
                         name="confirmPassword"
+                        placeholder='********'
                         type={showConfirmPassword ? 'text' : 'password'}
                         required
                         {...register('confirmPassword', { required: true })}
@@ -221,7 +223,7 @@ export const AddUser = () => {
                 </div>
                 {errors.confirmPassword && <ErrorText text="Confirmación es requerida" />}
             </div>
-            <Button type="submit" className="mt-2">
+            <Button type="submit" className="mt-2 bg-primary hover:bg-primaryHover">
                 Registrar
             </Button>
         </form>

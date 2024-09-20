@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Sidebar } from "flowbite-react";
 import { HiClipboardList, HiInformationCircle, HiCalendar, HiVideoCamera, HiArrowSmRight, HiArrowSmLeft } from "react-icons/hi";
+import { FaFilePrescription } from 'react-icons/fa'
 
 export const UserSidebar = ({ isSidebarCollapsed,
     setActiveMenu,
@@ -55,6 +56,15 @@ export const UserSidebar = ({ isSidebarCollapsed,
                         >
                             {!isSidebarCollapsed && <span>Videollamada</span>}
                             {isSidebarCollapsed && <span>Videollamada</span>}
+                        </Sidebar.Item>
+                        <Sidebar.Item
+                            className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 "
+                            icon={FaFilePrescription}
+                            onClick={() => setActiveMenu('prescription')}
+                            active={activeMenu === 'prescription'}
+                        >
+                            {!isSidebarCollapsed && <span>Recetas</span>}
+                            {isSidebarCollapsed && <span>Recetas</span>}
                         </Sidebar.Item>
                     </Sidebar.ItemGroup>
                 </Sidebar.Items>

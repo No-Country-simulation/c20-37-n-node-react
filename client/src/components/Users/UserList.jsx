@@ -41,9 +41,10 @@ export const UserList = ({ filterUsed }) => {
 
   return (
     <section className="bg-gray-100 dark:bg-gray-800 p-4 shadow-md sm:p-5 w-full">
-      <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+      <h1 className="text-3xl font-bold mb-2">
         Panel de usuarios
       </h1>
+      <p className="mb-4">*Gestion de usuarios, editar roles y eliminar usuarios.</p>
       <div className="flex align-middle justify-center items-center">
         <HiSearch className="text-gray-500 dark:text-gray-400 size-10" />
         <TextInput

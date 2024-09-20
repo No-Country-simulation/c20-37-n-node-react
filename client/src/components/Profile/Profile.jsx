@@ -66,7 +66,9 @@ export const Profile = ({ user }) => {
                 Editar Perfil
             </h5>
             <div className="mb-2 block">
-                <Label value={'Rol: ' + profile?.role} />
+                {profile.role === 'user' && <Label value={'Perfil de Paciente'} />}
+                {profile.role === 'doctor' && <Label value={'Perfil de Doctor'} />}
+                {profile.role === 'admin' && <Label value={'Perfil de Administrador'} />}
             </div>
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 <div>
